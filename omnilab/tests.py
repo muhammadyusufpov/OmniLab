@@ -800,10 +800,6 @@ class GuideLibraryPageTests(TestCase):
             self.response,
             "Twenty-five questions · One connected library",
         )
-        self.assertContains(
-            self.response,
-            "The twenty-five guides are grouped by the job they help you do",
-        )
         self.assertEqual(len(self.guides), 25)
         self.assertEqual(self.html.count('class="guide-index-link"'), 25)
 
@@ -824,6 +820,20 @@ class GuideLibraryPageTests(TestCase):
             with self.subTest(guide=guide["title"]):
                 self.assertContains(self.response, guide["title"])
                 self.assertContains(self.response, guide["summary"])
+
+    def test_library_keeps_one_grid_heading_without_duplicate_intro(self):
+        self.assertEqual(
+            self.html.count(
+                '<h2 id="library-heading">'
+                "Start where your chemistry question starts"
+                "</h2>"
+            ),
+            1,
+        )
+        self.assertNotContains(
+            self.response,
+            "The twenty-five guides are grouped by the job they help you do",
+        )
 
     def test_library_description_names_twenty_five_free_no_account_guides(self):
         description = self.response.context["page_description"]
