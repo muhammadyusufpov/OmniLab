@@ -171,6 +171,13 @@ const reactionGuidesByPairKey = new Map<string, readonly ReactionGuide[]>([
         ]
     ],
     [
+        'HNO3+NH3',
+        [{
+            href: '/guides/ammonia-with-nitric-acid/',
+            title: 'What happens when ammonia reacts with nitric acid?'
+        }]
+    ],
+    [
         'HCl+NaOH',
         [
             {
