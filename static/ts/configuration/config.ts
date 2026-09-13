@@ -144,6 +144,15 @@ const reactionGuidesByPairKey = new Map<string, readonly ReactionGuide[]>([
         ]
     ],
     [
+        'H2O+NO2',
+        [
+            {
+                href: '/guides/nitrogen-dioxide-and-water-reaction/',
+                title: 'What happens when nitrogen dioxide reacts with water?'
+            }
+        ]
+    ],
+    [
         'CO2+NaOH',
         [
             {
@@ -207,6 +216,15 @@ const reactionGuidesByPairKey = new Map<string, readonly ReactionGuide[]>([
         ]
     ],
     [
+        'C+O2',
+        [
+            {
+                href: '/guides/carbon-and-oxygen-reaction/',
+                title: 'What happens when carbon reacts with oxygen?'
+            }
+        ]
+    ],
+    [
         'Cu+O2',
         [
             {
@@ -257,6 +275,15 @@ const reactionGuidesByPairKey = new Map<string, readonly ReactionGuide[]>([
             {
                 href: '/guides/hydrogen-and-oxygen-reaction/',
                 title: 'What happens when hydrogen reacts with oxygen?'
+            }
+        ]
+    ],
+    [
+        'Cl2+H2',
+        [
+            {
+                href: '/guides/hydrogen-and-chlorine-reaction/',
+                title: 'What happens when hydrogen reacts with chlorine?'
             }
         ]
     ],
