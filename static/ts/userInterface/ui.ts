@@ -138,7 +138,7 @@ export function setupSearchFunction(): void {
     const searchInput = document.getElementById('chem-search-input') as HTMLInputElement | null;
     if (!searchInput) return;
 
-    searchInput.addEventListener('keyup', function(this: HTMLInputElement) {
+    searchInput.addEventListener('input', function(this: HTMLInputElement) {
         const value = this.value.toLowerCase().trim();
         const cards = document.querySelectorAll('.chemical-card');
 
