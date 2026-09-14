@@ -133,6 +133,12 @@ function getCurrentStep(): FirstExperimentStep {
 
 function openPanelForStep(step: FirstExperimentStep): void {
     if (step === 'sodium' || step === 'chlorine') {
+        // A search for the previous chemical must not hide the next step.
+        const search = document.getElementById('chem-search-input') as HTMLInputElement | null;
+        if (search) search.value = '';
+        document.querySelectorAll<HTMLElement>('.chemical-card').forEach(card => {
+            card.style.display = '';
+        });
         openCustomPopover('chemicals', false);
     } else if (step === 'beaker') {
         openCustomPopover('apparatus', false);
