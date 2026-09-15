@@ -8,6 +8,8 @@ INDEXNOW_KEY = (
 )
 
 urlpatterns = [
+    path("guides/barium-chloride-and-sodium-carbonate-reaction/", views.observation_guide, {"guide_key": "barium-chloride-sodium-carbonate"}, name="guide_barium_chloride_sodium_carbonate"),
+    path("demo/barium-chloride-sodium-carbonate/", views.prepared_reaction_demo, {"demo_key": "barium-chloride-sodium-carbonate"}, name="demo_barium_chloride_sodium_carbonate"),
     path('health/', views.health, name="health"),
     path(
         f'{INDEXNOW_KEY}.txt',
