@@ -1322,13 +1322,14 @@ class ContactFormTests(TestCase):
                 html=False,
             )
 
-    def test_ordinary_contact_route_remains_uninstrumented(self):
+    def test_ordinary_contact_tracks_pageview_without_feedback_events(self):
         response = self.client.get(
             "/contact/",
             HTTP_HOST="omnilab-bk8q.onrender.com",
         )
 
-        self.assertNotContains(response, "posthog.init(")
+        self.assertContains(response, "posthog.init(", count=1)
+        self.assertContains(response, "capturePageView();", count=1)
         self.assertNotContains(response, "/static/js/root/feedback.js")
         self.assertNotContains(response, "data-feedback-event")
 
@@ -5318,3 +5319,19 @@ class LabJourneyRepairTests(TestCase):
         self.assertIn("setAnalysisPending(false)", analysis_block)
         self.assertIn("setAnalysisPending(false)", reset_block)
         self.assertNotIn("resetBtn.disabled", interactions)
+
+
+@override_settings(ALLOWED_HOSTS=['omnilab-bk8q.onrender.com', 'localhost'], OMNILAB_NOINDEX=False)
+class PublicPageTrackingTests(TestCase):
+    def test_all_public_html_routes_have_one_pageview_entry(self):
+        from omnilab.urls import urlpatterns
+        excluded = {'health', 'indexnow_key', 'robots_txt', 'sitemap_xml', 'ai_insights'}
+        routes = ['/'] + ['/' + str(p.pattern) for p in urlpatterns if p.name not in excluded]
+        for route in routes:
+            with self.subTest(route=route):
+                response = self.client.get(route, HTTP_HOST='omnilab-bk8q.onrender.com')
+                self.assertEqual(response.status_code, 200)
+                self.assertContains(response, 'capturePageView();', count=1)
+                self.assertContains(response, 'before_send: sanitizePayload', count=1)
+                preview = self.client.get(route, HTTP_HOST='localhost')
+                self.assertNotContains(preview, 'posthog.init(')
