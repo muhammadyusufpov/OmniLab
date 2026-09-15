@@ -132,6 +132,18 @@ PUBLIC_CANONICAL_URLS = {
         "carbon-dioxide-and-sodium-hydroxide-reaction/"
     ),
     "ammonia_nitric_acid": f"{PRODUCTION_BASE_URL}/guides/ammonia-with-nitric-acid/",
+    "nitrogen_dioxide_water": (
+        f"{PRODUCTION_BASE_URL}/guides/"
+        "nitrogen-dioxide-and-water-reaction/"
+    ),
+    "hydrogen_chlorine": (
+        f"{PRODUCTION_BASE_URL}/guides/"
+        "hydrogen-and-chlorine-reaction/"
+    ),
+    "carbon_oxygen": (
+        f"{PRODUCTION_BASE_URL}/guides/"
+        "carbon-and-oxygen-reaction/"
+    ),
 }
 SODIUM_CHLORINE_DEMO_URL = f"{PRODUCTION_BASE_URL}/demo/sodium-chlorine/"
 FIRST_EXPERIMENT_URL = f"{PRODUCTION_BASE_URL}/first-experiment/"
@@ -399,6 +411,51 @@ REACTION_DEMOS = {
             "whether to request an educational reaction prediction."
         ),
         "url": f"{PRODUCTION_BASE_URL}/demo/carbon-dioxide-water/",
+    },
+    "nitrogen-dioxide-water": {
+        "id": "nitrogen-dioxide-water",
+        "version": "v1",
+        "selectedChemicals": ["NO2", "H2O"],
+        "vessel": "beaker",
+        "liquidColor": "#a85f32",
+        "mixture_label": "NO2 + H2O",
+        "title": "Nitrogen dioxide and water, ready to analyze",
+        "page_title": "OmniLab - Nitrogen dioxide and water demo",
+        "page_description": (
+            "Open a prepared Nitrogen dioxide and Water setup, then choose "
+            "whether to request an educational reaction prediction."
+        ),
+        "url": f"{PRODUCTION_BASE_URL}/demo/nitrogen-dioxide-water/",
+    },
+    "hydrogen-chlorine": {
+        "id": "hydrogen-chlorine",
+        "version": "v1",
+        "selectedChemicals": ["H2", "Cl2"],
+        "vessel": "beaker",
+        "liquidColor": "#9cab4f",
+        "mixture_label": "H2 + Cl2",
+        "title": "Hydrogen and chlorine, ready to analyze",
+        "page_title": "OmniLab - Hydrogen and chlorine demo",
+        "page_description": (
+            "Open a prepared Hydrogen and Chlorine setup, then choose "
+            "whether to request an educational reaction prediction."
+        ),
+        "url": f"{PRODUCTION_BASE_URL}/demo/hydrogen-chlorine/",
+    },
+    "carbon-oxygen": {
+        "id": "carbon-oxygen",
+        "version": "v1",
+        "selectedChemicals": ["C", "O2"],
+        "vessel": "beaker",
+        "liquidColor": "#465b66",
+        "mixture_label": "C + O2",
+        "title": "Carbon and oxygen, ready to analyze",
+        "page_title": "OmniLab - Carbon and oxygen demo",
+        "page_description": (
+            "Open a prepared Carbon and Oxygen setup, then choose whether "
+            "to request an educational reaction prediction."
+        ),
+        "url": f"{PRODUCTION_BASE_URL}/demo/carbon-oxygen/",
     },
     "iron-hydrochloric-acid": {
         "id": "iron-hydrochloric-acid",
@@ -2861,6 +2918,372 @@ OBSERVATION_GUIDE_PAGES = {
                   'title': 'Read the ratio as particles'}],
  'title': 'What happens when ammonia reacts with nitric acid?',
  'visit_source': 'guide_virtual_lab'},
+    "nitrogen-dioxide-water": {
+        "route_name": "guide_nitrogen_dioxide_water",
+        "canonical_key": "nitrogen_dioxide_water",
+        "visit_source": "guide_virtual_lab",
+        "demo_route_name": "demo_nitrogen_dioxide_water",
+        "title": "What happens when nitrogen dioxide reacts with water?",
+        "page_title": "Nitrogen dioxide and water reaction | OmniLab",
+        "description": (
+            "See how nitrogen dioxide reacts with water, balance the simplified "
+            "equation, compare nitrous and nitric acid, and keep its limits clear."
+        ),
+        "reading_time": "6 minute read",
+        "direct_answer": (
+            "Nitrogen dioxide reacts with cool, dilute water in OmniLab's "
+            "simplified model. The products are nitrous acid and nitric acid."
+        ),
+        "opening_boundary": (
+            "Real absorption involves equilibria and further chemistry. Nitrous "
+            "acid can decompose, so some summaries show nitric acid and nitric "
+            "oxide instead."
+        ),
+        "student_job": (
+            "Balance the equation and track nitrogen from oxidation state +4. "
+            "Then separate the classroom model from real gas absorption."
+        ),
+        "study_intro": (
+            "Follow nitrogen into two acid products and check the atom count. "
+            "Keep the cool, dilute-water condition attached to the result."
+        ),
+        "reactants": [
+            {"name": "Nitrogen dioxide", "formula": "NO2"},
+            {"name": "Water", "formula": "H2O"},
+        ],
+        "setup_summary": (
+            "A beaker is prepared with Nitrogen dioxide and Water. Nothing runs "
+            "until you select Analyze."
+        ),
+        "cta_label": "Try the nitrogen dioxide and water setup",
+        "equation": "2NO2(g) + H2O(l) -> HNO2(aq) + HNO3(aq)",
+        "explanation": (
+            "Nitrogen dioxide absorbed into cool, dilute water forms a mixture "
+            "of nitrous acid and nitric acid in this simplified equation. The "
+            "real gas absorption can involve additional equilibria, so this "
+            "result describes the classroom-scale net change."
+        ),
+        "observation_title": "Less brown gas above a clear acidic solution",
+        "observation": (
+            "Nitrogen dioxide is a reddish-brown gas. Absorption can reduce its "
+            "color while the liquid stays clear and becomes acidic. OmniLab "
+            "returns text only and does not simulate color or pH."
+        ),
+        "observation_class": "observation-clear",
+        "observation_label": "Clear acidic solution",
+        "study_steps": [
+            {
+                "title": "Balance nitrogen first",
+                "body": (
+                    "Place 2 before NO2. One nitrogen enters HNO2, and the "
+                    "other enters HNO3."
+                ),
+            },
+            {
+                "title": "Track the oxidation states",
+                "body": (
+                    "Nitrogen starts at +4. It changes to +3 in HNO2 and +5 "
+                    "in HNO3, so disproportionation occurs."
+                ),
+            },
+            {
+                "title": "Keep the model boundary",
+                "body": (
+                    "The equation represents one cool, dilute-water pathway. "
+                    "Equilibria and later nitrous acid chemistry can change the "
+                    "mixture."
+                ),
+            },
+        ],
+        "common_questions": [
+            {
+                "question": "What forms when nitrogen dioxide reacts with water?",
+                "answer": (
+                    "The simplified cool, dilute-water equation forms nitrous "
+                    "acid and nitric acid. Both products remain aqueous."
+                ),
+            },
+            {
+                "question": "What is the balanced equation for NO2 and water?",
+                "answer": (
+                    "OmniLab uses 2NO2(g) + H2O(l) -> HNO2(aq) + HNO3(aq). "
+                    "It balances two nitrogen, five oxygen, and two hydrogen atoms."
+                ),
+            },
+            {
+                "question": "Why do two different acids form?",
+                "answer": (
+                    "Nitrogen in NO2 has oxidation state +4. Some changes to +3, "
+                    "while some changes to +5."
+                ),
+            },
+            {
+                "question": "Why do some equations show nitric oxide?",
+                "answer": (
+                    "Nitrous acid can undergo further chemistry. A later net "
+                    "summary can therefore include nitric acid and nitric oxide."
+                ),
+            },
+            {
+                "question": "What would you observe?",
+                "answer": (
+                    "The reddish-brown gas can fade as it is absorbed. The liquid "
+                    "can stay clear, so acidity needs a suitable measurement."
+                ),
+            },
+        ],
+        "safety": [
+            "Use nitrogen dioxide only in a specialist fume-handling system.",
+            "Avoid inhalation and wear corrosion-resistant gloves and goggles.",
+            "Keep this oxidizer and the acidic products away from combustibles.",
+        ],
+        "boundary": (
+            "OmniLab predicts one simplified cool, dilute-water pathway. It does "
+            "not model gas concentration, NO2-N2O4 equilibrium, absorption rate, "
+            "temperature, pH, nitric oxide formation, acid decomposition, color "
+            "change, or a physical procedure. It is an educational prediction, "
+            "not a verified simulation or a substitute for trained laboratory "
+            "supervision."
+        ),
+    },
+    "hydrogen-chlorine": {
+        "route_name": "guide_hydrogen_chlorine",
+        "canonical_key": "hydrogen_chlorine",
+        "visit_source": "guide_virtual_lab",
+        "demo_route_name": "demo_hydrogen_chlorine",
+        "title": "What happens when hydrogen reacts with chlorine?",
+        "page_title": "Hydrogen and chlorine reaction | OmniLab",
+        "description": (
+            "See how hydrogen reacts with chlorine, balance the hydrogen "
+            "chloride equation, and keep light, heat, and safety limits clear."
+        ),
+        "reading_time": "5 minute read",
+        "direct_answer": (
+            "Hydrogen reacts with chlorine after initiation to form hydrogen "
+            "chloride gas. The balanced equation is H2(g) + Cl2(g) -> 2HCl(g)."
+        ),
+        "opening_boundary": (
+            "Light or heat can initiate a rapid chain reaction. OmniLab "
+            "predicts the product without simulating initiation, flame, "
+            "pressure, or reaction rate."
+        ),
+        "student_job": (
+            "Balance the equation, distinguish hydrogen chloride gas from "
+            "hydrochloric acid, and keep initiation attached to the result."
+        ),
+        "study_intro": (
+            "Follow the one-to-one reactant ratio into two hydrogen chloride "
+            "molecules. Then separate the gas product from its aqueous form."
+        ),
+        "reactants": [
+            {"name": "Hydrogen", "formula": "H2"},
+            {"name": "Chlorine", "formula": "Cl2"},
+        ],
+        "setup_summary": (
+            "A beaker is prepared with Hydrogen and Chlorine. Nothing runs "
+            "until you select Analyze."
+        ),
+        "cta_label": "Try the hydrogen and chlorine setup",
+        "equation": "H2(g) + Cl2(g) -> 2HCl(g)",
+        "explanation": (
+            "Hydrogen and chlorine form hydrogen chloride after initiation, "
+            "often by light or heat. The chain reaction is highly exothermic "
+            "and can proceed violently. One molecule of each reactant forms "
+            "two hydrogen chloride molecules."
+        ),
+        "observation_title": "No simulated flash, flame, or pressure change",
+        "observation": (
+            "OmniLab returns a text-only prediction for this pair. A physical "
+            "mixture can react rapidly after initiation, but the virtual "
+            "beaker does not represent light, heat, flame, or pressure."
+        ),
+        "observation_class": "observation-clear",
+        "observation_label": "Text-only result",
+        "study_steps": [
+            {
+                "title": "Balance both diatomic reactants",
+                "body": (
+                    "H2 and Cl2 each supply two atoms. Place 2 before HCl so "
+                    "both hydrogen and chlorine balance."
+                ),
+            },
+            {
+                "title": "Keep initiation in the explanation",
+                "body": (
+                    "The equation gives the net change. Light or heat starts "
+                    "the chain reaction but is not another reactant."
+                ),
+            },
+            {
+                "title": "Name the product state correctly",
+                "body": (
+                    "The stated product is hydrogen chloride gas, HCl(g). It "
+                    "is called hydrochloric acid after it dissolves in water."
+                ),
+            },
+        ],
+        "common_questions": [
+            {
+                "question": "What forms when hydrogen reacts with chlorine?",
+                "answer": (
+                    "Hydrogen chloride gas forms. The balanced equation makes "
+                    "two HCl molecules from one H2 molecule and one Cl2 molecule."
+                ),
+            },
+            {
+                "question": "What is the balanced equation for H2 and Cl2?",
+                "answer": (
+                    "The balanced equation is H2(g) + Cl2(g) -> 2HCl(g). It "
+                    "has two hydrogen and two chlorine atoms on each side."
+                ),
+            },
+            {
+                "question": "Why does the reaction need light or heat?",
+                "answer": (
+                    "Initiation breaks a bond and creates reactive species. "
+                    "They continue the chain reaction that forms HCl."
+                ),
+            },
+            {
+                "question": "Is hydrogen chloride the same as hydrochloric acid?",
+                "answer": (
+                    "Hydrogen chloride is the molecular gas. Its aqueous "
+                    "solution is called hydrochloric acid."
+                ),
+            },
+        ],
+        "safety": [
+            "Keep the gas mixture away from bright light and ignition sources.",
+            "Use blast shielding and trained supervision.",
+            "Avoid inhaling chlorine or hydrogen chloride gas.",
+        ],
+        "boundary": (
+            "OmniLab predicts hydrogen chloride without modeling light level, "
+            "temperature, gas ratio, pressure, reaction rate, flame, or a "
+            "physical procedure. Its results are educational predictions, not "
+            "verified simulations, and never a replacement for trained "
+            "laboratory supervision."
+        ),
+    },
+    "carbon-oxygen": {
+        "route_name": "guide_carbon_oxygen",
+        "canonical_key": "carbon_oxygen",
+        "visit_source": "guide_virtual_lab",
+        "demo_route_name": "demo_carbon_oxygen",
+        "title": "What happens when carbon reacts with oxygen?",
+        "page_title": "Carbon and oxygen reaction | OmniLab",
+        "description": (
+            "See how carbon reacts with sufficient oxygen, balance the carbon "
+            "dioxide equation, and compare complete with incomplete combustion."
+        ),
+        "reading_time": "5 minute read",
+        "direct_answer": (
+            "In sufficient oxygen, carbon burns to form carbon dioxide. The "
+            "balanced equation is C(s) + O2(g) -> CO2(g)."
+        ),
+        "opening_boundary": (
+            "Carbon needs ignition or strong heating before it burns. Oxygen "
+            "supply changes the products, but OmniLab predicts only complete "
+            "combustion in sufficient oxygen."
+        ),
+        "student_job": (
+            "Balance the equation, name the complete-combustion product, and "
+            "keep oxygen supply attached to the result."
+        ),
+        "study_intro": (
+            "Follow one carbon atom and one oxygen molecule into carbon "
+            "dioxide. Then compare sufficient and limited oxygen."
+        ),
+        "reactants": [
+            {"name": "Carbon", "formula": "C"},
+            {"name": "Oxygen", "formula": "O2"},
+        ],
+        "setup_summary": (
+            "A beaker is prepared with Carbon and Oxygen. The burner stays "
+            "off, and nothing runs until you select Analyze."
+        ),
+        "cta_label": "Try the carbon and oxygen setup",
+        "equation": "C(s) + O2(g) -> CO2(g)",
+        "explanation": (
+            "Carbon undergoes complete combustion in sufficient oxygen to "
+            "form carbon dioxide. The oxidation is exothermic and releases "
+            "energy as strong carbon-oxygen bonds form. One carbon atom and "
+            "one oxygen molecule produce one carbon dioxide molecule."
+        ),
+        "observation_title": "No simulated glow, flame, or gas buildup",
+        "observation": (
+            "OmniLab returns a text-only prediction for this pair. A physical "
+            "sample can glow or burn after ignition, but carbon dioxide is "
+            "colorless and the virtual beaker does not model combustion."
+        ),
+        "observation_class": "observation-clear",
+        "observation_label": "Text-only result",
+        "study_steps": [
+            {
+                "title": "Balance the atoms",
+                "body": (
+                    "One carbon atom and two oxygen atoms appear on each side, "
+                    "so every coefficient is 1."
+                ),
+            },
+            {
+                "title": "Keep sufficient oxygen in the answer",
+                "body": (
+                    "The equation describes complete combustion. Limited "
+                    "oxygen can produce carbon monoxide instead."
+                ),
+            },
+            {
+                "title": "Separate ignition from the net equation",
+                "body": (
+                    "Heating starts the physical reaction. It is a condition, "
+                    "not another reactant in the balanced equation."
+                ),
+            },
+        ],
+        "common_questions": [
+            {
+                "question": "What forms when carbon reacts with oxygen?",
+                "answer": (
+                    "Carbon dioxide forms during complete combustion in "
+                    "sufficient oxygen."
+                ),
+            },
+            {
+                "question": "What is the balanced equation for C and O2?",
+                "answer": (
+                    "The balanced equation is C(s) + O2(g) -> CO2(g). It has "
+                    "one carbon and two oxygen atoms on each side."
+                ),
+            },
+            {
+                "question": "What happens when oxygen is limited?",
+                "answer": (
+                    "Incomplete combustion can form carbon monoxide. The "
+                    "OmniLab result does not model that alternate pathway."
+                ),
+            },
+            {
+                "question": "What type of reaction is carbon and oxygen?",
+                "answer": (
+                    "It is a combustion reaction and a redox reaction. Carbon "
+                    "is oxidized as carbon dioxide forms."
+                ),
+            },
+        ],
+        "safety": [
+            "Use heat-resistant tools for hot carbon.",
+            "Vent carbon dioxide from the work area.",
+            "Keep combustible materials away from the reaction.",
+        ],
+        "boundary": (
+            "OmniLab predicts complete combustion without modeling ignition, "
+            "temperature, oxygen supply, reaction rate, glow, flame, carbon "
+            "monoxide formation, or a physical procedure. Its results are "
+            "educational predictions, not verified simulations, and never a "
+            "replacement for trained laboratory supervision."
+        ),
+    },
 }
 
 CHEMICAL_REACTION_VIRTUAL_LAB_PAGE = {
@@ -3097,6 +3520,20 @@ GUIDE_CHEMISTRY_PROFILES = {
         "reaction_patterns": frozenset({"acid-base"}),
     },
     "ammonia_nitric_acid": {"substances": frozenset({"NH3", "HNO3", "NH4NO3"}), "reaction_patterns": frozenset({"acid-base", "neutralization"})},
+    "nitrogen_dioxide_water": {
+        "substances": frozenset({"NO2", "H2O", "HNO2", "HNO3"}),
+        "reaction_patterns": frozenset(
+            {"acid-formation", "disproportionation", "redox"}
+        ),
+    },
+    "hydrogen_chlorine": {
+        "substances": frozenset({"H2", "Cl2", "HCl"}),
+        "reaction_patterns": frozenset({"combination", "redox"}),
+    },
+    "carbon_oxygen": {
+        "substances": frozenset({"C", "O2", "CO2"}),
+        "reaction_patterns": frozenset({"combustion", "redox"}),
+    },
 }
 
 # Each edge carries machine-checkable chemistry evidence. The UI deliberately
@@ -3135,7 +3572,12 @@ GUIDE_RELATIONSHIP_DEFINITIONS = {
             "supported_reaction_family",
             SODIUM_CHLORINE_REACTION_FAMILY,
         ),
-        ("sodium_water", "Compare another reaction of sodium", "shared_substance", "Na"),
+        (
+            "hydrogen_chlorine",
+            "Compare chlorine reacting with another element",
+            "shared_substance",
+            "Cl2",
+        ),
     ],
     "sodium_chlorine_formula": [
         (
@@ -3186,8 +3628,8 @@ GUIDE_RELATIONSHIP_DEFINITIONS = {
             "CO2",
         ),
         (
-            "acetic_acid_sodium_bicarbonate",
-            "See another reaction that produces carbon dioxide",
+            "carbon_dioxide_sodium_hydroxide",
+            "Compare carbon dioxide reacting with sodium hydroxide",
             "shared_substance",
             "CO2",
         ),
@@ -3298,8 +3740,8 @@ GUIDE_RELATIONSHIP_DEFINITIONS = {
     "hydrogen_oxygen": [
         ("sodium_water", "Trace hydrogen from a water reaction", "shared_substance", "H2"),
         (
-            "zinc_hydrochloric_acid",
-            "Trace hydrogen from a metal-acid reaction",
+            "hydrogen_chlorine",
+            "Compare hydrogen reacting with another diatomic gas",
             "shared_substance",
             "H2",
         ),
@@ -3314,10 +3756,10 @@ GUIDE_RELATIONSHIP_DEFINITIONS = {
             "O2",
         ),
         (
-            "iron_hydrochloric_acid",
-            "Compare another reaction of iron",
+            "carbon_oxygen",
+            "Compare oxygen reacting with a nonmetal",
             "shared_substance",
-            "Fe",
+            "O2",
         ),
     ],
     "hydrochloric_acid_sodium_hydroxide": [
@@ -3335,10 +3777,10 @@ GUIDE_RELATIONSHIP_DEFINITIONS = {
             "NaCl",
         ),
         (
-            "sodium_carbonate_hydrochloric_acid",
-            "Follow hydrochloric acid into a gas-forming reaction",
+            "carbon_dioxide_sodium_hydroxide",
+            "Compare sodium hydroxide reacting with carbon dioxide",
             "shared_substance",
-            "HCl",
+            "NaOH",
         ),
     ],
     "silver_nitrate_sodium_chloride": [
@@ -3375,10 +3817,10 @@ GUIDE_RELATIONSHIP_DEFINITIONS = {
             "O2",
         ),
         (
-            "chemical_reaction_virtual_lab",
-            "Review how supported predictions work",
-            "supported_reaction_family",
-            "CO+O2",
+            "carbon_oxygen",
+            "Compare complete combustion pathways",
+            "shared_substance",
+            "CO2",
         ),
     ],
     "carbon_dioxide_water": [
@@ -3389,16 +3831,16 @@ GUIDE_RELATIONSHIP_DEFINITIONS = {
             "CO2",
         ),
         (
-            "acetic_acid_sodium_bicarbonate",
-            "See a reaction that produces carbon dioxide",
+            "nitrogen_dioxide_water",
+            "Compare another gas oxide reacting with water",
             "shared_substance",
-            "CO2",
+            "H2O",
         ),
         (
-            "chemical_reaction_virtual_lab",
-            "Review how supported predictions work",
-            "supported_reaction_family",
-            "CO2+H2O",
+            "carbon_dioxide_sodium_hydroxide",
+            "Compare carbon dioxide reacting with sodium hydroxide",
+            "shared_substance",
+            "CO2",
         ),
     ],
     "iron_hydrochloric_acid": [
@@ -3407,12 +3849,6 @@ GUIDE_RELATIONSHIP_DEFINITIONS = {
             "Compare another metal-acid reaction",
             "shared_substance",
             "HCl",
-        ),
-        (
-            "iron_oxygen",
-            "Compare another reaction of iron",
-            "shared_substance",
-            "Fe",
         ),
         (
             "hydrochloric_acid_sodium_hydroxide",
@@ -3455,10 +3891,10 @@ GUIDE_RELATIONSHIP_DEFINITIONS = {
             "gas-forming-redox",
         ),
         (
-            "chemical_reaction_virtual_lab",
-            "Review what the virtual lab does and does not model",
-            "supported_reaction_family",
-            "H2O2+KMnO4",
+            "nitrogen_dioxide_water",
+            "Compare another condition-specific redox equation",
+            "shared_reaction_pattern",
+            "redox",
         ),
     ],
     "sodium_chloride_water": [
@@ -3502,6 +3938,48 @@ GUIDE_RELATIONSHIP_DEFINITIONS = {
         ),
     ],
     "ammonia_nitric_acid": [("hydrochloric_acid_sodium_hydroxide", "Compare neutralization with a strong base", "shared_reaction_pattern", "acid-base")],
+    "nitrogen_dioxide_water": [
+        (
+            "carbon_dioxide_water",
+            "Compare another gas oxide reacting with water",
+            "shared_substance",
+            "H2O",
+        ),
+        (
+            "potassium_permanganate_hydrogen_peroxide",
+            "Compare another condition-specific redox equation",
+            "shared_reaction_pattern",
+            "redox",
+        ),
+    ],
+    "hydrogen_chlorine": [
+        (
+            "hydrogen_oxygen",
+            "Compare hydrogen reacting with another diatomic gas",
+            "shared_substance",
+            "H2",
+        ),
+        (
+            "sodium_chlorine_reaction",
+            "Compare chlorine reacting with another element",
+            "shared_substance",
+            "Cl2",
+        ),
+    ],
+    "carbon_oxygen": [
+        (
+            "carbon_monoxide_oxygen",
+            "Compare complete combustion pathways",
+            "shared_substance",
+            "CO2",
+        ),
+        (
+            "iron_oxygen",
+            "Compare oxygen reacting with a metal",
+            "shared_substance",
+            "O2",
+        ),
+    ],
 }
 
 # The new weak-base guide extends existing link groups without removing links.
@@ -3953,12 +4431,60 @@ GUIDE_LIBRARY_GROUPS = [
                     "carbon-dioxide-sodium-hydroxide"
                 ]["canonical_key"],
             },
+            {
+                "number": "23",
+                "title": OBSERVATION_GUIDE_PAGES[
+                    "nitrogen-dioxide-water"
+                ]["title"],
+                "summary": (
+                    "Balance the two acid products and separate the simplified "
+                    "equation from later nitrogen oxide chemistry."
+                ),
+                "route_name": OBSERVATION_GUIDE_PAGES[
+                    "nitrogen-dioxide-water"
+                ]["route_name"],
+                "canonical_key": OBSERVATION_GUIDE_PAGES[
+                    "nitrogen-dioxide-water"
+                ]["canonical_key"],
+            },
+            {
+                "number": "24",
+                "title": OBSERVATION_GUIDE_PAGES[
+                    "hydrogen-chlorine"
+                ]["title"],
+                "summary": (
+                    "Balance the two diatomic gases and separate hydrogen "
+                    "chloride gas from hydrochloric acid."
+                ),
+                "route_name": OBSERVATION_GUIDE_PAGES[
+                    "hydrogen-chlorine"
+                ]["route_name"],
+                "canonical_key": OBSERVATION_GUIDE_PAGES[
+                    "hydrogen-chlorine"
+                ]["canonical_key"],
+            },
+            {
+                "number": "25",
+                "title": OBSERVATION_GUIDE_PAGES[
+                    "carbon-oxygen"
+                ]["title"],
+                "summary": (
+                    "Balance complete carbon combustion and keep oxygen "
+                    "supply attached to the carbon dioxide result."
+                ),
+                "route_name": OBSERVATION_GUIDE_PAGES[
+                    "carbon-oxygen"
+                ]["route_name"],
+                "canonical_key": OBSERVATION_GUIDE_PAGES[
+                    "carbon-oxygen"
+                ]["canonical_key"],
+            },
         ],
     },
 ]
 
 GUIDE_LIBRARY_GROUPS[-1]["guides"].append({
-    "number": "23", "title": OBSERVATION_GUIDE_PAGES["ammonia-nitric-acid"]["title"],
+    "number": "26", "title": OBSERVATION_GUIDE_PAGES["ammonia-nitric-acid"]["title"],
     "summary": "Follow proton transfer and cancel nitrate in the net ionic equation.",
     "route_name": "guide_ammonia_nitric_acid", "canonical_key": "ammonia_nitric_acid",
 })
@@ -4566,7 +5092,7 @@ def chemical_reaction_virtual_lab(request):
 def guide_library(request):
     canonical_url = PUBLIC_CANONICAL_URLS["guides"]
     description = (
-        "Browse 23 free, no-account chemistry guides about virtual reaction "
+        "Browse 26 free, no-account chemistry guides about virtual reaction "
         "labs, equations, bonding, combustion, oxidation, acids, gases, and "
         "precipitates."
     )
