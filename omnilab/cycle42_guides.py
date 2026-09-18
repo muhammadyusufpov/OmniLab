@@ -1,7 +1,7 @@
-"""Complete Cycle 42 pages staged for the shared linking/release tasks.
+"""Chemistry guide content and prepared examples.
 
 Reuse the observation guide template and exact deterministic reaction content.
-Discovery and reciprocal links are wired by cycle42_connect_three_guides.
+Discovery and reciprocal links use the shared registries in views.
 """
 
 from .reactions import get_reaction
@@ -63,10 +63,7 @@ _GUIDE_CONTENT = [{'key': 'sulfuric-acid-potassium-hydroxide',
                                   'heat release need not cause a visible change.'}],
   'boundary': 'OmniLab returns the complete-neutralization equation without calculating '
               'reagent amounts, excess acid, excess alkali, heat release, or pH.',
-  'neighbors': [('hydrochloric_acid_sodium_hydroxide',
-                 'Compare a one-to-one neutralization'),
-                ('carbon_dioxide_sodium_hydroxide',
-                 'Compare another equation that consumes two hydroxide equivalents')]},
+},
  {'key': 'aluminium-chloride-sodium-hydroxide',
   'slug': 'aluminium-chloride-and-sodium-hydroxide-reaction',
   'title': 'What happens when aluminium chloride reacts with sodium hydroxide?',
@@ -123,9 +120,7 @@ _GUIDE_CONTENT = [{'key': 'sulfuric-acid-potassium-hydroxide',
   'boundary': 'OmniLab predicts the initial precipitate without calculating '
               'concentration, pH, precipitation yield, or dissolution in excess '
               'hydroxide. Aluminium is also spelled aluminum.',
-  'neighbors': [('copper_sulfate_potassium_hydroxide',
-                 'Compare a colored metal hydroxide precipitate'),
-                ('silver_nitrate_sodium_chloride', 'Compare another white precipitate')]},
+},
  {'key': 'magnesium-sulfate-sodium-hydroxide',
   'slug': 'magnesium-sulfate-and-sodium-hydroxide-reaction',
   'title': 'What happens when magnesium sulfate reacts with sodium hydroxide?',
@@ -181,9 +176,7 @@ _GUIDE_CONTENT = [{'key': 'sulfuric-acid-potassium-hydroxide',
                                   'OmniLab does not calculate those quantities.'}],
   'boundary': 'OmniLab predicts a simplified white precipitate without calculating '
               'solubility equilibrium, pH, solid mass, particle size, or settling time.',
-  'neighbors': [('copper_sulfate_potassium_hydroxide',
-                 'Compare sulfate salts forming different hydroxide precipitates'),
-                ('limewater_carbon_dioxide', 'Compare another white precipitate cue')]}]
+}]
 
 CYCLE42_GUIDES = {}
 CYCLE42_DEMOS = {}

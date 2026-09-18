@@ -3193,6 +3193,19 @@ OBSERVATION_GUIDE_PAGES = {
     },
 }
 
+# Register the new pages before building discovery and relationship indexes.
+from .cycle42_guides import CYCLE42_GUIDES, CYCLE42_DEMOS
+
+OBSERVATION_GUIDE_PAGES.update(CYCLE42_GUIDES)
+PUBLIC_CANONICAL_URLS.update({
+    guide["canonical_key"]: f"{PRODUCTION_BASE_URL}/guides/{guide['slug']}/"
+    for guide in CYCLE42_GUIDES.values()
+})
+REACTION_DEMOS.update({
+    key: {**demo, "url": f"{PRODUCTION_BASE_URL}/demo/{key}/"}
+    for key, demo in CYCLE42_DEMOS.items()
+})
+
 CHEMICAL_REACTION_VIRTUAL_LAB_PAGE = {
     "route_name": "chemical_reaction_virtual_lab",
     "canonical_key": "chemical_reaction_virtual_lab",
@@ -3886,6 +3899,42 @@ GUIDE_RELATIONSHIP_DEFINITIONS = {
     ],
 }
 
+# Each addition keeps the existing two-to-three-link study groups intact.
+GUIDE_CHEMISTRY_PROFILES.update({
+    "sulfuric_acid_potassium_hydroxide": {
+        "substances": frozenset({"H2SO4", "KOH", "K2SO4", "H2O"}),
+        "reaction_patterns": frozenset({"acid-base", "neutralization", "double-displacement"}),
+    },
+    "aluminium_chloride_sodium_hydroxide": {
+        "substances": frozenset({"AlCl3", "NaOH", "Al(OH)3", "NaCl"}),
+        "reaction_patterns": frozenset({"precipitation", "double-displacement"}),
+    },
+    "magnesium_sulfate_sodium_hydroxide": {
+        "substances": frozenset({"MgSO4", "NaOH", "Mg(OH)2", "Na2SO4"}),
+        "reaction_patterns": frozenset({"precipitation", "double-displacement"}),
+    },
+})
+GUIDE_RELATIONSHIP_DEFINITIONS.update({
+    "sulfuric_acid_potassium_hydroxide": [
+        ("copper_sulfate_potassium_hydroxide", "Compare potassium hydroxide forming a precipitate", "shared_substance", "KOH"),
+        ("magnesium_sulfate_sodium_hydroxide", "Compare ion exchange forming a solid instead of water", "shared_reaction_pattern", "double-displacement"),
+    ],
+    "aluminium_chloride_sodium_hydroxide": [
+        ("magnesium_sulfate_sodium_hydroxide", "Compare hydroxides with different excess-alkali behavior", "shared_substance", "NaOH"),
+        ("silver_nitrate_potassium_iodide", "Compare white and yellow precipitates", "shared_reaction_pattern", "precipitation"),
+    ],
+    "magnesium_sulfate_sodium_hydroxide": [
+        ("aluminium_chloride_sodium_hydroxide", "Compare hydroxides with different excess-alkali behavior", "shared_substance", "NaOH"),
+        ("sulfuric_acid_potassium_hydroxide", "Compare ion exchange forming water instead of a solid", "shared_reaction_pattern", "double-displacement"),
+    ],
+})
+GUIDE_RELATIONSHIP_DEFINITIONS["copper_sulfate_potassium_hydroxide"].append(
+    ("sulfuric_acid_potassium_hydroxide", "Compare potassium hydroxide in neutralization", "shared_substance", "KOH")
+)
+GUIDE_RELATIONSHIP_DEFINITIONS["silver_nitrate_potassium_iodide"].append(
+    ("aluminium_chloride_sodium_hydroxide", "Compare yellow and white precipitates", "shared_reaction_pattern", "precipitation")
+)
+
 GUIDE_RELATIONSHIPS = {
     guide_key: [
         (related_key, reason)
@@ -4378,6 +4427,15 @@ GUIDE_LIBRARY_GROUPS = [
         ],
     },
 ]
+
+for number, guide in enumerate(CYCLE42_GUIDES.values(), start=26):
+    GUIDE_LIBRARY_GROUPS[-1]["guides"].append({
+        "number": f"{number:02d}",
+        "title": guide["title"],
+        "summary": guide["direct_answer"],
+        "route_name": guide["route_name"],
+        "canonical_key": guide["canonical_key"],
+    })
 
 CHEMICAL_REACTION_LAB_FAQS = [
     {
@@ -4919,47 +4977,6 @@ def observation_guide(request, guide_key):
 
 
 
-def cycle42_observation_guide(request, guide_key):
-    from .cycle42_guides import CYCLE42_GUIDES
-
-    guide = CYCLE42_GUIDES[guide_key]
-    canonical_url = f"{PRODUCTION_BASE_URL}/guides/{guide['slug']}/"
-    related_guides = [
-        {
-            "route_name": GUIDE_PAGE_REFERENCES[key]["route_name"],
-            "title": GUIDE_PAGE_REFERENCES[key]["title"],
-            "reason": reason,
-        }
-        for key, reason in guide["neighbors"]
-    ]
-    page_schema = guide_learning_schema(
-        guide, canonical_url, "Experiment observation guide",
-        equations=(guide["equation"],),
-        safety_notes=tuple(guide["safety"]),
-        boundary_notes=(guide["boundary"], OBSERVATION_GUIDE_SAFETY_WARNING),
-    )
-    return render(request, "observation_guide.html", {
-        "guide": guide,
-        "related_guides": related_guides,
-        "canonical_url": canonical_url,
-        "social_preview_url": SOCIAL_PREVIEW_URL,
-        "social_preview_alt": SOCIAL_PREVIEW_ALT,
-        "page_schema_json": json.dumps(page_schema),
-        "guide_safety_warning": OBSERVATION_GUIDE_SAFETY_WARNING,
-    })
-
-
-@ensure_csrf_cookie
-def cycle42_prepared_demo(request, demo_key):
-    from .cycle42_guides import CYCLE42_DEMOS
-
-    demo = {
-        **CYCLE42_DEMOS[demo_key],
-        "url": f"{PRODUCTION_BASE_URL}/demo/{demo_key}/",
-    }
-    return render(request, "index.html", homepage_context(demo))
-
-
 def chemical_reaction_virtual_lab(request):
     guide = CHEMICAL_REACTION_VIRTUAL_LAB_PAGE
     canonical_url = PUBLIC_CANONICAL_URLS[guide["canonical_key"]]
@@ -5024,7 +5041,7 @@ def chemical_reaction_virtual_lab(request):
 def guide_library(request):
     canonical_url = PUBLIC_CANONICAL_URLS["guides"]
     description = (
-        "Browse 25 free, no-account chemistry guides about virtual reaction "
+        "Browse 28 free, no-account chemistry guides about virtual reaction "
         "labs, equations, bonding, combustion, oxidation, acids, gases, and "
         "precipitates."
     )
