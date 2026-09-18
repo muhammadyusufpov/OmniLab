@@ -92,8 +92,11 @@ test('partner guidance uses the same matrix as Analyze eligibility', () => {
     }
 });
 
-test('twenty-two reaction families have only their exact matching study guides', () => {
+test('twenty-five reaction families have only their exact matching study guides', () => {
     const guidedPairs = new Map([
+        ['H2SO4+KOH', { count: 1, path: '/guides/sulfuric-acid-and-potassium-hydroxide-reaction/' }],
+        ['AlCl3+NaOH', { count: 1, path: '/guides/aluminium-chloride-and-sodium-hydroxide-reaction/' }],
+        ['MgSO4+NaOH', { count: 1, path: '/guides/magnesium-sulfate-and-sodium-hydroxide-reaction/' }],
         ['Cl2+Na', {
             count: 3,
             path: '/guides/sodium-and-chlorine-reaction/'
