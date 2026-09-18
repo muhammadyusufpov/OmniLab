@@ -4918,6 +4918,48 @@ def observation_guide(request, guide_key):
     )
 
 
+
+def cycle42_observation_guide(request, guide_key):
+    from .cycle42_guides import CYCLE42_GUIDES
+
+    guide = CYCLE42_GUIDES[guide_key]
+    canonical_url = f"{PRODUCTION_BASE_URL}/guides/{guide['slug']}/"
+    related_guides = [
+        {
+            "route_name": GUIDE_PAGE_REFERENCES[key]["route_name"],
+            "title": GUIDE_PAGE_REFERENCES[key]["title"],
+            "reason": reason,
+        }
+        for key, reason in guide["neighbors"]
+    ]
+    page_schema = guide_learning_schema(
+        guide, canonical_url, "Experiment observation guide",
+        equations=(guide["equation"],),
+        safety_notes=tuple(guide["safety"]),
+        boundary_notes=(guide["boundary"], OBSERVATION_GUIDE_SAFETY_WARNING),
+    )
+    return render(request, "observation_guide.html", {
+        "guide": guide,
+        "related_guides": related_guides,
+        "canonical_url": canonical_url,
+        "social_preview_url": SOCIAL_PREVIEW_URL,
+        "social_preview_alt": SOCIAL_PREVIEW_ALT,
+        "page_schema_json": json.dumps(page_schema),
+        "guide_safety_warning": OBSERVATION_GUIDE_SAFETY_WARNING,
+    })
+
+
+@ensure_csrf_cookie
+def cycle42_prepared_demo(request, demo_key):
+    from .cycle42_guides import CYCLE42_DEMOS
+
+    demo = {
+        **CYCLE42_DEMOS[demo_key],
+        "url": f"{PRODUCTION_BASE_URL}/demo/{demo_key}/",
+    }
+    return render(request, "index.html", homepage_context(demo))
+
+
 def chemical_reaction_virtual_lab(request):
     guide = CHEMICAL_REACTION_VIRTUAL_LAB_PAGE
     canonical_url = PUBLIC_CANONICAL_URLS[guide["canonical_key"]]
