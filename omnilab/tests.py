@@ -2292,6 +2292,7 @@ class ObservationGuidePageTests(TestCase):
             "carbon-dioxide-sodium-hydroxide",
             "/demo/carbon-dioxide-sodium-hydroxide/",
         ),
+        "/guides/barium-chloride-and-sodium-carbonate-reaction/": ("barium-chloride-sodium-carbonate", "/demo/barium-chloride-sodium-carbonate/"),
     }
 
     def test_twenty_two_guides_match_the_confirmed_reaction_matrix(self):
@@ -3170,6 +3171,7 @@ class ObservationGuidePageTests(TestCase):
 
     def test_guides_use_fixed_sources_and_ignore_query_values(self):
         expected_sources = {
+            "barium-chloride-sodium-carbonate": "guide_virtual_lab",
             "limewater-carbon-dioxide": "guide_observation_a",
             "sodium-carbonate-hydrochloric-acid": "guide_observation_b",
             "silver-nitrate-potassium-iodide": "guide_observation_c",
@@ -3342,7 +3344,7 @@ class GuideStructuredDataContractTests(TestCase):
             self.assertIn(statement, safety_part["text"])
             self.assertIn(statement, html)
 
-    def test_all_twenty_three_reaction_guides_match_visible_content(self):
+    def test_all_twenty_five_reaction_guides_match_visible_content(self):
         guide_sets = (
             (
                 GUIDED_EXPERIMENT_PAGES,
