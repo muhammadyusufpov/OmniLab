@@ -318,3 +318,24 @@ urlpatterns = [
     ),
     path('ai_insights/', views.ai_insights, name="ai_insights"),
 ]
+
+
+# Additional chemistry guides and prepared examples.
+urlpatterns += [
+    path("guides/sulfuric-acid-and-potassium-hydroxide-reaction/", views.observation_guide,
+         {"guide_key": "sulfuric-acid-potassium-hydroxide"}, name="guide_sulfuric_acid_potassium_hydroxide"),
+    path("demo/sulfuric-acid-potassium-hydroxide/", views.prepared_reaction_demo,
+         {"demo_key": "sulfuric-acid-potassium-hydroxide"}, name="demo_sulfuric_acid_potassium_hydroxide"),
+]
+urlpatterns += [
+    path("guides/aluminium-chloride-and-sodium-hydroxide-reaction/", views.observation_guide,
+         {"guide_key": "aluminium-chloride-sodium-hydroxide"}, name="guide_aluminium_chloride_sodium_hydroxide"),
+    path("demo/aluminium-chloride-sodium-hydroxide/", views.prepared_reaction_demo,
+         {"demo_key": "aluminium-chloride-sodium-hydroxide"}, name="demo_aluminium_chloride_sodium_hydroxide"),
+]
+urlpatterns += [
+    path("guides/magnesium-sulfate-and-sodium-hydroxide-reaction/", views.observation_guide,
+         {"guide_key": "magnesium-sulfate-sodium-hydroxide"}, name="guide_magnesium_sulfate_sodium_hydroxide"),
+    path("demo/magnesium-sulfate-sodium-hydroxide/", views.prepared_reaction_demo,
+         {"demo_key": "magnesium-sulfate-sodium-hydroxide"}, name="demo_magnesium_sulfate_sodium_hydroxide"),
+]

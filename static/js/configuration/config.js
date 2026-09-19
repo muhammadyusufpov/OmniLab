@@ -234,6 +234,27 @@ const reactionGuidesByPairKey = new Map([
                 title: 'What happens in the reaction of iron with oxygen?'
             }
         ]
+    ],
+    [
+        'H2SO4+KOH',
+        [{
+                href: '/guides/sulfuric-acid-and-potassium-hydroxide-reaction/',
+                title: 'What happens when sulfuric acid reacts with potassium hydroxide?'
+            }]
+    ],
+    [
+        'AlCl3+NaOH',
+        [{
+                href: '/guides/aluminium-chloride-and-sodium-hydroxide-reaction/',
+                title: 'What happens when aluminium chloride reacts with sodium hydroxide?'
+            }]
+    ],
+    [
+        'MgSO4+NaOH',
+        [{
+                href: '/guides/magnesium-sulfate-and-sodium-hydroxide-reaction/',
+                title: 'What happens when magnesium sulfate reacts with sodium hydroxide?'
+            }]
     ]
 ]);
 const supportedChemicalIds = new Set(supportedReactionPairs.flat());
