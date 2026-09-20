@@ -18,6 +18,10 @@ const ALLOWED_VISIT_SOURCES = new Set([
 const supportedReactionPairs = window.supportedReactionPairs || [['Na', 'Cl2']];
 const supportedReactionPairKeys = new Set(supportedReactionPairs.map(pair => [...pair].sort().join('+')));
 const reactionGuidesByPairKey = new Map([
+    ['BaCl2+Na2CO3', [{
+        href: '/guides/barium-chloride-and-sodium-carbonate-reaction/',
+        title: 'Barium chloride and sodium carbonate reaction'
+    }]],
     [
         'Cl2+Na',
         [
@@ -230,6 +234,27 @@ const reactionGuidesByPairKey = new Map([
                 title: 'What happens in the reaction of iron with oxygen?'
             }
         ]
+    ],
+    [
+        'H2SO4+KOH',
+        [{
+                href: '/guides/sulfuric-acid-and-potassium-hydroxide-reaction/',
+                title: 'What happens when sulfuric acid reacts with potassium hydroxide?'
+            }]
+    ],
+    [
+        'AlCl3+NaOH',
+        [{
+                href: '/guides/aluminium-chloride-and-sodium-hydroxide-reaction/',
+                title: 'What happens when aluminium chloride reacts with sodium hydroxide?'
+            }]
+    ],
+    [
+        'MgSO4+NaOH',
+        [{
+                href: '/guides/magnesium-sulfate-and-sodium-hydroxide-reaction/',
+                title: 'What happens when magnesium sulfate reacts with sodium hydroxide?'
+            }]
     ]
 ]);
 const supportedChemicalIds = new Set(supportedReactionPairs.flat());
