@@ -221,6 +221,17 @@
             </section>
             {% endif %}
 
+            {% if guide.references %}
+            <aside class="observation-guide-questions" aria-label="Study references">
+                <h2>Check the chemistry</h2>
+                <ul>
+                    {% for reference in guide.references %}
+                    <li><a href="{{ reference.url }}">{{ reference.title }}</a></li>
+                    {% endfor %}
+                </ul>
+            </aside>
+            {% endif %}
+
             {% include "partials/related_guides.html" with related_class="observation-guide-next" related_heading_id="next-heading" related_label="Keep exploring" related_heading="Connect this observation to another reaction" related_intro="These guides use the same pattern: predict the equation, identify the visible cue, then check what the virtual model leaves out." show_virtual_lab_link=True related_aria_label="Related observation guides" %}
         </article>
     </main>
