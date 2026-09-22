@@ -184,6 +184,10 @@ const reactionGuidesByPairKey = new Map<string, readonly ReactionGuide[]>([
         ]
     ],
     [
+        'AgCl+NH3',
+        [{href: '/guides/silver-chloride-and-ammonia/', title: 'Why does silver chloride dissolve in ammonia?'}]
+    ],
+    [
         'HNO3+NH3',
         [{
             href: '/guides/ammonia-with-nitric-acid/',

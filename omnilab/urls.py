@@ -10,6 +10,12 @@ INDEXNOW_KEY = (
 urlpatterns = [
     path("guides/barium-chloride-and-sodium-carbonate-reaction/", views.observation_guide, {"guide_key": "barium-chloride-sodium-carbonate"}, name="guide_barium_chloride_sodium_carbonate"),
     path("demo/barium-chloride-sodium-carbonate/", views.prepared_reaction_demo, {"demo_key": "barium-chloride-sodium-carbonate"}, name="demo_barium_chloride_sodium_carbonate"),
+    path('guides/silver-chloride-and-ammonia/', views.observation_guide, {'guide_key': 'silver-chloride-ammonia'}, name='guide_silver_chloride_ammonia'),
+    path('demo/silver-chloride-ammonia/', views.prepared_reaction_demo, {'demo_key': 'silver-chloride-ammonia'}, name='demo_silver_chloride_ammonia'),
+    path('guides/ammonia-with-nitric-acid/', views.observation_guide,
+         {'guide_key': 'ammonia-nitric-acid'}, name='guide_ammonia_nitric_acid'),
+    path('demo/ammonia-nitric-acid/', views.prepared_reaction_demo,
+         {'demo_key': 'ammonia-nitric-acid'}, name='demo_ammonia_nitric_acid'),
     path('health/', views.health, name="health"),
     path(
         f'{INDEXNOW_KEY}.txt',
