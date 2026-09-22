@@ -90,11 +90,15 @@ const reactionGuidesByPairKey = new Map([
         ]
     ],
     [
+        'AgCl+NH3',
+        [{ href: '/guides/silver-chloride-and-ammonia/', title: 'Why does silver chloride dissolve in ammonia?' }]
+    ],
+    [
         'HNO3+NH3',
         [{
-            href: '/guides/ammonia-with-nitric-acid/',
-            title: 'What happens when ammonia reacts with nitric acid?'
-        }]
+                href: '/guides/ammonia-with-nitric-acid/',
+                title: 'What happens when ammonia reacts with nitric acid?'
+            }]
     ],
     [
         'HCl+NaOH',
