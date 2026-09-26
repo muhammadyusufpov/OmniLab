@@ -43,6 +43,7 @@ SOCIAL_PREVIEW_ALT = (
     "a sodium chloride equation, reaction analysis, and safety guidance."
 )
 PUBLIC_CANONICAL_URLS = {
+    'barium_chloride_sodium_carbonate': f"{PRODUCTION_BASE_URL}/guides/barium-chloride-and-sodium-carbonate-reaction/",
     "index": f"{PRODUCTION_BASE_URL}/",
     "pricing": f"{PRODUCTION_BASE_URL}/pricing/",
     "contact": f"{PRODUCTION_BASE_URL}/contact/",
@@ -182,6 +183,17 @@ FIRST_EXPERIMENT = {
     "url": FIRST_EXPERIMENT_URL,
 }
 REACTION_DEMOS = {
+    'barium-chloride-sodium-carbonate': {'id': 'barium-chloride-sodium-carbonate',
+     'version': 'v1',
+     'selectedChemicals': ['BaCl2', 'Na2CO3'],
+     'vessel': 'beaker',
+     'liquidColor': '#cbdce8',
+     'mixture_label': 'BaCl2 + Na2CO3',
+     'title': 'Barium chloride and sodium carbonate, ready to analyze',
+     'page_title': 'OmniLab - Barium carbonate precipitation demo',
+     'page_description': 'Open a prepared Barium chloride and Sodium carbonate setup for '
+                         'an educational prediction.',
+     'url': f"{PRODUCTION_BASE_URL}/demo/barium-chloride-sodium-carbonate/"},
     "sodium-chlorine": SODIUM_CHLORINE_DEMO,
     "carbon-dioxide-calcium-hydroxide": {
         "id": "limewater-carbon-dioxide",
@@ -733,6 +745,100 @@ GUIDED_EXPERIMENT_PAGES = {
 }
 
 OBSERVATION_GUIDE_PAGES = {
+    'barium-chloride-sodium-carbonate': {'route_name': 'guide_barium_chloride_sodium_carbonate',
+     'canonical_key': 'barium_chloride_sodium_carbonate',
+     'visit_source': 'guide_virtual_lab',
+     'demo_route_name': 'demo_barium_chloride_sodium_carbonate',
+     'title': 'Barium chloride and sodium carbonate reaction',
+     'page_title': 'Barium chloride and sodium carbonate: equation and ions | OmniLab',
+     'description': 'Understand the white barium carbonate precipitate, balanced equation, '
+                    'and spectator ions. Open the supported barium chloride and sodium '
+                    'carbonate example.',
+     'reading_time': '4 minute read',
+     'direct_answer': 'Barium chloride and sodium carbonate solutions form a white barium '
+                      'carbonate precipitate. Sodium and chloride ions remain dissolved. '
+                      'The solid is BaCO3, not sodium chloride.',
+     'opening_boundary': 'Educational prediction only, not a verified simulation or a '
+                         'substitute for supervision. Barium compounds require trained '
+                         'handling and controlled waste disposal.',
+     'student_job': 'Explain why two dissolved salts produce a solid, then cancel the '
+                    'unchanged ions.',
+     'reactants': [{'name': 'Barium chloride', 'formula': 'BaCl2'},
+                   {'name': 'Sodium carbonate', 'formula': 'Na2CO3'}],
+     'setup_summary': 'The virtual beaker contains Barium chloride and Sodium carbonate. '
+                      'Analyze requests the supported educational prediction.',
+     'cta_label': 'Try the barium carbonate example',
+     'equation': 'BaCl2(aq) + Na2CO3(aq) -> BaCO3(s) + 2NaCl(aq)',
+     'explanation': 'Barium chloride and sodium carbonate exchange ions to form insoluble '
+                    'barium carbonate. The white precipitate removes barium ions from the '
+                    'solution while sodium and chloride ions remain dissolved. The '
+                    'reactants combine in a one-to-one ratio.',
+     'observation_title': 'A white carbonate precipitate',
+     'observation': 'The expected solid is barium carbonate. Fine suspended particles can '
+                    'make the mixture look cloudy. OmniLab represents this with a white '
+                    'precipitate cue. Its appearance does not measure particle size, '
+                    'settling time, or the amount of solid.',
+     'observation_class': 'observation-cloudy',
+     'observation_label': 'White precipitate',
+     'net_ionic_equation': 'Ba2+(aq) + CO3^2-(aq) -> BaCO3(s)',
+     'ionic_explanation': 'Barium ions and carbonate ions join in a solid with no overall '
+                          'charge. The 2+ and 2− charges balance in a one-to-one ratio. '
+                          'Keep solid BaCO3 together when writing the ionic equation.',
+     'spectator_ions': 'Na+(aq) and Cl−(aq). They appear unchanged on both sides of the '
+                       'complete ionic equation.',
+     'study_steps': [{'title': 'Split the dissolved salts',
+                      'body': 'BaCl2(aq) supplies Ba2+ and two Cl− ions. Na2CO3(aq) '
+                              'supplies two Na+ ions and one CO3^2− ion. The (aq) symbol '
+                              'means dissolved in water.'},
+                     {'title': 'Keep the solid together',
+                      'body': 'Write BaCO3(s) as one formula on the product side. The '
+                              'remaining product is 2Na+(aq) + 2Cl−(aq). The (s) symbol '
+                              'identifies the precipitate.'},
+                     {'title': 'Cancel only unchanged ions',
+                      'body': 'Remove two sodium ions and two chloride ions from each '
+                              'side. Ba2+(aq) + CO3^2−(aq) -> BaCO3(s) remains. Check both '
+                              'atoms and total charge: each side has zero net charge.'}],
+     'common_questions': [{'question': 'Why is there a 2 before NaCl?',
+                           'answer': 'One Na2CO3 formula unit contains two sodium atoms. '
+                                     'One BaCl2 formula unit contains two chlorine atoms. '
+                                     'Writing 2NaCl balances both without changing any '
+                                     'chemical formula. The molecular ratio is 1:1:1:2.'},
+                          {'question': 'Is this a double displacement reaction?',
+                           'answer': 'Yes. The ions exchange partners in the molecular '
+                                     'equation. More specifically, it is a precipitation '
+                                     'reaction because barium carbonate forms a solid. No '
+                                     'change in oxidation states is needed to explain this '
+                                     'reaction.'},
+                          {'question': 'Why does sodium chloride stay aqueous?',
+                           'answer': 'Sodium salts are soluble in water under ordinary '
+                                     'classroom conditions. Barium carbonate is sparingly '
+                                     'soluble, so it can precipitate. Insoluble is a '
+                                     'classroom shorthand here, not a claim that '
+                                     'absolutely no barium remains dissolved.'},
+                          {'question': 'Does sodium carbonate always produce bubbles?',
+                           'answer': 'No. With barium chloride, carbonate becomes part of '
+                                     'a solid. With hydrochloric acid, carbonate forms '
+                                     'carbon dioxide gas and water. Identify the other '
+                                     'reactant before predicting cloudiness or bubbles.'},
+                          {'question': 'Can a white precipitate identify barium by itself?',
+                           'answer': 'No. Many compounds form white precipitates, '
+                                     'including calcium carbonate and silver chloride. '
+                                     'This equation identifies the expected solid for the '
+                                     'stated reactants. Appearance alone cannot identify '
+                                     'an unknown sample.'},
+                          {'question': 'Does the model calculate the precipitate yield?',
+                           'answer': 'No. OmniLab matches this supported pair to a fixed '
+                                     'educational result. It does not calculate '
+                                     'concentrations, limiting reagents, equilibrium, or '
+                                     'residual dissolved barium. A displayed solid does '
+                                     'not establish that a real mixture is safe.'}],
+     'safety': ['Treat soluble barium compounds as toxic and avoid all ingestion.',
+                'Wear gloves and splash goggles throughout the procedure.',
+                'Collect all barium-containing material as hazardous waste.'],
+     'boundary': 'This page explains a simplified aqueous precipitation reaction. It '
+                 'provides no physical mixing procedure. The virtual result is an '
+                 'educational prediction, not a verified simulation or a replacement for '
+                 'supervision. Burner and vessel choices do not change the prediction.'},
     "limewater-carbon-dioxide": {
         "route_name": "guide_limewater_carbon_dioxide",
         "canonical_key": "limewater_carbon_dioxide",
@@ -3423,6 +3529,8 @@ GUIDE_SUPPORTED_REACTION_FAMILIES = {
 # Reaction patterns are used only when two supported pairs teach the same
 # specific chemistry relationship and do not share an exact substance.
 GUIDE_CHEMISTRY_PROFILES = {
+    'barium_chloride_sodium_carbonate': {'substances': frozenset({'BaCO3', 'Na2CO3', 'BaCl2', 'NaCl'}),
+     'reaction_patterns': frozenset({'precipitation'})},
     "chemical_reaction_virtual_lab": {
         "substances": frozenset(),
         "reaction_patterns": frozenset(),
@@ -3539,6 +3647,10 @@ GUIDE_CHEMISTRY_PROFILES = {
 # Each edge carries machine-checkable chemistry evidence. The UI deliberately
 # renders only the student-facing reason.
 GUIDE_RELATIONSHIP_DEFINITIONS = {
+    "barium_chloride_sodium_carbonate": [
+        ("silver_nitrate_potassium_iodide", "Compare a yellow precipitate", "shared_reaction_pattern", "precipitation"),
+        ("copper_sulfate_potassium_hydroxide", "Compare a blue precipitate", "shared_reaction_pattern", "precipitation"),
+    ],
     "chemical_reaction_virtual_lab": [
         (
             "hydrochloric_acid_sodium_hydroxide",
@@ -3655,6 +3767,7 @@ GUIDE_RELATIONSHIP_DEFINITIONS = {
         ),
     ],
     "silver_nitrate_potassium_iodide": [
+        ("barium_chloride_sodium_carbonate", "Compare a white carbonate precipitate", "shared_reaction_pattern", "precipitation"),
         (
             "silver_nitrate_sodium_chloride",
             "Compare yellow and white silver precipitates",
@@ -3669,6 +3782,7 @@ GUIDE_RELATIONSHIP_DEFINITIONS = {
         ),
     ],
     "copper_sulfate_potassium_hydroxide": [
+        ("barium_chloride_sodium_carbonate", "Compare a white carbonate precipitate", "shared_reaction_pattern", "precipitation"),
         (
             "silver_nitrate_potassium_iodide",
             "Compare a yellow precipitate result",
@@ -4479,6 +4593,12 @@ GUIDE_LIBRARY_GROUPS = [
                     "carbon-oxygen"
                 ]["canonical_key"],
             },
+            {'number': '26',
+             'title': 'Barium chloride and sodium carbonate reaction',
+             'summary': 'Identify the white barium carbonate solid and cancel sodium and chloride '
+                        'spectator ions.',
+             'route_name': 'guide_barium_chloride_sodium_carbonate',
+             'canonical_key': 'barium_chloride_sodium_carbonate'},
         ],
     },
 ]

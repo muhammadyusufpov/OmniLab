@@ -108,6 +108,10 @@ const supportedReactionPairKeys = new Set(
     supportedReactionPairs.map(pair => [...pair].sort().join('+'))
 );
 const reactionGuidesByPairKey = new Map<string, readonly ReactionGuide[]>([
+    ['BaCl2+Na2CO3', [{
+        href: '/guides/barium-chloride-and-sodium-carbonate-reaction/',
+        title: 'Barium chloride and sodium carbonate reaction'
+    }]],
     [
         'Cl2+Na',
         [
