@@ -132,6 +132,7 @@ PUBLIC_CANONICAL_URLS = {
         f"{PRODUCTION_BASE_URL}/guides/"
         "carbon-dioxide-and-sodium-hydroxide-reaction/"
     ),
+    "ammonia_nitric_acid": f"{PRODUCTION_BASE_URL}/guides/ammonia-with-nitric-acid/",
     "nitrogen_dioxide_water": (
         f"{PRODUCTION_BASE_URL}/guides/"
         "nitrogen-dioxide-and-water-reaction/"
@@ -554,6 +555,17 @@ REACTION_DEMOS = {
             "carbon-dioxide-sodium-hydroxide/"
         ),
     },
+    'ammonia-nitric-acid': {'id': 'ammonia-nitric-acid',
+ 'liquidColor': '#d7edf7',
+ 'mixture_label': 'NH3 + HNO3',
+ 'url': f'{PRODUCTION_BASE_URL}/demo/ammonia-nitric-acid/',
+ 'page_description': 'Open a prepared ammonia and nitric acid setup to request an '
+                     'educational reaction prediction.',
+ 'page_title': 'Ammonia and nitric acid demo | OmniLab',
+ 'selectedChemicals': ['NH3', 'HNO3'],
+ 'title': 'Ammonia and nitric acid, ready to analyze',
+ 'version': 'v1',
+ 'vessel': 'beaker'},
 }
 CHEMICAL_REACTION_VIRTUAL_LAB_VISIT_SOURCE = "guide_virtual_lab"
 SUPPORTED_REACTION_EFFECTS = frozenset(
@@ -2931,6 +2943,87 @@ OBSERVATION_GUIDE_PAGES = {
             "substitute for trained laboratory supervision."
         ),
     },
+    'ammonia-nitric-acid': {'boundary': 'OmniLab provides an educational prediction, not a verified simulation or '
+             'a replacement for supervision. This guide explains an aqueous acid-base '
+             'equation. It does not establish safe quantities, concentrations, '
+             'temperatures, or a physical procedure.',
+ 'canonical_key': 'ammonia_nitric_acid',
+ 'common_questions': [{'answer': 'NH3 gains a proton directly to become NH4+. It has '
+                                 'no hydroxide group that must form water. Using '
+                                 'hydronium instead of H+ gives NH3(aq) + H3O+(aq) → '
+                                 'NH4+(aq) + H2O(l). These forms describe the same '
+                                 'proton transfer in water.',
+                       'question': 'Why is there no water in the molecular equation?'},
+                      {'answer': 'No. Ammonium is a weak acid, so an ammonium nitrate '
+                                 'solution can be acidic. Excess nitric acid or '
+                                 'ammonia also changes the final pH. Neutralization '
+                                 'names the reaction; it does not guarantee a neutral '
+                                 'solution. OmniLab does not predict pH.',
+                       'question': 'Is the final solution always pH 7?'},
+                      {'answer': 'Not in this dilute aqueous model. The product is '
+                                 'dissolved ions, NH4+ and NO3−. A description of '
+                                 'solid ammonium nitrate does not establish '
+                                 'precipitation here. Do not isolate or heat the '
+                                 'product to check this prediction.',
+                       'question': 'Does ammonium nitrate form a white precipitate?'},
+                      {'answer': 'No. This page describes ammonia reacting with nitric '
+                                 'acid already present. Industrial nitric acid '
+                                 'manufacture involves different reactions. The '
+                                 'prepared browser example does not model that process '
+                                 'or provide a physical preparation procedure.',
+                       'question': 'Is this the same as making nitric acid from '
+                                   'ammonia?'}],
+ 'cta_label': 'Try the prepared reaction',
+ 'demo_route_name': 'demo_ammonia_nitric_acid',
+ 'description': 'Study ammonia with nitric acid: the balanced equation, nitrate '
+                'spectator ion, and why no precipitate forms. Open a prepared '
+                'educational browser prediction.',
+ 'direct_answer': 'Ammonia with nitric acid forms ammonium nitrate in aqueous '
+                  'solution. Ammonia accepts a proton, so this is an acid-base '
+                  'reaction. The balanced molecular equation uses a 1:1 ratio.',
+ 'equation': 'NH3(aq) + HNO3(aq) -> NH4NO3(aq)',
+ 'explanation': (
+     "Ammonia accepts a proton from nitric acid to form ammonium nitrate in solution. "
+     "This is an acid-base reaction and can release heat, especially when concentrated solutions are used. "
+     "The balanced equation uses one molecule of each reactant."),
+ 'observation': 'In dilute aqueous solution, ammonium nitrate remains dissolved. This '
+                'equation predicts neither a precipitate nor a gas product. The '
+                'reaction releases heat, but a visible change is not required. OmniLab '
+                'shows no special reaction effect for this pair. It does not calculate '
+                'a temperature rise or measure the solution.',
+ 'observation_class': 'observation-clear',
+ 'observation_label': 'Dissolved product',
+ 'observation_title': 'A clear solution can still react',
+ 'page_title': 'Ammonia with nitric acid: equation and ions | OmniLab',
+ 'reactants': [{'formula': 'NH3', 'name': 'Ammonia'},
+               {'formula': 'HNO3', 'name': 'Nitric acid'}],
+ 'reading_time': '4 min read',
+ 'route_name': 'guide_ammonia_nitric_acid',
+ 'safety': ['Use dilute solutions under trained laboratory supervision.',
+            'Avoid inhaling ammonia or nitric acid vapors.',
+            'Do not isolate or heat the ammonium nitrate product.'],
+ 'setup_summary': 'The browser setup selects ammonia and nitric acid. Analyze it to '
+                  'read the supported equation and safety rules.',
+ 'study_intro': 'Follow the proton, then check the atoms and charge. A clear solution '
+                'can still contain a reaction product.',
+ 'study_steps': [{'body': 'Nitric acid is a strong acid in water. Ammonia is a weak '
+                          'base and becomes the ammonium ion, NH4+. Keep NH3 together '
+                          'when writing the ionic equation. Do not split a weak base '
+                          'into fully dissociated ions.',
+                  'title': 'Ammonia accepts a proton'},
+                 {'body': 'The complete ionic equation is NH3(aq) + H+(aq) + NO3−(aq) '
+                          '→ NH4+(aq) + NO3−(aq). Nitrate appears unchanged on both '
+                          'sides. Cancel it to obtain NH3(aq) + H+(aq) → NH4+(aq). '
+                          'Charge is +1 on each side.',
+                  'title': 'Cancel the nitrate spectator'},
+                 {'body': 'One mole of NH3 accepts one mole of protons from HNO3. '
+                          'Equal coefficients do not imply equal liquid volumes. '
+                          'Concentrations determine how many moles a volume contains. '
+                          'OmniLab selects chemical identities; it does not calculate '
+                          'quantities or a titration endpoint.',
+                  'title': 'Read the ratio as particles'}],
+ 'title': 'What happens when ammonia reacts with nitric acid?',
+ 'visit_source': 'guide_virtual_lab'},
     "nitrogen-dioxide-water": {
         "route_name": "guide_nitrogen_dioxide_water",
         "canonical_key": "nitrogen_dioxide_water",
@@ -3534,6 +3627,7 @@ GUIDE_CHEMISTRY_PROFILES = {
         "substances": frozenset({"CO2", "NaOH", "Na2CO3", "H2O"}),
         "reaction_patterns": frozenset({"acid-base"}),
     },
+    "ammonia_nitric_acid": {"substances": frozenset({"NH3", "HNO3", "NH4NO3"}), "reaction_patterns": frozenset({"acid-base", "neutralization"})},
     "nitrogen_dioxide_water": {
         "substances": frozenset({"NO2", "H2O", "HNO2", "HNO3"}),
         "reaction_patterns": frozenset(
@@ -3783,6 +3877,7 @@ GUIDE_RELATIONSHIP_DEFINITIONS = {
         ),
     ],
     "hydrochloric_acid_sodium_hydroxide": [
+        ("ammonia_nitric_acid", "Compare neutralization with a weak base", "shared_reaction_pattern", "acid-base"),
         (
             "zinc_hydrochloric_acid",
             "Compare an acid reacting with a metal",
@@ -3956,6 +4051,7 @@ GUIDE_RELATIONSHIP_DEFINITIONS = {
             "NaOH",
         ),
     ],
+    "ammonia_nitric_acid": [("hydrochloric_acid_sodium_hydroxide", "Compare neutralization with a strong base", "shared_reaction_pattern", "acid-base")],
     "nitrogen_dioxide_water": [
         (
             "carbon_dioxide_water",
@@ -3999,6 +4095,14 @@ GUIDE_RELATIONSHIP_DEFINITIONS = {
         ),
     ],
 }
+
+# The new weak-base guide extends existing link groups without removing links.
+GUIDE_RELATIONSHIP_DEFINITIONS["ammonia_nitric_acid"].append(
+    ("carbon_dioxide_sodium_hydroxide", "Compare another acid-base equation", "shared_reaction_pattern", "acid-base")
+)
+GUIDE_RELATIONSHIP_DEFINITIONS["carbon_dioxide_sodium_hydroxide"].append(
+    ("ammonia_nitric_acid", "Compare proton transfer to ammonia", "shared_reaction_pattern", "acid-base")
+)
 
 GUIDE_RELATIONSHIPS = {
     guide_key: [
@@ -4498,6 +4602,12 @@ GUIDE_LIBRARY_GROUPS = [
         ],
     },
 ]
+
+GUIDE_LIBRARY_GROUPS[-1]["guides"].append({
+    "number": "26", "title": OBSERVATION_GUIDE_PAGES["ammonia-nitric-acid"]["title"],
+    "summary": "Follow proton transfer and cancel nitrate in the net ionic equation.",
+    "route_name": "guide_ammonia_nitric_acid", "canonical_key": "ammonia_nitric_acid",
+})
 
 CHEMICAL_REACTION_LAB_FAQS = [
     {

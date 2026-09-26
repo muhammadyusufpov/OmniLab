@@ -832,7 +832,7 @@ class GuideLibraryPageTests(TestCase):
         )
         self.assertNotContains(
             self.response,
-            "The twenty-five guides are grouped by the job they help you do",
+            "The twenty-six guides are grouped by the job they help you do",
         )
 
     def test_library_description_names_twenty_six_free_no_account_guides(self):
@@ -892,7 +892,7 @@ class GuideLibraryPageTests(TestCase):
         )
         for guide_key, relationships in GUIDE_RELATIONSHIPS.items():
             with self.subTest(guide_key=guide_key):
-                self.assertIn(len(relationships), (2, 3))
+                self.assertIn(len(relationships), (2, 3, 4))
                 related_keys = [
                     related_key for related_key, _reason in relationships
                 ]
@@ -2205,6 +2205,9 @@ class GuidedExperimentPageTests(TestCase):
 
 class ObservationGuidePageTests(TestCase):
     routes = {
+        "/guides/ammonia-with-nitric-acid/": (
+            "ammonia-nitric-acid", "/demo/ammonia-nitric-acid/",
+        ),
         "/guides/why-limewater-turns-cloudy-with-carbon-dioxide/": (
             "limewater-carbon-dioxide",
             "/demo/carbon-dioxide-calcium-hydroxide/",
@@ -2319,6 +2322,18 @@ class ObservationGuidePageTests(TestCase):
                 for safety_note in guide["safety"]:
                     self.assertContains(response, safety_note)
 
+    def test_ammonia_guide_matches_supported_prediction_and_boundaries(self):
+        response = self.client.get("/guides/ammonia-with-nitric-acid/")
+        self.assertEqual(response.status_code, 200)
+        for phrase in (
+            "NH3(aq) + HNO3(aq) -&gt; NH4NO3(aq)",
+            "Cancel the nitrate spectator", "Do not isolate or heat",
+            "does not predict pH", "/demo/ammonia-nitric-acid/",
+        ):
+            self.assertContains(response, phrase)
+        demo = self.client.get("/demo/ammonia-nitric-acid/")
+        self.assertContains(demo, '"selectedChemicals": ["NH3", "HNO3"]')
+
     def test_carbon_dioxide_sodium_hydroxide_guide_answers_query_completely(self):
         response = self.client.get(
             "/guides/carbon-dioxide-and-sodium-hydroxide-reaction/"
@@ -2354,13 +2369,14 @@ class ObservationGuidePageTests(TestCase):
         )
         self.assertEqual(
             html.count('class="guide-related-link-copy"'),
-            3,
+            4,
         )
         self.assertContains(response, "What forms when CO2 reacts with NaOH?")
 
-    def test_carbon_dioxide_sodium_hydroxide_has_three_reciprocal_neighbors(self):
+    def test_carbon_dioxide_sodium_hydroxide_has_four_reciprocal_neighbors(self):
         guide_key = "carbon_dioxide_sodium_hydroxide"
         neighbors = {
+            "ammonia_nitric_acid",
             "carbon_dioxide_water",
             "limewater_carbon_dioxide",
             "hydrochloric_acid_sodium_hydroxide",
@@ -3174,6 +3190,7 @@ class ObservationGuidePageTests(TestCase):
             "potassium-permanganate-hydrogen-peroxide": "guide_virtual_lab",
             "sodium-chloride-water": "guide_virtual_lab",
             "carbon-dioxide-sodium-hydroxide": "guide_virtual_lab",
+            "ammonia-nitric-acid": "guide_virtual_lab",
             "nitrogen-dioxide-water": "guide_virtual_lab",
             "hydrogen-chlorine": "guide_virtual_lab",
             "carbon-oxygen": "guide_virtual_lab",
@@ -3210,7 +3227,7 @@ class ObservationGuidePageTests(TestCase):
                     guide["canonical_key"]
                 ]
 
-                self.assertIn(len(relationships), (2, 3))
+                self.assertIn(len(relationships), (2, 3, 4))
                 self.assertEqual(
                     related_block.count("<a href="),
                     len(relationships),

@@ -107,7 +107,11 @@ test('advancing exposes and focuses the next chemical control', () => {
         classList: makeClassList(),
         setAttribute: () => {}
     };
+    const search = { value: 'sodium' };
     const chlorine = {
+        style: { display: 'none' },
+        dataset: { name: 'Cl2' },
+        setAttribute: () => {},
         classList: makeClassList(),
         focus: () => focused.push('chlorine')
     };
@@ -116,11 +120,13 @@ test('advancing exposes and focuses the next chemical control', () => {
         'sub-panel-apparatus': apparatusPanel,
         'trigger-chemicals': chemicalsTrigger,
         'trigger-apparatus': apparatusTrigger,
+        'chem-search-input': search,
         'chem-item-Cl2': chlorine
     };
     globalThis.document.getElementById = id => elements[id] || null;
     globalThis.document.querySelector = () => null;
     globalThis.document.querySelectorAll = selector => {
+        if (selector === '.chemical-card') return [chlorine];
         if (selector === '.floating-popover-panel') {
             return [chemicalsPanel, apparatusPanel];
         }
@@ -133,6 +139,9 @@ test('advancing exposes and focuses the next chemical control', () => {
 
     advanceFirstExperimentGuide();
 
+    assert.equal(search.value, '');
+    assert.equal(chlorine.style.display, '');
+    assert.equal(chlorine.disabled, false);
     assert.equal(chemicalsPanel.style.display, 'block');
     assert.equal(apparatusPanel.style.display, 'none');
     assert.deepEqual(focused, ['chlorine']);
