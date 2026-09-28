@@ -27,7 +27,9 @@ test('an unflagged lab page emits an unclassified lab_viewed event', () => {
             'lab_viewed',
             {
                 route: '/demo/sodium-chlorine/',
-                visit_type: 'unclassified'
+                visit_type: 'unclassified',
+                page_path: '/demo/sodium-chlorine/',
+                controlled_run: false
             }
         ]]
     );
@@ -48,7 +50,9 @@ test('completed analyses default to unclassified and ignore caller overrides', (
             'reaction_analysis_completed',
             {
                 chemical_count: 2,
-                visit_type: 'unclassified'
+                visit_type: 'unclassified',
+                page_path: '/demo/sodium-chlorine/',
+                controlled_run: false
             }
         ]]
     );
@@ -74,6 +78,6 @@ test('non-visit events retain their existing unflagged properties', () => {
 
     assert.deepEqual(
         capturedEvents.slice(countBeforeCapture),
-        [['guide_visit', { entry_source: 'bounded_test_value' }]]
+        [['guide_visit', { entry_source: 'bounded_test_value', page_path: '/demo/sodium-chlorine/', controlled_run: false }]]
     );
 });

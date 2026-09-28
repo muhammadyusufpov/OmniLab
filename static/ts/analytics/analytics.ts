@@ -9,6 +9,7 @@ interface LabSetupProperties extends AnalyticsProperties, LabEntryAttribution {
 }
 
 let labSetupCaptured = false;
+let pageViewCaptured = false;
 
 const CONTROLLED_VERIFICATION_PARAM = 'verification';
 const CONTROLLED_VERIFICATION_VALUE = 'controlled';
@@ -41,7 +42,11 @@ export function capture(
         ? { ...properties, visit_type: 'unclassified' }
         : properties;
 
-    window.posthog?.capture?.(event, measuredProperties);
+    window.posthog?.capture?.(event, {
+        ...measuredProperties,
+        page_path: normalizedPath(window.location?.pathname),
+        controlled_run: false,
+    });
 }
 
 export function captureLabSetupStarted(properties: LabSetupProperties): void {
@@ -49,4 +54,17 @@ export function captureLabSetupStarted(properties: LabSetupProperties): void {
 
     labSetupCaptured = true;
     capture('lab_setup_started', properties);
+}
+
+/** Paths never include search strings, fragments, or encoded private input. */
+export function normalizedPath(path: unknown): string {
+    if (typeof path !== 'string') return '/';
+    const clean = path.split(/[?#]/, 1)[0] || '/';
+    return /^\/(?:[a-z0-9_-]+\/)*[a-z0-9_-]*$/i.test(clean) ? clean : '/unknown/';
+}
+
+export function capturePageView(): void {
+    if (pageViewCaptured) return;
+    pageViewCaptured = true;
+    capture('$pageview');
 }

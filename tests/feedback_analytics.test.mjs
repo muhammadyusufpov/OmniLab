@@ -18,7 +18,7 @@ globalThis.window = {
     }
 };
 
-test('focused feedback events fire once without custom properties', async () => {
+test('focused feedback events fire once with only bounded page properties', async () => {
     const {
         bindFeedbackOpenCapture,
         captureFeedbackPromptViewed
@@ -52,7 +52,7 @@ test('focused feedback events fire once without custom properties', async () => 
     ];
     assert.deepEqual(
         capturedEvents,
-        expectedEvents.map(event => [event, {}])
+        expectedEvents.map(event => [event, {page_path: '/', controlled_run: false}])
     );
 });
 
