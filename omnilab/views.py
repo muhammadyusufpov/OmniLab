@@ -3408,19 +3408,19 @@ REACTION_DEMOS.update({
 CHEMICAL_REACTION_VIRTUAL_LAB_PAGE = {
     "route_name": "chemical_reaction_virtual_lab",
     "canonical_key": "chemical_reaction_virtual_lab",
-    "title": "How does the chemical reaction virtual lab work?",
-    "page_title": "Chemical reaction virtual lab for students | OmniLab",
+    "title": "Chemistry reaction simulator for students",
+    "page_title": "Chemistry reaction simulator for students | OmniLab",
     "description": (
-        "Try 34 supported reaction pairs in OmniLab's free chemical reaction "
-        "virtual lab. See equations, explanations, safety guidance, and "
-        "visible reaction cues."
+        "Try OmniLab's chemistry reaction simulator with 34 supported "
+        "pairs. Explore equations, explanations, safety notes, and visible "
+        "cues in a free browser lab."
     ),
-    "heading": "Try a chemical reaction in a virtual lab",
+    "heading": "Try a chemistry reaction simulator in your browser",
     "direct_answer": (
-        "Choose two chemicals from a supported pair. OmniLab returns a "
-        "balanced equation, a plain-language explanation, three safety "
-        "notes, and a visible reaction cue when the result includes bubbling "
-        "or a precipitate."
+        "Choose two chemicals from a supported pair, then request an "
+        "educational prediction. Read the balanced equation, a short "
+        "explanation, three safety notes, and a visible cue when the "
+        "result includes bubbling or a precipitate."
     ),
     "reaction_examples": [
         {
@@ -3428,6 +3428,7 @@ CHEMICAL_REACTION_VIRTUAL_LAB_PAGE = {
             "title": "Hydrogen + Oxygen",
             "equation": "2H₂ + O₂ → 2H₂O",
             "explanation": "Follow how two elements combine into one compound.",
+            "demo_route_name": "demo_hydrogen_oxygen",
         },
         {
             "type": "Neutralization",
@@ -3436,6 +3437,7 @@ CHEMICAL_REACTION_VIRTUAL_LAB_PAGE = {
             "explanation": (
                 "Connect an acid-base reaction to salt and water formation."
             ),
+            "demo_route_name": "demo_hydrochloric_acid_sodium_hydroxide",
         },
         {
             "type": "Gas evolution",
@@ -3444,6 +3446,7 @@ CHEMICAL_REACTION_VIRTUAL_LAB_PAGE = {
             "explanation": (
                 "See carbon dioxide represented as a bubbling result."
             ),
+            "demo_route_name": "demo_acetic_acid_sodium_bicarbonate",
         },
         {
             "type": "Blue precipitate",
@@ -3452,6 +3455,7 @@ CHEMICAL_REACTION_VIRTUAL_LAB_PAGE = {
             "explanation": (
                 "Relate the equation to a blue copper(II) hydroxide solid."
             ),
+            "demo_route_name": "demo_copper_sulfate_potassium_hydroxide",
         },
         {
             "type": "Yellow precipitate",
@@ -3461,12 +3465,14 @@ CHEMICAL_REACTION_VIRTUAL_LAB_PAGE = {
                 "Identify a yellow silver iodide precipitate in a double "
                 "displacement reaction."
             ),
+            "demo_route_name": "demo_silver_nitrate_potassium_iodide",
         },
         {
             "type": "Single displacement",
             "title": "Zinc + Hydrochloric acid",
             "equation": "Zn + 2HCl → ZnCl₂ + H₂",
             "explanation": "Track zinc oxidation and hydrogen gas formation.",
+            "demo_route_name": "demo_zinc_hydrochloric_acid",
         },
     ],
     "boundary": (

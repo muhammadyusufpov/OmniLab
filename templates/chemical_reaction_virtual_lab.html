@@ -9,13 +9,13 @@
     <link rel="canonical" href="{{ canonical_url }}">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="OmniLab">
-    <meta property="og:title" content="Chemical reaction virtual lab for students">
+    <meta property="og:title" content="{{ page_title }}">
     <meta property="og:description" content="{{ page_description }}">
     <meta property="og:url" content="{{ canonical_url }}">
     <meta property="og:image" content="{{ social_preview_url }}">
     <meta property="og:image:alt" content="{{ social_preview_alt }}">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Chemical reaction virtual lab for students">
+    <meta name="twitter:title" content="{{ page_title }}">
     <meta name="twitter:description" content="{{ page_description }}">
     <meta name="twitter:image" content="{{ social_preview_url }}">
     <link rel="icon" href="{% static 'favicon.png' %}" type="image/png">
@@ -35,7 +35,7 @@
             <nav class="guide-breadcrumb" aria-label="Breadcrumb">
                 <a href="{% url 'index' %}">Virtual lab</a>
                 <span aria-hidden="true">/</span>
-                <span>Chemical reaction virtual lab</span>
+                <span>Chemistry reaction simulator</span>
             </nav>
 
             <section class="reaction-lab-hero" aria-labelledby="reaction-lab-heading">
@@ -89,11 +89,11 @@
                 <div class="reaction-lab-section-intro">
                     <p class="guide-section-label">Supported examples</p>
                     <h2 id="pairs-heading">Explore reaction types, not random combinations</h2>
-                    <p>The current matrix covers 34 specific pairs. These examples show the range you can explore without pretending every possible mixture is supported.</p>
+                    <p>The current matrix covers 34 supported reaction pairs. Try one in a prepared beaker, then inspect its result before choosing another.</p>
                 </div>
                 <div class="reaction-pair-grid">
                     {% for example in guide.reaction_examples %}
-                    <article><p class="reaction-pair-type">{{ example.type }}</p><h3>{{ example.title }}</h3><p class="reaction-pair-equation">{{ example.equation }}</p><p>{{ example.explanation }}</p></article>
+                    <article><p class="reaction-pair-type">{{ example.type }}</p><h3>{{ example.title }}</h3><p class="reaction-pair-equation">{{ example.equation }}</p><p>{{ example.explanation }}</p><a class="reaction-pair-link" href="{% url example.demo_route_name %}?source=guide_virtual_lab">Try this pair <span aria-hidden="true">→</span></a></article>
                     {% endfor %}
                 </div>
             </section>
@@ -119,7 +119,7 @@
             <section class="reaction-lab-fit" aria-labelledby="fit-heading">
                 <div class="reaction-lab-section-intro">
                     <p class="guide-section-label">Choose the right tool</p>
-                    <h2 id="fit-heading">Where a chemical reaction virtual lab fits</h2>
+                    <h2 id="fit-heading">What this simulator can and cannot show</h2>
                     <p>No single online lab covers every learning goal. Choose the format that matches what you need to practice.</p>
                 </div>
                 <div class="reaction-lab-fit-grid">
