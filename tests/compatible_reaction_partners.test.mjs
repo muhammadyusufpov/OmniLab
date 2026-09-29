@@ -92,8 +92,9 @@ test('partner guidance uses the same matrix as Analyze eligibility', () => {
     }
 });
 
-test('twenty-four reaction families have only their exact matching study guides', () => {
+test('twenty-five reaction families have only their exact matching study guides', () => {
     const guidedPairs = new Map([
+        ['BaCl2+Na2CO3', {count: 1, path: '/guides/barium-chloride-and-sodium-carbonate-reaction/'}],
         ['AgCl+NH3', {count: 1, path: '/guides/silver-chloride-and-ammonia/'}],
         ['HNO3+NH3', {count: 1, path: '/guides/ammonia-with-nitric-acid/'}],
         ['Cl2+Na', {
