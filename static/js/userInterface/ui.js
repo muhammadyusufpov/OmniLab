@@ -103,7 +103,7 @@ export function setupSearchFunction() {
     const searchInput = document.getElementById('chem-search-input');
     if (!searchInput)
         return;
-    searchInput.addEventListener('keyup', function () {
+    searchInput.addEventListener('input', function () {
         const value = this.value.toLowerCase().trim();
         const cards = document.querySelectorAll('.chemical-card');
         cards.forEach(cardNode => {
