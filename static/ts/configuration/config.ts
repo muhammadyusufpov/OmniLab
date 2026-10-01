@@ -359,8 +359,8 @@ const reactionGuidesByPairKey = new Map<string, readonly ReactionGuide[]>([
         title: 'What happens when hydroiodic acid and sodium hydroxide react?'
     }]],
     ['AgCl+NH3', [{
-        href: '/guides/silver-chloride-ammonia-reaction/',
-        title: 'What happens when silver chloride and ammonia react?'
+        href: '/guides/silver-chloride-and-ammonia/',
+        title: 'Why does silver chloride dissolve in ammonia?'
     }]],
     ['HgCl2+NaOH', [{
         href: '/guides/mercury-chloride-sodium-hydroxide-reaction/',

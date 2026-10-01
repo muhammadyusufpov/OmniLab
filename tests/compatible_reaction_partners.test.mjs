@@ -97,7 +97,7 @@ test('all 34 reaction families have only their exact matching study guides', () 
         ['HF+NaOH', { count: 1, path: '/guides/hydrofluoric-acid-sodium-hydroxide-reaction/' }],
         ['HBr+NaOH', { count: 1, path: '/guides/hydrobromic-acid-sodium-hydroxide-reaction/' }],
         ['HI+NaOH', { count: 1, path: '/guides/hydroiodic-acid-sodium-hydroxide-reaction/' }],
-        ['AgCl+NH3', { count: 1, path: '/guides/silver-chloride-ammonia-reaction/' }],
+        ['AgCl+NH3', { count: 1, path: '/guides/silver-chloride-and-ammonia/' }],
         ['HgCl2+NaOH', { count: 1, path: '/guides/mercury-chloride-sodium-hydroxide-reaction/' }],
         ['H2S+NaOH', { count: 1, path: '/guides/hydrogen-sulfide-sodium-hydroxide-reaction/' }],
         ['H2O2+O3', { count: 1, path: '/guides/ozone-hydrogen-peroxide-reaction/' }],

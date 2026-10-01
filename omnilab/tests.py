@@ -2302,7 +2302,7 @@ class ObservationGuidePageTests(TestCase):
         "/guides/hydrofluoric-acid-sodium-hydroxide-reaction/": ("hydrofluoric-acid-sodium-hydroxide", "/demo/hydrofluoric-acid-sodium-hydroxide/"),
         "/guides/hydrobromic-acid-sodium-hydroxide-reaction/": ("hydrobromic-acid-sodium-hydroxide", "/demo/hydrobromic-acid-sodium-hydroxide/"),
         "/guides/hydroiodic-acid-sodium-hydroxide-reaction/": ("hydroiodic-acid-sodium-hydroxide", "/demo/hydroiodic-acid-sodium-hydroxide/"),
-        "/guides/silver-chloride-ammonia-reaction/": ("silver-chloride-ammonia", "/demo/silver-chloride-ammonia/"),
+        "/guides/silver-chloride-and-ammonia/": ("silver-chloride-ammonia", "/demo/silver-chloride-ammonia/"),
         "/guides/mercury-chloride-sodium-hydroxide-reaction/": ("mercury-chloride-sodium-hydroxide", "/demo/mercury-chloride-sodium-hydroxide/"),
         "/guides/hydrogen-sulfide-sodium-hydroxide-reaction/": ("hydrogen-sulfide-sodium-hydroxide", "/demo/hydrogen-sulfide-sodium-hydroxide/"),
         "/guides/ozone-hydrogen-peroxide-reaction/": ("ozone-hydrogen-peroxide", "/demo/ozone-hydrogen-peroxide/"),

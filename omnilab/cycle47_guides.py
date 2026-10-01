@@ -213,3 +213,98 @@ for item in CONTENT:
         "page_title": f"OmniLab - {name} prepared example",
         "page_description": "Open the supported pair, then select Analyze for an educational prediction.",
     }
+
+# Preserve the full researched guide already staged in PR #132.
+CYCLE47_GUIDES["silver-chloride-ammonia"] = {'route_name': 'guide_silver_chloride_ammonia',
+ 'canonical_key': 'silver_chloride_ammonia',
+ 'visit_source': 'guide_virtual_lab',
+ 'demo_route_name': 'demo_silver_chloride_ammonia',
+ 'title': 'Why does silver chloride dissolve in ammonia?',
+ 'page_title': 'Silver chloride and ammonia: equation and explanation | OmniLab',
+ 'description': 'Learn why silver chloride dissolves in ammonia. Follow the complex-ion equation, '
+                'check charge balance, and try a prepared educational prediction.',
+ 'reading_time': '4 min read',
+ 'direct_answer': 'Silver chloride and ammonia form a dissolved diamminesilver(I) complex in '
+                  'excess aqueous ammonia. The white AgCl solid can dissolve. Ammonia binds '
+                  'dissolved silver ions, which shifts the dissolution equilibrium.',
+ 'opening_boundary': 'This is a chemistry study example, not a physical procedure. Do not store, '
+                     'heat, or dry silver-ammonia mixtures. They can form hazardous explosive '
+                     'residues.',
+ 'student_job': 'Explain the disappearing solid without calling it a redox reaction or claiming '
+                'the silver has vanished.',
+ 'reactants': [{'name': 'Silver chloride', 'formula': 'AgCl'},
+               {'name': 'Ammonia', 'formula': 'NH3'}],
+ 'setup_summary': 'The browser selects silver chloride and ammonia. Select Analyze to read the '
+                  'supported equation and three safety notes.',
+ 'cta_label': 'Try the prepared reaction',
+ 'equation': 'AgCl(s) + 2NH3(aq) -> [Ag(NH3)2]+(aq) + Cl-(aq)',
+ 'explanation': 'Freshly prepared silver chloride dissolves in excess dilute aqueous ammonia as '
+                'the diamminesilver(I) complex forms. Complex formation lowers the free silver-ion '
+                'concentration and shifts the silver chloride dissolution equilibrium.',
+ 'observation_title': 'The white precipitate can dissolve',
+ 'observation': 'With sufficient aqueous ammonia, the white solid gives a colorless solution '
+                'containing the silver complex and chloride ions. Dissolved silver is still '
+                'present. OmniLab returns a text prediction for this pair. It does not animate '
+                'dissolving particles or calculate how much solid remains.',
+ 'observation_class': 'observation-clear',
+ 'observation_label': 'Dissolved silver complex',
+ 'study_intro': 'Track the silver through two linked equilibria, then check the atoms and charge.',
+ 'study_steps': [{'title': 'Start with the small dissolved fraction',
+                  'body': 'AgCl(s) ⇌ Ag+(aq) + Cl−(aq). Silver chloride has low solubility in '
+                          'water, not zero solubility. Some silver ions therefore exist in '
+                          'solution even while solid remains. The equilibrium concerns free Ag+ '
+                          'ions, not all dissolved silver.'},
+                 {'title': 'Bind the free silver ions',
+                  'body': 'Ag+(aq) + 2NH3(aq) ⇌ [Ag(NH3)2]+(aq). Each ammonia molecule acts as a '
+                          'ligand: it donates an electron pair to silver. Complex formation lowers '
+                          'free Ag+ concentration. More AgCl can dissolve as the coupled system '
+                          'approaches equilibrium.'},
+                 {'title': 'Add the equations and check the charge',
+                  'body': 'Cancel Ag+ between the two equations. One AgCl unit and two NH3 '
+                          'molecules give one complex ion and one chloride ion. There are one '
+                          'silver, one chlorine, two nitrogen, and six hydrogen atoms on each '
+                          'side. The product charges, +1 and −1, sum to zero.'}],
+ 'common_questions': [{'question': 'Is the displayed equation a net ionic equation?',
+                       'answer': 'Yes. AgCl(s) + 2NH3(aq) ⇌ [Ag(NH3)2]+(aq) + Cl−(aq) describes '
+                                 'the coupled dissolution and complex formation. Keep the solid '
+                                 'AgCl intact on the left. Keep weakly ionizing NH3 together. '
+                                 'OmniLab uses a forward arrow for its simplified prediction; the '
+                                 'physical chemistry involves equilibria.'},
+                      {'question': 'Is silver reduced to silver metal?',
+                       'answer': 'No. Silver remains in oxidation state +1, both in AgCl and in '
+                                 'the complex. Forming coordinate bonds does not make this '
+                                 'electron-transfer redox chemistry. The product is a dissolved '
+                                 'ion, not a deposit of metallic silver.'},
+                      {'question': 'Does two ammonia mean two equal volumes?',
+                       'answer': 'No. The coefficient counts molecules or moles in the equation. '
+                                 'It does not specify liquid volumes or a practical recipe. '
+                                 'Complete dissolution depends on the amounts and equilibrium '
+                                 'conditions. OmniLab does not accept concentrations or calculate '
+                                 'a dissolution endpoint.'},
+                      {'question': 'Why can acid make silver chloride reappear?',
+                       'answer': 'Acid converts NH3 into NH4+, reducing the ammonia available to '
+                                 'bind silver. This can shift the coupled equilibria toward solid '
+                                 'AgCl. This is a written equilibrium explanation, not an '
+                                 'instruction to add acid. The prepared example models only the '
+                                 'selected AgCl and NH3 pair.'},
+                      {'question': 'Does ammonia dissolve every silver halide?',
+                       'answer': 'No. In standard qualitative tests, AgCl dissolves in dilute '
+                                 'ammonia; AgBr requires concentrated ammonia, while AgI remains '
+                                 'insoluble. Their different dissolution equilibria matter. The '
+                                 'AgCl browser example cannot predict another halide by changing '
+                                 'its name.'}],
+ 'safety': ['Use ammonia only in a fume hood and avoid breathing its vapors.',
+            'Wear chemical splash goggles and avoid contact with the mixture.',
+            'Collect every silver-containing solution for approved hazardous waste disposal.'],
+ 'boundary': 'OmniLab provides an educational prediction, not a verified simulation or a '
+             'replacement for supervision. The beaker and burner do not set chemical conditions. '
+             'This guide establishes no safe quantities, storage conditions, or disposal '
+             'procedure. Do not store, heat, or dry silver-ammonia mixtures. Follow your '
+             'laboratory supervisor and approved hazardous-waste process.',
+ 'references': [{'title': 'Chemguide: halide tests and ammonia',
+                 'url': 'https://www.chemguide.co.uk/inorganic/group7/testing.html'},
+                {'title': 'Truman ChemLab: complex formation',
+                 'url': 'https://chemlab.truman.edu/chemical-principles/inorganic-quantitative-analysis/'},
+                {'title': 'Stanford safety summary: silver compounds',
+                 'url': 'https://web.stanford.edu/dept/EHS/cgi-bin/lcst/lcss/lcss76.html'}]}
+CYCLE47_GUIDES["silver-chloride-ammonia"]["slug"] = "silver-chloride-and-ammonia"

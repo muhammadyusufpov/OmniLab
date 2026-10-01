@@ -4196,6 +4196,13 @@ for content in CYCLE47_CONTENT:
         for neighbor in content["related"]
     ]
 
+GUIDE_RELATIONSHIP_DEFINITIONS["silver_nitrate_sodium_chloride"].append(
+    ("silver_chloride_ammonia", "Explain how silver chloride can dissolve", "shared_substance", "AgCl")
+)
+GUIDE_RELATIONSHIP_DEFINITIONS["ammonia_nitric_acid"].append(
+    ("silver_chloride_ammonia", "Compare ammonia binding a silver ion", "shared_substance", "NH3")
+)
+
 GUIDE_RELATIONSHIPS = {
     guide_key: [
         (related_key, reason)
