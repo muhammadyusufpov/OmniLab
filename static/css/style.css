@@ -545,6 +545,13 @@ body {
     line-height: 1;
 }
 
+.reaction-result-boundary {
+    margin: 12px 0 0;
+    color: #f4f4f5;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
 .result-heading-mark,
 .safety-rule-mark {
     width: 1.1em;

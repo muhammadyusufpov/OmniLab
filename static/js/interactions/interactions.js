@@ -103,6 +103,7 @@ export function renderReactionResult(panel, reaction, selectedChemicals) {
                 </h3>
                 <div class="fs-5 text-center py-2 px-2 text-white border border-secondary border-opacity-50 rounded-3 reaction-equation"
                     style="font-family: 'Fira Code', monospace; font-weight: 500; background-color: #1e1e24; letter-spacing: 1.5px;"></div>
+                <p class="reaction-result-boundary">Educational prediction, not a verified simulation. It can be incomplete or wrong and cannot replace instructor supervision.</p>
             </div>
 
             <div class="mb-4 conceptual-breakdown px-2">
