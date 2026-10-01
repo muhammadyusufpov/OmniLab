@@ -92,8 +92,15 @@ test('partner guidance uses the same matrix as Analyze eligibility', () => {
     }
 });
 
-test('twenty-seven reaction families have only their exact matching study guides', () => {
+test('all 34 reaction families have only their exact matching study guides', () => {
     const guidedPairs = new Map([
+        ['HF+NaOH', { count: 1, path: '/guides/hydrofluoric-acid-sodium-hydroxide-reaction/' }],
+        ['HBr+NaOH', { count: 1, path: '/guides/hydrobromic-acid-sodium-hydroxide-reaction/' }],
+        ['HI+NaOH', { count: 1, path: '/guides/hydroiodic-acid-sodium-hydroxide-reaction/' }],
+        ['AgCl+NH3', { count: 1, path: '/guides/silver-chloride-ammonia-reaction/' }],
+        ['HgCl2+NaOH', { count: 1, path: '/guides/mercury-chloride-sodium-hydroxide-reaction/' }],
+        ['H2S+NaOH', { count: 1, path: '/guides/hydrogen-sulfide-sodium-hydroxide-reaction/' }],
+        ['H2O2+O3', { count: 1, path: '/guides/ozone-hydrogen-peroxide-reaction/' }],
         ['H2SO4+KOH', { count: 1, path: '/guides/sulfuric-acid-and-potassium-hydroxide-reaction/' }],
         ['AlCl3+NaOH', { count: 1, path: '/guides/aluminium-chloride-and-sodium-hydroxide-reaction/' }],
         ['MgSO4+NaOH', { count: 1, path: '/guides/magnesium-sulfate-and-sodium-hydroxide-reaction/' }],
@@ -201,6 +208,7 @@ test('twenty-seven reaction families have only their exact matching study guides
         }]
     ]);
 
+    assert.equal(guidedPairs.size, supportedPairs.length);
     for (const pair of supportedPairs) {
         const key = [...pair].sort().join('+');
         const expected = guidedPairs.get(key);

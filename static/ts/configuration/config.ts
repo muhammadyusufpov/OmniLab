@@ -345,7 +345,35 @@ const reactionGuidesByPairKey = new Map<string, readonly ReactionGuide[]>([
             href: '/guides/magnesium-sulfate-and-sodium-hydroxide-reaction/',
             title: 'What happens when magnesium sulfate reacts with sodium hydroxide?'
         }]
-    ]
+    ],
+    ['HF+NaOH', [{
+        href: '/guides/hydrofluoric-acid-sodium-hydroxide-reaction/',
+        title: 'What happens when hydrofluoric acid and sodium hydroxide react?'
+    }]],
+    ['HBr+NaOH', [{
+        href: '/guides/hydrobromic-acid-sodium-hydroxide-reaction/',
+        title: 'What happens when hydrobromic acid and sodium hydroxide react?'
+    }]],
+    ['HI+NaOH', [{
+        href: '/guides/hydroiodic-acid-sodium-hydroxide-reaction/',
+        title: 'What happens when hydroiodic acid and sodium hydroxide react?'
+    }]],
+    ['AgCl+NH3', [{
+        href: '/guides/silver-chloride-ammonia-reaction/',
+        title: 'What happens when silver chloride and ammonia react?'
+    }]],
+    ['HgCl2+NaOH', [{
+        href: '/guides/mercury-chloride-sodium-hydroxide-reaction/',
+        title: 'What happens when mercury(II) chloride and sodium hydroxide react?'
+    }]],
+    ['H2S+NaOH', [{
+        href: '/guides/hydrogen-sulfide-sodium-hydroxide-reaction/',
+        title: 'What happens when hydrogen sulfide and sodium hydroxide react?'
+    }]],
+    ['H2O2+O3', [{
+        href: '/guides/ozone-hydrogen-peroxide-reaction/',
+        title: 'What happens when ozone and hydrogen peroxide react?'
+    }]]
 ]);
 const supportedChemicalIds = new Set(supportedReactionPairs.flat());
 const supportedReactionPartners = new Map<string, Set<string>>();

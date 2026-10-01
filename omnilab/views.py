@@ -3405,6 +3405,18 @@ REACTION_DEMOS.update({
     for key, demo in CYCLE42_DEMOS.items()
 })
 
+from .cycle47_guides import CONTENT as CYCLE47_CONTENT, CYCLE47_DEMOS, CYCLE47_GUIDES
+
+OBSERVATION_GUIDE_PAGES.update(CYCLE47_GUIDES)
+PUBLIC_CANONICAL_URLS.update({
+    guide["canonical_key"]: f"{PRODUCTION_BASE_URL}/guides/{guide['slug']}/"
+    for guide in CYCLE47_GUIDES.values()
+})
+REACTION_DEMOS.update({
+    key: {**demo, "url": f"{PRODUCTION_BASE_URL}/demo/{key}/"}
+    for key, demo in CYCLE47_DEMOS.items()
+})
+
 CHEMICAL_REACTION_VIRTUAL_LAB_PAGE = {
     "route_name": "chemical_reaction_virtual_lab",
     "canonical_key": "chemical_reaction_virtual_lab",
@@ -4158,6 +4170,32 @@ GUIDE_RELATIONSHIP_DEFINITIONS["silver_nitrate_potassium_iodide"].append(
     ("aluminium_chloride_sodium_hydroxide", "Compare yellow and white precipitates", "shared_reaction_pattern", "precipitation")
 )
 
+for content in CYCLE47_CONTENT:
+    guide = CYCLE47_GUIDES[content["key"]]
+    canonical_key = guide["canonical_key"]
+    substances = {part["formula"] for part in guide["reactants"]}
+    substances.update(content["products"])
+    GUIDE_CHEMISTRY_PROFILES[canonical_key] = {
+        "substances": frozenset(substances),
+        "reaction_patterns": frozenset({content["pattern"]}),
+    }
+
+for content in CYCLE47_CONTENT:
+    guide = CYCLE47_GUIDES[content["key"]]
+    canonical_key = guide["canonical_key"]
+    substances = GUIDE_CHEMISTRY_PROFILES[canonical_key]["substances"]
+    GUIDE_RELATIONSHIP_DEFINITIONS[canonical_key] = [
+        (
+            neighbor,
+            "Compare a supported reaction with shared chemistry",
+            "shared_substance" if substances & GUIDE_CHEMISTRY_PROFILES[neighbor]["substances"] else "shared_reaction_pattern",
+            next(iter(sorted(substances & GUIDE_CHEMISTRY_PROFILES[neighbor]["substances"])))
+            if substances & GUIDE_CHEMISTRY_PROFILES[neighbor]["substances"]
+            else content["pattern"],
+        )
+        for neighbor in content["related"]
+    ]
+
 GUIDE_RELATIONSHIPS = {
     guide_key: [
         (related_key, reason)
@@ -4664,6 +4702,14 @@ GUIDE_LIBRARY_GROUPS[-1]["guides"].append({'number': '27',
              'route_name': 'guide_barium_chloride_sodium_carbonate',
              'canonical_key': 'barium_chloride_sodium_carbonate'})
 for number, guide in enumerate(CYCLE42_GUIDES.values(), start=28):
+    GUIDE_LIBRARY_GROUPS[-1]["guides"].append({
+        "number": f"{number:02d}",
+        "title": guide["title"],
+        "summary": guide["direct_answer"],
+        "route_name": guide["route_name"],
+        "canonical_key": guide["canonical_key"],
+    })
+for number, guide in enumerate(CYCLE47_GUIDES.values(), start=31):
     GUIDE_LIBRARY_GROUPS[-1]["guides"].append({
         "number": f"{number:02d}",
         "title": guide["title"],
@@ -5276,7 +5322,7 @@ def chemical_reaction_virtual_lab(request):
 def guide_library(request):
     canonical_url = PUBLIC_CANONICAL_URLS["guides"]
     description = (
-        "Browse 30 free, no-account chemistry guides about virtual reaction "
+        "Browse 37 free, no-account chemistry guides about virtual reaction "
         "labs, equations, bonding, combustion, oxidation, acids, gases, and "
         "precipitates."
     )

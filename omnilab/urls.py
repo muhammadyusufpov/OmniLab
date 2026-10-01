@@ -339,3 +339,19 @@ urlpatterns += [
     path("demo/magnesium-sulfate-sodium-hydroxide/", views.prepared_reaction_demo,
          {"demo_key": "magnesium-sulfate-sodium-hydroxide"}, name="demo_magnesium_sulfate_sodium_hydroxide"),
 ]
+
+for guide_key, guide in views.CYCLE47_GUIDES.items():
+    urlpatterns.extend([
+        path(
+            f"guides/{guide['slug']}/",
+            views.observation_guide,
+            {"guide_key": guide_key},
+            name=guide["route_name"],
+        ),
+        path(
+            f"demo/{guide_key}/",
+            views.prepared_reaction_demo,
+            {"demo_key": guide_key},
+            name=guide["demo_route_name"],
+        ),
+    ])
