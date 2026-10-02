@@ -161,8 +161,15 @@ CONTENT = [
 
 CYCLE47_GUIDES = {}
 CYCLE47_DEMOS = {}
+# These two pages follow in a later release. Keep their complete drafts here.
+HELD_GUIDE_KEYS = frozenset({
+    "hydrofluoric-acid-sodium-hydroxide",
+    "mercury-chloride-sodium-hydroxide",
+})
 for item in CONTENT:
     key = item["key"]
+    if key in HELD_GUIDE_KEYS:
+        continue
     canonical_key = key.replace("-", "_")
     reactants = [{"name": name, "formula": formula} for name, formula in item["pair"]]
     reaction = get_reaction([part["formula"] for part in reactants])
