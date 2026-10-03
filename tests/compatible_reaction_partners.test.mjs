@@ -92,9 +92,18 @@ test('partner guidance uses the same matrix as Analyze eligibility', () => {
     }
 });
 
-test('twenty-three reaction families have only their exact matching study guides', () => {
+test('all 34 reaction families have only their exact matching study guides', () => {
     const guidedPairs = new Map([
+        ['HBr+NaOH', { count: 1, path: '/guides/hydrobromic-acid-sodium-hydroxide-reaction/' }],
+        ['HI+NaOH', { count: 1, path: '/guides/hydroiodic-acid-sodium-hydroxide-reaction/' }],
+        ['AgCl+NH3', { count: 1, path: '/guides/silver-chloride-and-ammonia/' }],
+        ['H2S+NaOH', { count: 1, path: '/guides/hydrogen-sulfide-sodium-hydroxide-reaction/' }],
+        ['H2O2+O3', { count: 1, path: '/guides/ozone-hydrogen-peroxide-reaction/' }],
+        ['H2SO4+KOH', { count: 1, path: '/guides/sulfuric-acid-and-potassium-hydroxide-reaction/' }],
+        ['AlCl3+NaOH', { count: 1, path: '/guides/aluminium-chloride-and-sodium-hydroxide-reaction/' }],
+        ['MgSO4+NaOH', { count: 1, path: '/guides/magnesium-sulfate-and-sodium-hydroxide-reaction/' }],
         ['HNO3+NH3', {count: 1, path: '/guides/ammonia-with-nitric-acid/'}],
+        ['BaCl2+Na2CO3', {count: 1, path: '/guides/barium-chloride-and-sodium-carbonate-reaction/'}],
         ['Cl2+Na', {
             count: 3,
             path: '/guides/sodium-and-chlorine-reaction/'
@@ -197,6 +206,7 @@ test('twenty-three reaction families have only their exact matching study guides
         }]
     ]);
 
+    assert.equal(guidedPairs.size, supportedPairs.length - 2);
     for (const pair of supportedPairs) {
         const key = [...pair].sort().join('+');
         const expected = guidedPairs.get(key);

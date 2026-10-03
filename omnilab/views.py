@@ -3392,22 +3392,47 @@ OBSERVATION_GUIDE_PAGES = {
     },
 }
 
+# Register the new pages before building discovery and relationship indexes.
+from .cycle42_guides import CYCLE42_GUIDES, CYCLE42_DEMOS
+
+OBSERVATION_GUIDE_PAGES.update(CYCLE42_GUIDES)
+PUBLIC_CANONICAL_URLS.update({
+    guide["canonical_key"]: f"{PRODUCTION_BASE_URL}/guides/{guide['slug']}/"
+    for guide in CYCLE42_GUIDES.values()
+})
+REACTION_DEMOS.update({
+    key: {**demo, "url": f"{PRODUCTION_BASE_URL}/demo/{key}/"}
+    for key, demo in CYCLE42_DEMOS.items()
+})
+
+from .cycle47_guides import CONTENT as CYCLE47_CONTENT, CYCLE47_DEMOS, CYCLE47_GUIDES, HELD_GUIDE_KEYS
+
+OBSERVATION_GUIDE_PAGES.update(CYCLE47_GUIDES)
+PUBLIC_CANONICAL_URLS.update({
+    guide["canonical_key"]: f"{PRODUCTION_BASE_URL}/guides/{guide['slug']}/"
+    for guide in CYCLE47_GUIDES.values()
+})
+REACTION_DEMOS.update({
+    key: {**demo, "url": f"{PRODUCTION_BASE_URL}/demo/{key}/"}
+    for key, demo in CYCLE47_DEMOS.items()
+})
+
 CHEMICAL_REACTION_VIRTUAL_LAB_PAGE = {
     "route_name": "chemical_reaction_virtual_lab",
     "canonical_key": "chemical_reaction_virtual_lab",
-    "title": "How does the chemical reaction virtual lab work?",
-    "page_title": "Chemical reaction virtual lab for students | OmniLab",
+    "title": "Chemistry reaction simulator for students",
+    "page_title": "Chemistry reaction simulator for students | OmniLab",
     "description": (
-        "Try 34 supported reaction pairs in OmniLab's free chemical reaction "
-        "virtual lab. See equations, explanations, safety guidance, and "
-        "visible reaction cues."
+        "Try OmniLab's chemistry reaction simulator with 34 supported "
+        "pairs. Explore equations, explanations, safety notes, and visible "
+        "cues in a free browser lab."
     ),
-    "heading": "Try a chemical reaction in a virtual lab",
+    "heading": "Try a chemistry reaction simulator in your browser",
     "direct_answer": (
-        "Choose two chemicals from a supported pair. OmniLab returns a "
-        "balanced equation, a plain-language explanation, three safety "
-        "notes, and a visible reaction cue when the result includes bubbling "
-        "or a precipitate."
+        "Choose two chemicals from a supported pair, then request an "
+        "educational prediction. Read the balanced equation, a short "
+        "explanation, three safety notes, and a visible cue when the "
+        "result includes bubbling or a precipitate."
     ),
     "reaction_examples": [
         {
@@ -3415,6 +3440,7 @@ CHEMICAL_REACTION_VIRTUAL_LAB_PAGE = {
             "title": "Hydrogen + Oxygen",
             "equation": "2H₂ + O₂ → 2H₂O",
             "explanation": "Follow how two elements combine into one compound.",
+            "demo_route_name": "demo_hydrogen_oxygen",
         },
         {
             "type": "Neutralization",
@@ -3423,6 +3449,7 @@ CHEMICAL_REACTION_VIRTUAL_LAB_PAGE = {
             "explanation": (
                 "Connect an acid-base reaction to salt and water formation."
             ),
+            "demo_route_name": "demo_hydrochloric_acid_sodium_hydroxide",
         },
         {
             "type": "Gas evolution",
@@ -3431,6 +3458,7 @@ CHEMICAL_REACTION_VIRTUAL_LAB_PAGE = {
             "explanation": (
                 "See carbon dioxide represented as a bubbling result."
             ),
+            "demo_route_name": "demo_acetic_acid_sodium_bicarbonate",
         },
         {
             "type": "Blue precipitate",
@@ -3439,6 +3467,7 @@ CHEMICAL_REACTION_VIRTUAL_LAB_PAGE = {
             "explanation": (
                 "Relate the equation to a blue copper(II) hydroxide solid."
             ),
+            "demo_route_name": "demo_copper_sulfate_potassium_hydroxide",
         },
         {
             "type": "Yellow precipitate",
@@ -3448,12 +3477,14 @@ CHEMICAL_REACTION_VIRTUAL_LAB_PAGE = {
                 "Identify a yellow silver iodide precipitate in a double "
                 "displacement reaction."
             ),
+            "demo_route_name": "demo_silver_nitrate_potassium_iodide",
         },
         {
             "type": "Single displacement",
             "title": "Zinc + Hydrochloric acid",
             "equation": "Zn + 2HCl → ZnCl₂ + H₂",
             "explanation": "Track zinc oxidation and hydrogen gas formation.",
+            "demo_route_name": "demo_zinc_hydrochloric_acid",
         },
     ],
     "boundary": (
@@ -4103,13 +4134,87 @@ GUIDE_RELATIONSHIP_DEFINITIONS["ammonia_nitric_acid"].append(
 GUIDE_RELATIONSHIP_DEFINITIONS["carbon_dioxide_sodium_hydroxide"].append(
     ("ammonia_nitric_acid", "Compare proton transfer to ammonia", "shared_reaction_pattern", "acid-base")
 )
+# Each addition keeps the existing two-to-three-link study groups intact.
+GUIDE_CHEMISTRY_PROFILES.update({
+    "sulfuric_acid_potassium_hydroxide": {
+        "substances": frozenset({"H2SO4", "KOH", "K2SO4", "H2O"}),
+        "reaction_patterns": frozenset({"acid-base", "neutralization", "double-displacement"}),
+    },
+    "aluminium_chloride_sodium_hydroxide": {
+        "substances": frozenset({"AlCl3", "NaOH", "Al(OH)3", "NaCl"}),
+        "reaction_patterns": frozenset({"precipitation", "double-displacement"}),
+    },
+    "magnesium_sulfate_sodium_hydroxide": {
+        "substances": frozenset({"MgSO4", "NaOH", "Mg(OH)2", "Na2SO4"}),
+        "reaction_patterns": frozenset({"precipitation", "double-displacement"}),
+    },
+})
+GUIDE_RELATIONSHIP_DEFINITIONS.update({
+    "sulfuric_acid_potassium_hydroxide": [
+        ("copper_sulfate_potassium_hydroxide", "Compare potassium hydroxide forming a precipitate", "shared_substance", "KOH"),
+        ("magnesium_sulfate_sodium_hydroxide", "Compare ion exchange forming a solid instead of water", "shared_reaction_pattern", "double-displacement"),
+    ],
+    "aluminium_chloride_sodium_hydroxide": [
+        ("magnesium_sulfate_sodium_hydroxide", "Compare hydroxides with different excess-alkali behavior", "shared_substance", "NaOH"),
+        ("silver_nitrate_potassium_iodide", "Compare white and yellow precipitates", "shared_reaction_pattern", "precipitation"),
+    ],
+    "magnesium_sulfate_sodium_hydroxide": [
+        ("aluminium_chloride_sodium_hydroxide", "Compare hydroxides with different excess-alkali behavior", "shared_substance", "NaOH"),
+        ("sulfuric_acid_potassium_hydroxide", "Compare ion exchange forming water instead of a solid", "shared_reaction_pattern", "double-displacement"),
+    ],
+})
+GUIDE_RELATIONSHIP_DEFINITIONS["copper_sulfate_potassium_hydroxide"].append(
+    ("sulfuric_acid_potassium_hydroxide", "Compare potassium hydroxide in neutralization", "shared_substance", "KOH")
+)
+GUIDE_RELATIONSHIP_DEFINITIONS["silver_nitrate_potassium_iodide"].append(
+    ("aluminium_chloride_sodium_hydroxide", "Compare yellow and white precipitates", "shared_reaction_pattern", "precipitation")
+)
+
+for content in CYCLE47_CONTENT:
+    if content["key"] in HELD_GUIDE_KEYS:
+        continue
+    guide = CYCLE47_GUIDES[content["key"]]
+    canonical_key = guide["canonical_key"]
+    substances = {part["formula"] for part in guide["reactants"]}
+    substances.update(content["products"])
+    GUIDE_CHEMISTRY_PROFILES[canonical_key] = {
+        "substances": frozenset(substances),
+        "reaction_patterns": frozenset({content["pattern"]}),
+    }
+
+for content in CYCLE47_CONTENT:
+    if content["key"] in HELD_GUIDE_KEYS:
+        continue
+    guide = CYCLE47_GUIDES[content["key"]]
+    canonical_key = guide["canonical_key"]
+    substances = GUIDE_CHEMISTRY_PROFILES[canonical_key]["substances"]
+    GUIDE_RELATIONSHIP_DEFINITIONS[canonical_key] = [
+        (
+            neighbor,
+            "Compare a supported reaction with shared chemistry",
+            "shared_substance" if substances & GUIDE_CHEMISTRY_PROFILES[neighbor]["substances"] else "shared_reaction_pattern",
+            next(iter(sorted(substances & GUIDE_CHEMISTRY_PROFILES[neighbor]["substances"])))
+            if substances & GUIDE_CHEMISTRY_PROFILES[neighbor]["substances"]
+            else content["pattern"],
+        )
+        for neighbor in content["related"]
+    ]
+
+GUIDE_RELATIONSHIP_DEFINITIONS["silver_nitrate_sodium_chloride"].append(
+    ("silver_chloride_ammonia", "Explain how silver chloride can dissolve", "shared_substance", "AgCl")
+)
+GUIDE_RELATIONSHIP_DEFINITIONS["ammonia_nitric_acid"].append(
+    ("silver_chloride_ammonia", "Compare ammonia binding a silver ion", "shared_substance", "NH3")
+)
 
 GUIDE_RELATIONSHIPS = {
     guide_key: [
         (related_key, reason)
         for related_key, reason, _evidence_kind, _evidence_value in relationships
+        if related_key in GUIDE_PAGE_REFERENCES
     ]
     for guide_key, relationships in GUIDE_RELATIONSHIP_DEFINITIONS.items()
+    if guide_key in GUIDE_PAGE_REFERENCES
 }
 
 
@@ -4593,12 +4698,7 @@ GUIDE_LIBRARY_GROUPS = [
                     "carbon-oxygen"
                 ]["canonical_key"],
             },
-            {'number': '26',
-             'title': 'Barium chloride and sodium carbonate reaction',
-             'summary': 'Identify the white barium carbonate solid and cancel sodium and chloride '
-                        'spectator ions.',
-             'route_name': 'guide_barium_chloride_sodium_carbonate',
-             'canonical_key': 'barium_chloride_sodium_carbonate'},
+
         ],
     },
 ]
@@ -4608,6 +4708,28 @@ GUIDE_LIBRARY_GROUPS[-1]["guides"].append({
     "summary": "Follow proton transfer and cancel nitrate in the net ionic equation.",
     "route_name": "guide_ammonia_nitric_acid", "canonical_key": "ammonia_nitric_acid",
 })
+GUIDE_LIBRARY_GROUPS[-1]["guides"].append({'number': '27',
+             'title': 'Barium chloride and sodium carbonate reaction',
+             'summary': 'Identify the white barium carbonate solid and cancel sodium and chloride '
+                        'spectator ions.',
+             'route_name': 'guide_barium_chloride_sodium_carbonate',
+             'canonical_key': 'barium_chloride_sodium_carbonate'})
+for number, guide in enumerate(CYCLE42_GUIDES.values(), start=28):
+    GUIDE_LIBRARY_GROUPS[-1]["guides"].append({
+        "number": f"{number:02d}",
+        "title": guide["title"],
+        "summary": guide["direct_answer"],
+        "route_name": guide["route_name"],
+        "canonical_key": guide["canonical_key"],
+    })
+for number, guide in enumerate(CYCLE47_GUIDES.values(), start=31):
+    GUIDE_LIBRARY_GROUPS[-1]["guides"].append({
+        "number": f"{number:02d}",
+        "title": guide["title"],
+        "summary": guide["direct_answer"],
+        "route_name": guide["route_name"],
+        "canonical_key": guide["canonical_key"],
+    })
 
 CHEMICAL_REACTION_LAB_FAQS = [
     {
@@ -5148,6 +5270,7 @@ def observation_guide(request, guide_key):
     )
 
 
+
 def chemical_reaction_virtual_lab(request):
     guide = CHEMICAL_REACTION_VIRTUAL_LAB_PAGE
     canonical_url = PUBLIC_CANONICAL_URLS[guide["canonical_key"]]
@@ -5212,7 +5335,7 @@ def chemical_reaction_virtual_lab(request):
 def guide_library(request):
     canonical_url = PUBLIC_CANONICAL_URLS["guides"]
     description = (
-        "Browse 26 free, no-account chemistry guides about virtual reaction "
+        "Browse 35 free, no-account chemistry guides about virtual reaction "
         "labs, equations, bonding, combustion, oxidation, acids, gases, and "
         "precipitates."
     )

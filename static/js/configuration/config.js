@@ -234,7 +234,48 @@ const reactionGuidesByPairKey = new Map([
                 title: 'What happens in the reaction of iron with oxygen?'
             }
         ]
-    ]
+    ],
+    [
+        'H2SO4+KOH',
+        [{
+                href: '/guides/sulfuric-acid-and-potassium-hydroxide-reaction/',
+                title: 'What happens when sulfuric acid reacts with potassium hydroxide?'
+            }]
+    ],
+    [
+        'AlCl3+NaOH',
+        [{
+                href: '/guides/aluminium-chloride-and-sodium-hydroxide-reaction/',
+                title: 'What happens when aluminium chloride reacts with sodium hydroxide?'
+            }]
+    ],
+    [
+        'MgSO4+NaOH',
+        [{
+                href: '/guides/magnesium-sulfate-and-sodium-hydroxide-reaction/',
+                title: 'What happens when magnesium sulfate reacts with sodium hydroxide?'
+            }]
+    ],
+    ['HBr+NaOH', [{
+                href: '/guides/hydrobromic-acid-sodium-hydroxide-reaction/',
+                title: 'What happens when hydrobromic acid and sodium hydroxide react?'
+            }]],
+    ['HI+NaOH', [{
+                href: '/guides/hydroiodic-acid-sodium-hydroxide-reaction/',
+                title: 'What happens when hydroiodic acid and sodium hydroxide react?'
+            }]],
+    ['AgCl+NH3', [{
+                href: '/guides/silver-chloride-and-ammonia/',
+                title: 'Why does silver chloride dissolve in ammonia?'
+            }]],
+    ['H2S+NaOH', [{
+                href: '/guides/hydrogen-sulfide-sodium-hydroxide-reaction/',
+                title: 'What happens when hydrogen sulfide and sodium hydroxide react?'
+            }]],
+    ['H2O2+O3', [{
+                href: '/guides/ozone-hydrogen-peroxide-reaction/',
+                title: 'What happens when ozone and hydrogen peroxide react?'
+            }]]
 ]);
 const supportedChemicalIds = new Set(supportedReactionPairs.flat());
 const supportedReactionPartners = new Map();

@@ -545,6 +545,13 @@ body {
     line-height: 1;
 }
 
+.reaction-result-boundary {
+    margin: 12px 0 0;
+    color: #f4f4f5;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
 .result-heading-mark,
 .safety-rule-mark {
     width: 1.1em;
@@ -2463,7 +2470,9 @@ body {
 .reaction-pair-type { margin: 0 0 14px; }
 .reaction-pair-grid h3 { margin: 0 0 12px; font-size: 19px; line-height: 1.3; }
 .reaction-pair-equation { margin: 0 0 16px; padding: 10px 12px; border-radius: 8px; background: var(--bg-canvas); font-size: 13px; font-weight: 700; line-height: 1.5; }
-.reaction-pair-grid article > p:last-child { margin-top: auto; }
+.reaction-pair-grid article > p:nth-last-child(2) { margin-top: auto; }
+.reaction-pair-link { align-self: flex-start; margin-top: 20px; font-weight: 700; color: var(--text-color); text-decoration-thickness: 1px; text-underline-offset: 4px; }
+.reaction-pair-link:hover, .reaction-pair-link:focus-visible { text-decoration-thickness: 2px; }
 .reaction-lab-reading { margin-top: 124px; display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(320px, .92fr); align-items: center; gap: 72px; }
 .reaction-lab-equation-card { padding: 32px; border: 2px solid var(--border-color); border-radius: 14px; background: var(--text-color); color: var(--bg-main); box-shadow: var(--shadow); }
 .reaction-lab-equation-card .guide-section-label { color: var(--bg-main); opacity: .7; }
