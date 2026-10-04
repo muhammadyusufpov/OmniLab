@@ -111,15 +111,6 @@ export function drawVesselAndFluid() {
     const state = config.getLabState();
     const cx = config.canvas.width / 2 + state.vesselOffsetX;
     let cy = config.canvas.height / 2 + 50 + state.vesselOffsetY;
-    if (state.currentLiquidVol < state.targetLiquidVol) {
-        config.updateLabState({ currentLiquidVol: state.currentLiquidVol + 1.5 });
-        if (config.getLabState().currentLiquidVol >= state.targetLiquidVol) {
-            config.updateLabState({ currentLiquidVol: state.targetLiquidVol, streamActive: false });
-        }
-    }
-    else if (state.currentLiquidVol > state.targetLiquidVol) {
-        config.updateLabState({ currentLiquidVol: state.currentLiquidVol - 1.5 });
-    }
     const updatedState = config.getLabState();
     let targetColor = updatedState.liquidColor;
     if (updatedState.burnerActive) {
@@ -132,23 +123,30 @@ export function drawVesselAndFluid() {
     let match2 = config.hexToRgbA(targetColor, 1).match(/\d+/g);
     let c1 = match1 ? match1.map(Number) : [255, 255, 255];
     let c2 = match2 ? match2.map(Number) : [255, 255, 255];
-    let r = Math.round(c1[0] + (c2[0] - c1[0]) * 0.02);
-    let g = Math.round(c1[1] + (c2[1] - c1[1]) * 0.02);
-    let b = Math.round(c1[2] + (c2[2] - c1[2]) * 0.02);
-    currentRenderColor = `rgb(${r}, ${g}, ${b})`;
-    if (updatedState.streamActive && updatedState.streamX) {
+    let r = Math.round(c1[0] + (c2[0] - c1[0]) * 0.18);
+    let g = Math.round(c1[1] + (c2[1] - c1[1]) * 0.18);
+    let b = Math.round(c1[2] + (c2[2] - c1[2]) * 0.18);
+    // Keep a hex color so the translucent glass shading uses the real liquid color.
+    currentRenderColor = `#${[r, g, b].map(channel => channel.toString(16).padStart(2, '0')).join('')}`;
+    if (updatedState.streamActive && Number.isFinite(updatedState.streamX)) {
         config.ctx.save();
         config.ctx.beginPath();
-        config.ctx.strokeStyle = updatedState.streamColor;
-        config.ctx.lineWidth = 6;
+        const streamGradient = config.ctx.createLinearGradient(updatedState.streamX - 4, 0, updatedState.streamX + 4, 0);
+        streamGradient.addColorStop(0, config.hexToRgbA(updatedState.streamColor, 0.55));
+        streamGradient.addColorStop(0.5, updatedState.streamColor);
+        streamGradient.addColorStop(1, config.hexToRgbA(updatedState.streamColor, 0.8));
+        config.ctx.strokeStyle = streamGradient;
+        config.ctx.lineWidth = 5;
         config.ctx.lineCap = 'round';
         let baseLevel = updatedState.currentVessel === 'tube' ? cy + 104 : cy + 106;
         if (updatedState.burnerActive) {
             baseLevel -= 40;
         }
         let liquidTopY = baseLevel - updatedState.currentLiquidVol;
-        config.ctx.moveTo(updatedState.streamX, 0);
-        config.ctx.lineTo(cx, liquidTopY);
+        const streamStartX = Math.max(12, Math.min(config.canvas.width - 12, updatedState.streamX));
+        const impactX = cx + Math.sin(updatedState.waveTime * 2) * 2;
+        config.ctx.moveTo(streamStartX, 8);
+        config.ctx.bezierCurveTo(streamStartX, liquidTopY * 0.35, impactX - 10, liquidTopY * 0.7, impactX, liquidTopY);
         config.ctx.stroke();
         config.ctx.restore();
     }
@@ -277,7 +275,7 @@ export function drawVesselAndFluid() {
         config.ctx.beginPath();
         let baseLevel = updatedState.currentVessel === 'tube' ? cy + 104 : cy + 106;
         let liquidTopY = baseLevel - updatedState.currentLiquidVol;
-        let amplitude = updatedState.burnerActive ? 6 : 3.5;
+        let amplitude = updatedState.burnerActive ? 6 : (updatedState.streamActive ? 5.5 : 1.4);
         config.ctx.moveTo(startX - 10, liquidTopY);
         for (let x = startX - 10; x <= endX + 10; x++) {
             let waveY = liquidTopY + Math.sin(x * 0.05 + updatedState.waveTime * 1.3) * amplitude;
@@ -297,6 +295,17 @@ export function drawVesselAndFluid() {
         }
         config.ctx.closePath();
         config.ctx.fill();
+        if (updatedState.streamActive) {
+            const rippleWidth = updatedState.currentVessel === 'tube' ? 16 : 28;
+            config.ctx.strokeStyle = 'rgba(255, 255, 255, 0.58)';
+            config.ctx.lineWidth = 1.5;
+            for (let ripple = 0; ripple < 2; ripple++) {
+                const spread = rippleWidth * (0.5 + ripple * 0.45);
+                config.ctx.beginPath();
+                config.ctx.ellipse(cx, liquidTopY + 1 + ripple * 2, spread, 2.5, 0, 0, Math.PI);
+                config.ctx.stroke();
+            }
+        }
         if (updatedState.precipitateColor) {
             drawPrecipitate(cx, liquidTopY, baseLevel, startX, endX, updatedState.precipitateColor);
         }
