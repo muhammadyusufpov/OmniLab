@@ -105,19 +105,33 @@ document.addEventListener("DOMContentLoaded", function(): void {
     window.addEventListener('resize', ui.resizeCanvas);
 });
 
-function engineLoop(): void {
+let lastFrameTime = 0;
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+function engineLoop(now: number): void {
     const state = config.getLabState();
-    
+    const elapsed = lastFrameTime ? Math.min(now - lastFrameTime, 50) / 1000 : 1 / 60;
+    lastFrameTime = now;
+
     if (state.currentLiquidVol < state.targetLiquidVol) {
+        const nextVolume = reducedMotion.matches
+            ? state.targetLiquidVol
+            : Math.min(state.targetLiquidVol, state.currentLiquidVol + 240 * elapsed);
         config.updateLabState({
-            currentLiquidVol: state.currentLiquidVol + 2.0,
-            waveTime: state.waveTime + 0.25
+            currentLiquidVol: nextVolume,
+            streamActive: nextVolume < state.targetLiquidVol,
+            waveTime: state.waveTime + (reducedMotion.matches ? 0 : 8 * elapsed)
         });
     } else {
-        config.updateLabState({ streamActive: false });
-        if (state.currentLiquidVol > 0) {
-            config.updateLabState({ waveTime: state.waveTime + 0.06 });
-        }
+        config.updateLabState({
+            streamActive: false,
+            currentLiquidVol: state.currentLiquidVol > state.targetLiquidVol
+                ? Math.max(state.targetLiquidVol, state.currentLiquidVol - 240 * elapsed)
+                : state.currentLiquidVol,
+            waveTime: state.currentLiquidVol > 0 && !reducedMotion.matches
+                ? state.waveTime + 2 * elapsed
+                : state.waveTime
+        });
     }
     render.drawVesselAndFluid();
     requestAnimationFrame(engineLoop);
