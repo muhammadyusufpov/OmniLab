@@ -71,6 +71,9 @@ function chemicalMenuMessage(selectedChemicals: string[]): string {
     }
 
     if (selectedChemicals.length === 1) {
+        if (window.firstExperiment && selectedChemicals[0] === 'Na') {
+            return 'Choose Chlorine to continue this first experiment.';
+        }
         const selectedName = chemicalDisplayName(selectedChemicals[0]);
         const partnerCount = config.getCompatibleReactionPartners(
             selectedChemicals[0]
@@ -112,7 +115,8 @@ export function refreshChemicalMenuGuidance(): void {
     document.querySelectorAll<HTMLButtonElement>('.chemical-card').forEach(card => {
         const chemicalId = card.getAttribute('data-name') || '';
         const isSelected = selectedChemicals.includes(chemicalId);
-        const isCompatible = compatiblePartners.has(chemicalId);
+        const isCompatible = compatiblePartners.has(chemicalId)
+            && (!window.firstExperiment || chemicalId === 'Cl2');
         const chemical = state.chemicalDatabase.find(item => item.id === chemicalId);
         const status = card.querySelector<HTMLElement>('.chemical-card-status');
 

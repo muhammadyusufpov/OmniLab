@@ -51,6 +51,9 @@ function chemicalMenuMessage(selectedChemicals) {
         return 'Select one chemical. OmniLab will mark every supported partner.';
     }
     if (selectedChemicals.length === 1) {
+        if (window.firstExperiment && selectedChemicals[0] === 'Na') {
+            return 'Choose Chlorine to continue this first experiment.';
+        }
         const selectedName = chemicalDisplayName(selectedChemicals[0]);
         const partnerCount = config.getCompatibleReactionPartners(selectedChemicals[0]).length;
         const optionLabel = partnerCount === 1 ? 'option is' : 'options are';
@@ -83,7 +86,8 @@ export function refreshChemicalMenuGuidance() {
     document.querySelectorAll('.chemical-card').forEach(card => {
         const chemicalId = card.getAttribute('data-name') || '';
         const isSelected = selectedChemicals.includes(chemicalId);
-        const isCompatible = compatiblePartners.has(chemicalId);
+        const isCompatible = compatiblePartners.has(chemicalId)
+            && (!window.firstExperiment || chemicalId === 'Cl2');
         const chemical = state.chemicalDatabase.find(item => item.id === chemicalId);
         const status = card.querySelector('.chemical-card-status');
         card.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
