@@ -2796,6 +2796,40 @@ class ObservationGuidePageTests(TestCase):
             1,
         )
 
+    def test_three_worked_answers_keep_sources_and_study_boundary(self):
+        cases = (
+            (
+                "/guides/hydrochloric-acid-and-sodium-hydroxide-reaction/",
+                "That leaves 1 mmol of HCl in excess.",
+                "14-4-hydrolysis-of-salt-solutions",
+            ),
+            (
+                "/guides/silver-nitrate-and-sodium-chloride-reaction/",
+                "Na+ and NO3- stay dissolved, so they are spectator ions.",
+                "4-2-classifying-chemical-reactions",
+            ),
+            (
+                "/guides/zinc-and-hydrochloric-acid-reaction/",
+                "So 1 mol of zinc needs 2 mol of HCl and predicts 1 mol of H2.",
+                "4-2-classifying-chemical-reactions",
+            ),
+        )
+        for path, answer, source_slug in cases:
+            with self.subTest(path=path):
+                response = self.client.get(path)
+                self.assertEqual(response.status_code, 200)
+                self.assertContains(response, answer)
+                self.assertContains(response, source_slug)
+                self.assertContains(
+                    response,
+                    "an educational prediction, not a verified simulation "
+                    "or a replacement for trained supervision",
+                )
+                self.assertEqual(
+                    response.content.decode().count('class="observation-guide-worked"'),
+                    1,
+                )
+
     def test_carbon_monoxide_oxygen_guide_keeps_activation_with_the_answer(self):
         response = self.client.get(
             "/guides/carbon-monoxide-and-oxygen-reaction/"
