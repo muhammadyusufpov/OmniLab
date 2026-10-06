@@ -3420,19 +3420,19 @@ REACTION_DEMOS.update({
 CHEMICAL_REACTION_VIRTUAL_LAB_PAGE = {
     "route_name": "chemical_reaction_virtual_lab",
     "canonical_key": "chemical_reaction_virtual_lab",
-    "title": "Chemistry reaction simulator for students",
-    "page_title": "Chemistry reaction simulator for students | OmniLab",
+    "title": "Chemical reaction simulator for students",
+    "page_title": "Chemical reaction simulator online for students | OmniLab",
     "description": (
-        "Try OmniLab's chemistry reaction simulator with 34 supported "
-        "pairs. Explore equations, explanations, safety notes, and visible "
-        "cues in a free browser lab."
+        "Try a free chemical reaction simulator. Choose one of 34 supported "
+        "pairs, then study its equation, observation, and safety notes. "
+        "No account required."
     ),
-    "heading": "Try a chemistry reaction simulator in your browser",
+    "heading": "Try a chemical reaction simulator in your browser",
     "direct_answer": (
-        "Choose two chemicals from a supported pair, then request an "
-        "educational prediction. Read the balanced equation, a short "
-        "explanation, three safety notes, and a visible cue when the "
-        "result includes bubbling or a precipitate."
+        "Choose a chemical, select a marked partner, and request an "
+        "educational prediction. OmniLab shows a balanced equation, a short "
+        "explanation, three safety notes, and a visible cue for supported "
+        "results that bubble or form a precipitate."
     ),
     "reaction_examples": [
         {
@@ -4732,6 +4732,15 @@ for number, guide in enumerate(CYCLE47_GUIDES.values(), start=31):
     })
 
 CHEMICAL_REACTION_LAB_FAQS = [
+    {
+        "question": "How do I start a reaction in the simulator?",
+        "answer": (
+            "Choose a chemical from the searchable menu, then select a "
+            "marked partner. Select Analyze Chemical Reaction to request "
+            "the educational prediction. A prepared Sodium and Chlorine "
+            "example is available if you want to start with a known pair."
+        ),
+    },
     {
         "question": "Is OmniLab's chemical reaction virtual lab free?",
         "answer": (
