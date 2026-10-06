@@ -1806,10 +1806,10 @@ class SearchDiscoveryTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(
             response,
-            "<h1 id=\"reaction-lab-heading\">Try a chemistry reaction simulator in your browser</h1>",
+            "<h1 id=\"reaction-lab-heading\">Try a chemical reaction simulator in your browser</h1>",
             html=True,
         )
-        self.assertContains(response, "Chemistry reaction simulator for students | OmniLab")
+        self.assertContains(response, "Chemical reaction simulator online for students | OmniLab")
         self.assertEqual(response.content.decode().count("Try this pair"), 6)
         self.assertContains(response, "34 supported reaction pairs")
         self.assertContains(response, "38 available substances")
@@ -1867,7 +1867,7 @@ class SearchDiscoveryTests(TestCase):
 
         self.assertEqual(schema_types, {"LearningResource", "FAQPage"})
         faq_schema = next(item for item in page_graph if item["@type"] == "FAQPage")
-        self.assertEqual(len(faq_schema["mainEntity"]), 4)
+        self.assertEqual(len(faq_schema["mainEntity"]), 5)
 
     def test_guide_library_links_to_chemical_reaction_virtual_lab(self):
         response = self.client.get("/guides/")
