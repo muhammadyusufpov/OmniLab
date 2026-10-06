@@ -116,8 +116,9 @@ export function drawVesselAndFluid() {
     if (updatedState.burnerActive) {
         targetColor = '#eab308';
     }
-    if (!currentRenderColor) {
-        currentRenderColor = updatedState.liquidColor;
+    // An empty or first-filled vessel has nothing to blend with.
+    if (!currentRenderColor || updatedState.selectedChemicals.length <= 1) {
+        currentRenderColor = targetColor;
     }
     let match1 = config.hexToRgbA(currentRenderColor, 1).match(/\d+/g);
     let match2 = config.hexToRgbA(targetColor, 1).match(/\d+/g);
