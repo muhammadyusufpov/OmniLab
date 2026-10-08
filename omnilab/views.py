@@ -1271,6 +1271,20 @@ OBSERVATION_GUIDE_PAGES = {
             "Use this guide to balance the equation, identify the gas, and "
             "connect the bubbles to a metal-acid displacement reaction."
         ),
+        "worked_answer": {
+            "question": "If 1 mol of zinc reacts completely, how much hydrochloric acid is needed?",
+            "steps": [
+                "The balanced equation is Zn(s) + 2HCl(aq) -> ZnCl2(aq) + H2(g).",
+                "Its coefficients give a 1:2 ratio of zinc to hydrochloric acid.",
+                "So 1 mol of zinc needs 2 mol of HCl and predicts 1 mol of H2.",
+            ],
+            "limit": (
+                "This ratio does not give the gas volume or reaction speed. "
+                "Hydrochloric acid is corrosive, and hydrogen is flammable."
+            ),
+            "source_url": "https://openstax.org/books/chemistry-2e/pages/4-2-classifying-chemical-reactions",
+            "source_label": "OpenStax Chemistry 2e: classifying chemical reactions",
+        },
         "reactants": [
             {"name": "Zinc", "formula": "Zn"},
             {"name": "Hydrochloric acid", "formula": "HCl"},
@@ -1778,6 +1792,20 @@ OBSERVATION_GUIDE_PAGES = {
             "Use this guide to identify the products, balance the equation, "
             "and reduce it to the net ionic change that forms water."
         ),
+        "worked_answer": {
+            "question": "A paper problem gives 2 mmol of HCl and 1 mmol of NaOH. Which remains?",
+            "steps": [
+                "HCl(aq) + NaOH(aq) -> NaCl(aq) + H2O(l) has a 1:1 mole ratio.",
+                "The 1 mmol of NaOH uses 1 mmol of HCl.",
+                "That leaves 1 mmol of HCl in excess.",
+            ],
+            "limit": (
+                "The amounts alone cannot give a numerical final pH or "
+                "temperature. A clear mixture can still react and warm."
+            ),
+            "source_url": "https://openstax.org/books/chemistry/pages/14-4-hydrolysis-of-salt-solutions",
+            "source_label": "OpenStax Chemistry: hydrolysis of salt solutions",
+        },
         "study_intro": (
             "Connect the one-to-one molecular equation to the ions that react, "
             "the spectator ions, and the expected temperature change."
@@ -1904,6 +1932,20 @@ OBSERVATION_GUIDE_PAGES = {
             "Use this guide to identify the white solid, balance the molecular "
             "equation, and reduce it to the ions that form silver chloride."
         ),
+        "worked_answer": {
+            "question": "Which ions make the solid, and which stay dissolved?",
+            "steps": [
+                "AgNO3(aq) supplies Ag+ and NO3-. NaCl(aq) supplies Na+ and Cl-.",
+                "Ag+ and Cl- join in a 1:1 ratio: Ag+(aq) + Cl-(aq) -> AgCl(s).",
+                "Na+ and NO3- stay dissolved, so they are spectator ions.",
+            ],
+            "limit": (
+                "The solid is predicted from solubility. Very dilute "
+                "solutions may show no visible precipitate."
+            ),
+            "source_url": "https://openstax.org/books/chemistry-2e/pages/4-2-classifying-chemical-reactions",
+            "source_label": "OpenStax Chemistry 2e: classifying chemical reactions",
+        },
         "reactants": [
             {"name": "Silver nitrate", "formula": "AgNO3"},
             {"name": "Sodium chloride", "formula": "NaCl"},

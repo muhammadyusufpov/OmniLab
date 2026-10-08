@@ -2871,18 +2871,21 @@ body {
 }
 
 .observation-guide-study,
+.observation-guide-worked,
 .observation-guide-details,
 .observation-guide-questions {
     margin-top: 112px;
 }
 
 .observation-guide-study-intro,
+.observation-guide-worked-intro,
 .observation-guide-details-intro,
 .observation-guide-questions-intro {
     max-width: 720px;
 }
 
 .observation-guide-study-intro h2,
+.observation-guide-worked-intro h2,
 .observation-guide-details-intro h2,
 .observation-guide-questions-intro h2 {
     max-width: 17ch;
@@ -2963,6 +2966,49 @@ body {
     align-items: start;
     padding-top: 28px;
     border-top: 2px solid var(--border-color);
+}
+
+.observation-guide-worked {
+    display: grid;
+    grid-template-columns: minmax(260px, .72fr) minmax(0, 1.28fr);
+    gap: 64px;
+    align-items: start;
+    padding-top: 28px;
+    border-top: 2px solid var(--border-color);
+}
+
+.observation-guide-worked-body {
+    max-width: 62ch;
+}
+
+.observation-guide-worked-body ol {
+    margin: 0;
+    padding-left: 24px;
+}
+
+.observation-guide-worked-body li {
+    padding: 0 0 16px 8px;
+    color: var(--text-color);
+    font-size: 16px;
+    line-height: 1.65;
+}
+
+.observation-guide-worked-body li::marker {
+    font-weight: 700;
+}
+
+.observation-guide-worked-body p {
+    margin: 4px 0 16px;
+    color: var(--muted-text);
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+.observation-guide-worked-body a {
+    color: var(--text-color);
+    font-size: 14px;
+    font-weight: 700;
+    text-underline-offset: 3px;
 }
 
 .observation-guide-detail-list article {
@@ -3061,6 +3107,7 @@ body {
 .guide-breadcrumb a:focus-visible,
 .guide-sources a:focus-visible,
 .observation-guide-next > div > a:focus-visible,
+.observation-guide-worked-body a:focus-visible,
 .guide-related-links a:focus-visible {
     outline: 3px solid #e3384f;
     outline-offset: 3px;
@@ -3099,6 +3146,7 @@ body {
     .observation-guide-result,
     .observation-guide-observation,
     .observation-guide-ions,
+    .observation-guide-worked,
     .observation-guide-details,
     .observation-guide-questions,
     .observation-guide-notes,
@@ -3238,6 +3286,7 @@ body {
     .observation-guide-observation,
     .observation-guide-ions,
     .observation-guide-study,
+    .observation-guide-worked,
     .observation-guide-details,
     .observation-guide-questions,
     .observation-guide-notes,

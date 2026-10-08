@@ -185,6 +185,25 @@
             </section>
             {% endif %}
 
+            {% if guide.worked_answer %}
+            <section class="observation-guide-worked" aria-labelledby="worked-answer-heading">
+                <div class="observation-guide-worked-intro">
+                    <p class="guide-section-label">Worked answer</p>
+                    <h2 id="worked-answer-heading">{{ guide.worked_answer.question }}</h2>
+                </div>
+                <div class="observation-guide-worked-body">
+                    <ol>
+                        {% for step in guide.worked_answer.steps %}
+                        <li>{{ step }}</li>
+                        {% endfor %}
+                    </ol>
+                    <p>{{ guide.worked_answer.limit }}</p>
+                    <p class="observation-guide-worked-boundary">This is an educational prediction, not a verified simulation or a replacement for trained supervision.</p>
+                    <a href="{{ guide.worked_answer.source_url }}" rel="noopener noreferrer">Check the chemistry in {{ guide.worked_answer.source_label }}</a>
+                </div>
+            </section>
+            {% endif %}
+
             <section class="observation-guide-notes" aria-label="Safety and product limits">
                 <div class="observation-guide-safety">
                     <p class="guide-section-label">Three safety notes</p>
