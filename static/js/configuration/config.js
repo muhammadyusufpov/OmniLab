@@ -256,6 +256,10 @@ const reactionGuidesByPairKey = new Map([
                 title: 'What happens when magnesium sulfate reacts with sodium hydroxide?'
             }]
     ],
+    ['HF+NaOH', [{
+        href: '/guides/hydrofluoric-acid-sodium-hydroxide-reaction/',
+        title: 'What happens when hydrofluoric acid and sodium hydroxide react?'
+    }]],
     ['HBr+NaOH', [{
                 href: '/guides/hydrobromic-acid-sodium-hydroxide-reaction/',
                 title: 'What happens when hydrobromic acid and sodium hydroxide react?'
@@ -268,6 +272,10 @@ const reactionGuidesByPairKey = new Map([
                 href: '/guides/silver-chloride-and-ammonia/',
                 title: 'Why does silver chloride dissolve in ammonia?'
             }]],
+    ['HgCl2+NaOH', [{
+        href: '/guides/mercury-chloride-sodium-hydroxide-reaction/',
+        title: 'What happens when mercury(II) chloride and sodium hydroxide react?'
+    }]],
     ['H2S+NaOH', [{
                 href: '/guides/hydrogen-sulfide-sodium-hydroxide-reaction/',
                 title: 'What happens when hydrogen sulfide and sodium hydroxide react?'
