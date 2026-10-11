@@ -3447,7 +3447,7 @@ REACTION_DEMOS.update({
     for key, demo in CYCLE42_DEMOS.items()
 })
 
-from .cycle47_guides import CONTENT as CYCLE47_CONTENT, CYCLE47_DEMOS, CYCLE47_GUIDES, HELD_GUIDE_KEYS
+from .cycle47_guides import CONTENT as CYCLE47_CONTENT, CYCLE47_DEMOS, CYCLE47_GUIDES
 
 OBSERVATION_GUIDE_PAGES.update(CYCLE47_GUIDES)
 PUBLIC_CANONICAL_URLS.update({
@@ -4213,8 +4213,6 @@ GUIDE_RELATIONSHIP_DEFINITIONS["silver_nitrate_potassium_iodide"].append(
 )
 
 for content in CYCLE47_CONTENT:
-    if content["key"] in HELD_GUIDE_KEYS:
-        continue
     guide = CYCLE47_GUIDES[content["key"]]
     canonical_key = guide["canonical_key"]
     substances = {part["formula"] for part in guide["reactants"]}
@@ -4225,8 +4223,6 @@ for content in CYCLE47_CONTENT:
     }
 
 for content in CYCLE47_CONTENT:
-    if content["key"] in HELD_GUIDE_KEYS:
-        continue
     guide = CYCLE47_GUIDES[content["key"]]
     canonical_key = guide["canonical_key"]
     substances = GUIDE_CHEMISTRY_PROFILES[canonical_key]["substances"]
@@ -5386,7 +5382,7 @@ def chemical_reaction_virtual_lab(request):
 def guide_library(request):
     canonical_url = PUBLIC_CANONICAL_URLS["guides"]
     description = (
-        "Browse 35 free, no-account chemistry guides about virtual reaction "
+        "Browse 37 free, no-account chemistry guides about virtual reaction "
         "labs, equations, bonding, combustion, oxidation, acids, gases, and "
         "precipitates."
     )
