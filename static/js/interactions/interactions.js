@@ -5,7 +5,7 @@ import { capture, captureLabSetupStarted } from '../analytics/analytics.js';
 import { bindFeedbackOpenCapture, buildFeedbackContactUrl, captureFeedbackPromptViewed } from './feedback.js';
 import { normalizeReactionEffect, normalizePrecipitateColor, parseSavedReactionResult } from './reactionResult.js';
 import { readStorageValue, removeStorageValue, writeStorageValue } from '../storage/storage.js';
-import { moveLiquid } from '../rendering/liquidMotion.js';
+import { moveLiquid, pourIntoLiquid } from '../rendering/liquidMotion.js';
 const DEFAULT_REACTION_INSTRUCTION = `
     <div class="text-center mt-5 lab-empty-state">
         <p class="lab-instruction mb-2">Choose a supported pair from Chemicals. Try <strong>Hydrogen and Oxygen</strong> or <strong>Hydrochloric acid and Sodium hydroxide</strong>.</p>
@@ -251,7 +251,10 @@ export function addChemicalToLab(name, color, streamX = config.canvas ? config.c
             streamColor: color,
             streamActive: true,
             streamX,
-            targetLiquidVol: targetVol
+            targetLiquidVol: targetVol,
+            ...(state.targetLiquidVol > 0 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+                ? pourIntoLiquid(state)
+                : {})
         });
         if (updatedChemicals.length === 1) {
             captureLabSetupStarted({
