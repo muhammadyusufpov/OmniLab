@@ -25,6 +25,7 @@ import {
     removeStorageValue,
     writeStorageValue
 } from '../storage/storage.js';
+import { moveLiquid } from '../rendering/liquidMotion.js';
 
 const DEFAULT_REACTION_INSTRUCTION = `
     <div class="text-center mt-5 lab-empty-state">
@@ -302,7 +303,10 @@ export function setupCanvasDrag(): void {
             vesselOffsetX: state.vesselOffsetX + dx,
             vesselOffsetY: state.vesselOffsetY + dy,
             dragStartX: e.clientX,
-            dragStartY: e.clientY
+            dragStartY: e.clientY,
+            ...(state.currentLiquidVol > 0 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+                ? moveLiquid(state, dx, dy)
+                : {})
         });
     });
 
@@ -404,7 +408,11 @@ export function resetLaboratory(): void {
         precipitateColor: null,
         streamActive: false,
         vesselOffsetX: 0,
-        vesselOffsetY: 0
+        vesselOffsetY: 0,
+        liquidTilt: 0,
+        liquidTiltVelocity: 0,
+        liquidRipple: 0,
+        liquidRippleVelocity: 0
     });
     document.querySelectorAll('.chemical-card').forEach(card => {
         card.setAttribute('aria-pressed', 'false');
