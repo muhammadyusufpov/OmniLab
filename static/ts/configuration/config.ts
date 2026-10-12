@@ -35,6 +35,10 @@ export interface LabState {
     dragStartY: number;
     vesselOffsetX: number;
     vesselOffsetY: number;
+    liquidTilt: number;
+    liquidTiltVelocity: number;
+    liquidRipple: number;
+    liquidRippleVelocity: number;
     smokeParticles: Particle[];
     explosionParticles: Particle[];
     isBubbling: boolean;
@@ -406,6 +410,10 @@ let state: LabState = {
     dragStartY: 0,
     vesselOffsetX: 0,
     vesselOffsetY: 0,
+    liquidTilt: 0,
+    liquidTiltVelocity: 0,
+    liquidRipple: 0,
+    liquidRippleVelocity: 0,
     smokeParticles: [],
     explosionParticles: [],
     isBubbling: false,

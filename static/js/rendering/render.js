@@ -1,4 +1,5 @@
 import * as config from '../configuration/config.js';
+import { liquidSurfaceDisplacement } from './liquidMotion.js';
 export function updateAndDrawAmbientBubbles(cx, cy) {
     if (!config.getLabState().burnerActive) {
         config.updateLabState({ ambientBubbles: [] });
@@ -276,10 +277,12 @@ export function drawVesselAndFluid() {
         config.ctx.beginPath();
         let baseLevel = updatedState.currentVessel === 'tube' ? cy + 104 : cy + 106;
         let liquidTopY = baseLevel - updatedState.currentLiquidVol;
-        let amplitude = updatedState.burnerActive ? 6 : (updatedState.streamActive ? 5.5 : 1.4);
+        let amplitude = updatedState.burnerActive ? 6 : (updatedState.streamActive ? 5.5 : 0);
         config.ctx.moveTo(startX - 10, liquidTopY);
         for (let x = startX - 10; x <= endX + 10; x++) {
-            let waveY = liquidTopY + Math.sin(x * 0.05 + updatedState.waveTime * 1.3) * amplitude;
+            let waveY = liquidTopY
+                + Math.sin(x * 0.05 + updatedState.waveTime * 1.3) * amplitude
+                + liquidSurfaceDisplacement(updatedState, x, cx, (endX - startX) / 2, updatedState.waveTime);
             config.ctx.lineTo(x, waveY);
         }
         if (updatedState.currentVessel === 'beaker') {

@@ -5,6 +5,7 @@ import { capture, captureLabSetupStarted } from '../analytics/analytics.js';
 import { bindFeedbackOpenCapture, buildFeedbackContactUrl, captureFeedbackPromptViewed } from './feedback.js';
 import { normalizeReactionEffect, normalizePrecipitateColor, parseSavedReactionResult } from './reactionResult.js';
 import { readStorageValue, removeStorageValue, writeStorageValue } from '../storage/storage.js';
+import { moveLiquid } from '../rendering/liquidMotion.js';
 const DEFAULT_REACTION_INSTRUCTION = `
     <div class="text-center mt-5 lab-empty-state">
         <p class="lab-instruction mb-2">Choose a supported pair from Chemicals. Try <strong>Hydrogen and Oxygen</strong> or <strong>Hydrochloric acid and Sodium hydroxide</strong>.</p>
@@ -226,7 +227,10 @@ export function setupCanvasDrag() {
             vesselOffsetX: state.vesselOffsetX + dx,
             vesselOffsetY: state.vesselOffsetY + dy,
             dragStartX: e.clientX,
-            dragStartY: e.clientY
+            dragStartY: e.clientY,
+            ...(state.currentLiquidVol > 0 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+                ? moveLiquid(state, dx, dy)
+                : {})
         });
     });
     window.addEventListener('mouseup', function () {
@@ -306,7 +310,11 @@ export function resetLaboratory() {
         precipitateColor: null,
         streamActive: false,
         vesselOffsetX: 0,
-        vesselOffsetY: 0
+        vesselOffsetY: 0,
+        liquidTilt: 0,
+        liquidTiltVelocity: 0,
+        liquidRipple: 0,
+        liquidRippleVelocity: 0
     });
     document.querySelectorAll('.chemical-card').forEach(card => {
         card.setAttribute('aria-pressed', 'false');

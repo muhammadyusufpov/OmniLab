@@ -4,6 +4,7 @@ import * as render from '../rendering/render.js';
 import * as interactions from '../interactions/interactions.js';
 import * as firstExperiment from '../firstExperiment/firstExperiment.js';
 import { capture } from '../analytics/analytics.js';
+import { settleLiquid } from '../rendering/liquidMotion.js';
 
 declare global {
     interface Window {
@@ -132,6 +133,9 @@ function engineLoop(now: number): void {
                 ? state.waveTime + 2 * elapsed
                 : state.waveTime
         });
+    }
+    if (state.currentLiquidVol > 0 && !reducedMotion.matches) {
+        config.updateLabState(settleLiquid(config.getLabState(), elapsed));
     }
     render.drawVesselAndFluid();
     requestAnimationFrame(engineLoop);
