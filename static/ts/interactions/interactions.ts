@@ -25,7 +25,7 @@ import {
     removeStorageValue,
     writeStorageValue
 } from '../storage/storage.js';
-import { moveLiquid } from '../rendering/liquidMotion.js';
+import { moveLiquid, pourIntoLiquid } from '../rendering/liquidMotion.js';
 
 const DEFAULT_REACTION_INSTRUCTION = `
     <div class="text-center mt-5 lab-empty-state">
@@ -336,7 +336,10 @@ export function addChemicalToLab(
             streamColor: color,
             streamActive: true,
             streamX,
-            targetLiquidVol: targetVol
+            targetLiquidVol: targetVol,
+            ...(state.targetLiquidVol > 0 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+                ? pourIntoLiquid(state)
+                : {})
         });
 
         if (updatedChemicals.length === 1) {

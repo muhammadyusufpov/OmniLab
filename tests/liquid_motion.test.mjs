@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 
-const { moveLiquid, settleLiquid, liquidSurfaceDisplacement } = await import(
+const { moveLiquid, pourIntoLiquid, settleLiquid, liquidSurfaceDisplacement } = await import(
     '../static/js/rendering/liquidMotion.js'
 );
 
@@ -28,4 +28,19 @@ test('vertical movement creates a ripple that settles after the vessel stops', (
         motion = settleLiquid(motion, 1 / 60);
     }
     assert.deepEqual(motion, still);
+});
+
+test('a moved vessel keeps a visible ripple after two seconds, then settles', () => {
+    let motion = moveLiquid(still, 0, 20);
+    for (let frame = 0; frame < 120; frame++) motion = settleLiquid(motion, 1 / 60);
+    assert.ok(Math.abs(motion.liquidRipple) > 0.25);
+    for (let frame = 0; frame < 600; frame++) motion = settleLiquid(motion, 1 / 60);
+    assert.deepEqual(motion, still);
+});
+
+test('pouring into existing liquid starts movement that outlasts the stream', () => {
+    let motion = pourIntoLiquid(still);
+    for (let frame = 0; frame < 15; frame++) motion = settleLiquid(motion, 1 / 60);
+    assert.ok(Math.abs(motion.liquidRipple) > 1);
+    assert.ok(Math.abs(motion.liquidTilt) > 0.1);
 });
