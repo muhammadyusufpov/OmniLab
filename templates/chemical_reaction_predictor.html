@@ -1,0 +1,136 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{{ page_description }}">
+    <title>{{ page_title }}</title>
+    <link rel="canonical" href="{{ canonical_url }}">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="OmniLab">
+    <meta property="og:title" content="{{ page_title }}">
+    <meta property="og:description" content="{{ page_description }}">
+    <meta property="og:url" content="{{ canonical_url }}">
+    <meta property="og:image" content="{{ social_preview_url }}">
+    <meta property="og:image:alt" content="{{ social_preview_alt }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ page_title }}">
+    <meta name="twitter:description" content="{{ page_description }}">
+    <meta name="twitter:image" content="{{ social_preview_url }}">
+    <link rel="icon" href="{% static 'favicon.png' %}" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% include "partials/product_analytics.html" %}
+    <script type="application/ld+json">{{ page_schema_json|safe }}</script>
+</head>
+<body class="guide-page">
+    <header class="guide-site-header">
+        <a class="guide-brand" href="{% url 'index' %}">OmniLab</a>
+        <span class="guide-site-label">Study tool</span>
+    </header>
+    <main>
+        <article class="reaction-lab-shell">
+            <nav class="guide-breadcrumb" aria-label="Breadcrumb">
+                <a href="{% url 'index' %}">Virtual lab</a>
+                <span aria-hidden="true">/</span>
+                <span>Reaction predictor</span>
+            </nav>
+
+            <section class="reaction-lab-hero" aria-labelledby="predictor-heading">
+                <div class="reaction-lab-hero-copy">
+                    <p class="guide-context">For chemistry students · Free in the current release</p>
+                    <h1 id="predictor-heading">A chemical reaction predictor you can check, step by step</h1>
+                    <p class="reaction-lab-lede">Choose a supported pair in OmniLab. Read its predicted products, balanced equation, expected observation, and safety notes in one place.</p>
+                    <a class="guide-primary" href="{% url 'sodium_chlorine_demo' %}?source=guide_reaction_predictor">Try a prepared reaction <span aria-hidden="true">→</span></a>
+                    <p class="guide-cta-note">No account is required. You choose when to analyze.</p>
+                </div>
+                <figure class="guide-preview reaction-lab-preview">
+                    <div class="guide-preview-frame">
+                        <img src="{% static 'images/omnilab-social-preview.png' %}" alt="OmniLab result showing a balanced equation, explanation, and safety guidance">
+                        <span class="guide-preview-label">Actual OmniLab result</span>
+                    </div>
+                    <figcaption>The result panel connects a supported pair to an equation and study notes.</figcaption>
+                </figure>
+            </section>
+
+            <section class="reaction-lab-output" aria-labelledby="what-heading">
+                <div>
+                    <p class="guide-section-label">What this tool does</p>
+                    <h2 id="what-heading">See more than a product formula</h2>
+                </div>
+                <div class="reaction-lab-output-grid">
+                    <div><span>01</span><h3>Predicted products</h3><p>See the products for a pair included in OmniLab's fixed reaction catalog.</p></div>
+                    <div><span>02</span><h3>Balanced equation</h3><p>Check the reactants, products, coefficients, and states together.</p></div>
+                    <div><span>03</span><h3>Expected cue</h3><p>Connect a gas, precipitate, color, or other listed observation to the equation.</p></div>
+                    <div><span>04</span><h3>Safety limits</h3><p>Read the specific cautions before comparing the result with a physical lab.</p></div>
+                </div>
+            </section>
+
+            <section class="reaction-lab-how" aria-labelledby="steps-heading">
+                <div class="reaction-lab-section-intro">
+                    <p class="guide-section-label">How to check a reaction</p>
+                    <h2 id="steps-heading">Start with a pair, then test the prediction</h2>
+                    <p>OmniLab handles only supported pairs. The chemical picker marks compatible partners after your first choice.</p>
+                </div>
+                <ol class="reaction-lab-how-list">
+                    <li><span>1</span><div><h3>Pick a first substance</h3><p>Open the Chemicals menu in the lab. Search or browse for the first substance in your study question.</p></div></li>
+                    <li><span>2</span><div><h3>Choose a marked partner</h3><p>The picker marks substances with a supported result. If your intended partner is not marked, this release cannot answer that pair.</p></div></li>
+                    <li><span>3</span><div><h3>Analyze and inspect</h3><p>Choose Analyze Chemical Reaction. Read the product and equation together. Compare the explanation and observation with your course materials.</p></div></li>
+                </ol>
+            </section>
+
+            <section class="reaction-lab-reading" aria-labelledby="example-heading">
+                <div class="reaction-lab-equation-card">
+                    <p class="guide-section-label">One worked example</p>
+                    <p class="reaction-lab-equation">AgNO₃(aq) + NaCl(aq) → AgCl(s) + NaNO₃(aq)</p>
+                    <div class="reaction-lab-equation-key">
+                        <span><strong>(aq)</strong> dissolved in water</span>
+                        <span><strong>(s)</strong> solid product</span>
+                        <span><strong>→</strong> produces</span>
+                    </div>
+                </div>
+                <div class="reaction-lab-reading-copy">
+                    <p class="guide-section-label">Read the result</p>
+                    <h2 id="example-heading">Which product can you see?</h2>
+                    <p>Silver nitrate and sodium chloride form a white silver chloride precipitate in this simplified example. The equation marks silver chloride as a solid with (s).</p>
+                    <p>Sodium nitrate stays dissolved in this model. That is why the visible white solid points to silver chloride, not every product on the right side.</p>
+                    <p>Open the <a href="{% url 'guide_silver_nitrate_sodium_chloride' %}">silver nitrate and sodium chloride guide</a> for the ion-level explanation and the matching prepared lab.</p>
+                </div>
+            </section>
+
+            <section class="reaction-lab-fit" aria-labelledby="fit-heading">
+                <div class="reaction-lab-section-intro">
+                    <p class="guide-section-label">Choose the right study method</p>
+                    <h2 id="fit-heading">Know when this predictor fits</h2>
+                    <p>Use a tool that matches the question your class asks.</p>
+                </div>
+                <div class="reaction-lab-fit-grid">
+                    <article><h3>Use OmniLab for supported pairs</h3><p>Choose a marked pair when you want one quick predicted result, equation, observation, and safety notes. The current catalog includes 34 supported pairs.</p></article>
+                    <article><h3>Use course material for other pairs</h3><p>If the partner is unmarked, do not treat a missing OmniLab result as proof that no reaction occurs. Use your textbook or ask your instructor.</p></article>
+                    <article><h3>Use supervised lab work for measurements</h3><p>OmniLab does not verify yields, rates, concentrations, temperature effects, or physical safety. Follow your instructor and lab procedure for those questions.</p></article>
+                </div>
+            </section>
+
+            <section class="reaction-lab-boundary" aria-labelledby="boundary-heading">
+                <div><p class="guide-section-label">Study boundary</p><h2 id="boundary-heading">A prediction is a starting point.</h2></div>
+                <div>
+                    <p>OmniLab's results are educational predictions from a fixed catalog. They are not verified simulations or evidence that a physical reaction will behave the same way.</p>
+                    <p>Check important details with trusted course materials. Never use a result as a replacement for trained supervision, safety procedures, or a real experiment.</p>
+                </div>
+            </section>
+
+            <section class="reaction-lab-final" aria-labelledby="next-heading">
+                <p class="guide-section-label">Try it now</p>
+                <h2 id="next-heading">Inspect one result before choosing your own pair.</h2>
+                <p>The prepared Sodium and Chlorine setup opens ready for your Analyze choice.</p>
+                <div class="reaction-lab-final-links">
+                    <a href="{% url 'sodium_chlorine_demo' %}?source=guide_reaction_predictor">Open the prepared reaction <span aria-hidden="true">→</span></a>
+                    <a href="{% url 'index' %}#lab-workspace">Browse the full lab <span aria-hidden="true">→</span></a>
+                </div>
+            </section>
+        </article>
+    </main>
+    {% include "partials/site_footer.html" %}
+</body>
+</html>

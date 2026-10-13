@@ -31,6 +31,8 @@ urlpatterns = [
     path('privacy/', views.privacy, name="privacy"),
     path('terms/', views.terms, name="terms"),
     path('guides/', views.guide_library, name="guide_library"),
+    path('guides/chemical-reaction-predictor/', views.chemical_reaction_predictor,
+         name="chemical_reaction_predictor"),
     path(
         'first-experiment/',
         views.first_experiment,

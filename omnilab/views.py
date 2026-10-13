@@ -49,6 +49,9 @@ PUBLIC_CANONICAL_URLS = {
     "contact": f"{PRODUCTION_BASE_URL}/contact/",
     "faq": f"{PRODUCTION_BASE_URL}/faq/",
     "guides": f"{PRODUCTION_BASE_URL}/guides/",
+    "chemical_reaction_predictor": (
+        f"{PRODUCTION_BASE_URL}/guides/chemical-reaction-predictor/"
+    ),
     "privacy": f"{PRODUCTION_BASE_URL}/privacy/",
     "terms": f"{PRODUCTION_BASE_URL}/terms/",
     "sodium_chlorine_reaction": (
@@ -5436,6 +5439,31 @@ def guide_library(request):
             "guide_groups": GUIDE_LIBRARY_GROUPS,
         },
     )
+
+
+def chemical_reaction_predictor(request):
+    canonical_url = PUBLIC_CANONICAL_URLS["chemical_reaction_predictor"]
+    description = (
+        "Use OmniLab's free chemical reaction predictor for supported pairs. "
+        "Inspect the equation, expected observation, and safety limits before a real lab."
+    )
+    page_schema = {
+        "@context": "https://schema.org",
+        "@type": "LearningResource",
+        "name": "Chemical reaction predictor for students",
+        "description": description,
+        "url": canonical_url,
+        "isPartOf": {"@type": "WebSite", "name": "OmniLab",
+                     "url": PUBLIC_CANONICAL_URLS["index"]},
+    }
+    return render(request, "chemical_reaction_predictor.html", {
+        "page_title": "Chemical reaction predictor for students | OmniLab",
+        "page_description": description,
+        "canonical_url": canonical_url,
+        "social_preview_url": SOCIAL_PREVIEW_URL,
+        "social_preview_alt": SOCIAL_PREVIEW_ALT,
+        "page_schema_json": json.dumps(page_schema),
+    })
 
 
 def pricing(request):
