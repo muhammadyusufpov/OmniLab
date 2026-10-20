@@ -1,0 +1,152 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{{ page_description }}">
+    <title>{{ page_title }}</title>
+    <link rel="canonical" href="{{ canonical_url }}">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="OmniLab">
+    <meta property="og:title" content="{{ page_title }}">
+    <meta property="og:description" content="{{ page_description }}">
+    <meta property="og:url" content="{{ canonical_url }}">
+    <meta property="og:image" content="{{ social_preview_url }}">
+    <meta property="og:image:alt" content="{{ social_preview_alt }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ page_title }}">
+    <meta name="twitter:description" content="{{ page_description }}">
+    <meta name="twitter:image" content="{{ social_preview_url }}">
+    <link rel="icon" href="{% static 'favicon.png' %}" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% include "partials/product_analytics.html" %}
+    <script type="application/ld+json">{{ page_schema_json|safe }}</script>
+</head>
+<body class="guide-page">
+    <header class="guide-site-header">
+        <a class="guide-brand" href="{% url 'index' %}">OmniLab</a>
+        <span class="guide-site-label">Study tool</span>
+    </header>
+    <main>
+        <article class="reaction-lab-shell practice-shell">
+            <nav class="guide-breadcrumb" aria-label="Breadcrumb">
+                <a href="{% url 'index' %}">Virtual lab</a>
+                <span aria-hidden="true">/</span>
+                <span>Chemical reaction practice</span>
+            </nav>
+
+            <section class="reaction-lab-hero" aria-labelledby="practice-heading">
+                <div class="reaction-lab-hero-copy">
+                    <p class="guide-context">Five questions · Worked answers · Matching lab examples</p>
+                    <h1 id="practice-heading">Practice chemical reactions you can actually check</h1>
+                    <p class="reaction-lab-lede">Predict a product or observation first. Then reveal the equation and reasoning. Each example links to a supported OmniLab reaction.</p>
+                    <a class="guide-primary" href="#practice-questions">Start question 1 <span aria-hidden="true">→</span></a>
+                    <p class="guide-cta-note">No account or payment is required in the current release.</p>
+                </div>
+                <figure class="guide-preview reaction-lab-preview">
+                    <div class="guide-preview-frame">
+                        <img src="{% static 'images/omnilab-social-preview.png' %}" alt="OmniLab showing selected chemicals, a balanced equation, and safety guidance">
+                        <span class="guide-preview-label">Actual OmniLab result</span>
+                    </div>
+                    <figcaption>After each answer, open the matching setup and inspect the educational prediction.</figcaption>
+                </figure>
+            </section>
+
+            <section class="practice-method" aria-labelledby="practice-method-heading">
+                <p class="guide-section-label">How to use this set</p>
+                <h2 id="practice-method-heading">Try the question before opening its answer</h2>
+                <p>For each pair, write what you expect to form. Look for a balanced equation and a clue you could discuss in class. Open the answer only after you make a prediction. These five examples cover a precipitate, a gas, neutralization, combustion, and a metal-acid reaction.</p>
+            </section>
+
+            <section class="practice-list" id="practice-questions" aria-labelledby="practice-list-heading">
+                <div class="practice-list-intro">
+                    <p class="guide-section-label">Work through the reactions</p>
+                    <h2 id="practice-list-heading">Five questions, five different clues</h2>
+                    <p>Each answer explains one useful step. The full guides go deeper after you check your work.</p>
+                </div>
+
+                <article class="practice-card">
+                    <div class="practice-card-head"><span class="practice-number">01</span><span class="practice-type">Precipitation</span></div>
+                    <h3>What forms when silver nitrate meets sodium chloride?</h3>
+                    <p>Both reactants are dissolved in water. Name the solid, then balance the full equation.</p>
+                    <details><summary>Show the worked answer</summary><div class="practice-answer">
+                        <p class="practice-equation">AgNO₃(aq) + NaCl(aq) → AgCl(s) + NaNO₃(aq)</p>
+                        <p>Silver ions join chloride ions to form solid silver chloride. The white solid is a precipitate. Sodium and nitrate remain dissolved. Every element already has the same atom count on both sides, so each coefficient is 1.</p>
+                        <p>Check the state symbols: (aq) means dissolved in water; (s) means solid. A white appearance alone cannot identify an unknown substance without further tests.</p>
+                        <a href="{% url 'guide_silver_nitrate_sodium_chloride' %}">Read the silver chloride guide →</a>
+                    </div></details>
+                </article>
+
+                <article class="practice-card">
+                    <div class="practice-card-head"><span class="practice-number">02</span><span class="practice-type">Gas formation</span></div>
+                    <h3>Why does sodium carbonate fizz with hydrochloric acid?</h3>
+                    <p>Predict the gas and the other products. Then check which coefficients make the equation balance.</p>
+                    <details><summary>Show the worked answer</summary><div class="practice-answer">
+                        <p class="practice-equation">Na₂CO₃(aq) + 2HCl(aq) → 2NaCl(aq) + H₂O(l) + CO₂(g)</p>
+                        <p>The carbonate and acid produce carbon dioxide gas, water, and dissolved sodium chloride. Carbon dioxide leaving the liquid explains the expected bubbles. Two HCl units supply two chloride ions for two NaCl units and two hydrogen atoms for water.</p>
+                        <p>Do not use fizzing alone to identify a gas in a real lab. Check the chemicals, conditions, and your instructor's procedure.</p>
+                        <a href="{% url 'guide_sodium_carbonate_hydrochloric_acid' %}">Read the carbonate and acid guide →</a>
+                    </div></details>
+                </article>
+
+                <article class="practice-card">
+                    <div class="practice-card-head"><span class="practice-number">03</span><span class="practice-type">Neutralization</span></div>
+                    <h3>What changes when hydrochloric acid meets sodium hydroxide?</h3>
+                    <p>Write the molecular equation. Then identify the ions that make water.</p>
+                    <details><summary>Show the worked answer</summary><div class="practice-answer">
+                        <p class="practice-equation">HCl(aq) + NaOH(aq) → NaCl(aq) + H₂O(l)</p>
+                        <p>Hydrogen ions from the acid and hydroxide ions from the base form water. Sodium and chloride remain dissolved as spectator ions. The net ionic equation is H⁺(aq) + OH⁻(aq) → H₂O(l). One of each formula unit balances the molecular equation.</p>
+                        <p>A balanced equation does not specify the final pH. Amounts and concentrations still matter in a physical mixture.</p>
+                        <a href="{% url 'guide_hydrochloric_acid_sodium_hydroxide' %}">Read the neutralization guide →</a>
+                    </div></details>
+                </article>
+
+                <article class="practice-card">
+                    <div class="practice-card-head"><span class="practice-number">04</span><span class="practice-type">Combustion</span></div>
+                    <h3>How do hydrogen and oxygen make water?</h3>
+                    <p>Begin with H₂ + O₂ → H₂O. Balance oxygen first, then hydrogen.</p>
+                    <details><summary>Show the worked answer</summary><div class="practice-answer">
+                        <p class="practice-equation">2H₂(g) + O₂(g) → 2H₂O(l)</p>
+                        <p>One O₂ molecule has two oxygen atoms. Put 2 before H₂O to match them. That gives four hydrogen atoms on the right, so put 2 before H₂. The coefficients now balance both elements.</p>
+                        <p>The equation is a simplified product prediction. It does not show ignition conditions, rate, or the hazards of a real hydrogen-oxygen mixture.</p>
+                        <a href="{% url 'guide_hydrogen_oxygen' %}">Read the hydrogen and oxygen guide →</a>
+                    </div></details>
+                </article>
+
+                <article class="practice-card">
+                    <div class="practice-card-head"><span class="practice-number">05</span><span class="practice-type">Metal and acid</span></div>
+                    <h3>What gas can zinc release in hydrochloric acid?</h3>
+                    <p>Predict the products. Balance the chlorine and hydrogen atoms after writing their formulas.</p>
+                    <details><summary>Show the worked answer</summary><div class="practice-answer">
+                        <p class="practice-equation">Zn(s) + 2HCl(aq) → ZnCl₂(aq) + H₂(g)</p>
+                        <p>Zinc forms dissolved zinc chloride while hydrogen gas can appear as bubbles. Zinc chloride has two chlorine atoms, so the left side needs 2HCl. Those two hydrogen atoms form one H₂ molecule.</p>
+                        <p>Real observations depend on surface condition and solution strength. Hydrogen is flammable, so a virtual prediction cannot replace supervised safety steps.</p>
+                        <a href="{% url 'guide_zinc_hydrochloric_acid' %}">Read the zinc and acid guide →</a>
+                    </div></details>
+                </article>
+            </section>
+
+            <section class="reaction-lab-boundary" aria-labelledby="practice-boundary-heading">
+                <div><p class="guide-section-label">Study boundary</p><h2 id="practice-boundary-heading">A checked answer is still a model.</h2></div>
+                <div>
+                    <p>These answers and OmniLab results are educational predictions for supported pairs. They are not verified simulations or a complete account of physical conditions.</p>
+                    <p>Check important details against trusted course materials. Never use these predictions instead of trained supervision or laboratory safety procedures.</p>
+                </div>
+            </section>
+
+            <section class="reaction-lab-final" aria-labelledby="practice-next-heading">
+                <p class="guide-section-label">Next step</p>
+                <h2 id="practice-next-heading">Test one answer in the virtual lab.</h2>
+                <p>The prepared sodium and chlorine example opens with a supported pair selected. You decide when to analyze it.</p>
+                <div class="reaction-lab-final-links">
+                    <a class="guide-primary" href="{% url 'sodium_chlorine_demo' %}?source=guide_reaction_practice">Open a prepared reaction <span aria-hidden="true">→</span></a>
+                    <a href="{% url 'guide_library' %}">Browse the chemistry guides <span aria-hidden="true">→</span></a>
+                </div>
+            </section>
+        </article>
+    </main>
+    {% include "partials/site_footer.html" %}
+</body>
+</html>

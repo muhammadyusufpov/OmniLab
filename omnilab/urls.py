@@ -33,6 +33,8 @@ urlpatterns = [
     path('guides/', views.guide_library, name="guide_library"),
     path('guides/chemical-reaction-predictor/', views.chemical_reaction_predictor,
          name="chemical_reaction_predictor"),
+    path('guides/chemical-reaction-practice/', views.chemical_reaction_practice,
+         name="chemical_reaction_practice"),
     path(
         'first-experiment/',
         views.first_experiment,

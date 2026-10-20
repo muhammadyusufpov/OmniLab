@@ -52,6 +52,9 @@ PUBLIC_CANONICAL_URLS = {
     "chemical_reaction_predictor": (
         f"{PRODUCTION_BASE_URL}/guides/chemical-reaction-predictor/"
     ),
+    "chemical_reaction_practice": (
+        f"{PRODUCTION_BASE_URL}/guides/chemical-reaction-practice/"
+    ),
     "privacy": f"{PRODUCTION_BASE_URL}/privacy/",
     "terms": f"{PRODUCTION_BASE_URL}/terms/",
     "sodium_chlorine_reaction": (
@@ -5458,6 +5461,32 @@ def chemical_reaction_predictor(request):
     }
     return render(request, "chemical_reaction_predictor.html", {
         "page_title": "Chemical reaction predictor for students | OmniLab",
+        "page_description": description,
+        "canonical_url": canonical_url,
+        "social_preview_url": SOCIAL_PREVIEW_URL,
+        "social_preview_alt": SOCIAL_PREVIEW_ALT,
+        "page_schema_json": json.dumps(page_schema),
+    })
+
+
+def chemical_reaction_practice(request):
+    canonical_url = PUBLIC_CANONICAL_URLS["chemical_reaction_practice"]
+    description = (
+        "Practice five chemical reactions with questions, worked answers, "
+        "balanced equations, and matching virtual lab examples."
+    )
+    page_schema = {
+        "@context": "https://schema.org",
+        "@type": "LearningResource",
+        "name": "Chemical reaction practice with worked answers",
+        "description": description,
+        "url": canonical_url,
+        "learningResourceType": "Practice problems",
+        "isPartOf": {"@type": "WebSite", "name": "OmniLab",
+                     "url": PUBLIC_CANONICAL_URLS["index"]},
+    }
+    return render(request, "chemical_reaction_practice.html", {
+        "page_title": "Chemical reaction practice: 5 worked problems | OmniLab",
         "page_description": description,
         "canonical_url": canonical_url,
         "social_preview_url": SOCIAL_PREVIEW_URL,

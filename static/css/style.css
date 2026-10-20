@@ -2501,6 +2501,34 @@ body {
 .reaction-lab-final-links > a:last-child { color: var(--bg-main); font-size: 14px; font-weight: 700; text-underline-offset: 4px; }
 .reaction-lab-related { margin-top: 80px; }
 
+.practice-method { margin-top: 112px; max-width: 760px; }
+.practice-method h2 { max-width: 18ch; }
+.practice-method > p:last-child { max-width: 68ch; margin-top: 22px; color: var(--muted-text); line-height: 1.7; }
+.practice-list { margin-top: 112px; }
+.practice-list-intro { max-width: 700px; margin-bottom: 40px; }
+.practice-list-intro h2 { max-width: 17ch; }
+.practice-list-intro > p:last-child { margin-top: 18px; color: var(--muted-text); }
+.practice-card { padding: 30px 0 34px; border-top: 1px solid var(--border-color); }
+.practice-card:last-child { border-bottom: 1px solid var(--border-color); }
+.practice-card-head { display: flex; align-items: center; gap: 16px; margin-bottom: 14px; }
+.practice-number { font-size: 15px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.practice-type { color: var(--muted-text); font-size: 12px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+.practice-card h3 { max-width: 28ch; margin: 0; font-size: clamp(23px, 2.4vw, 31px); line-height: 1.25; text-wrap: balance; }
+.practice-card > p { max-width: 68ch; margin: 12px 0 18px; color: var(--muted-text); line-height: 1.7; }
+.practice-card details { max-width: 790px; }
+.practice-card summary { width: fit-content; min-height: 44px; display: inline-flex; align-items: center; cursor: pointer; font-weight: 700; text-underline-offset: 4px; text-decoration: underline; }
+.practice-card summary:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
+.practice-answer { margin-top: 16px; padding: 24px 28px; border-radius: 14px; background: var(--panel-bg); box-shadow: var(--shadow); }
+.practice-answer p { max-width: 68ch; margin: 0 0 16px; line-height: 1.7; }
+.practice-answer p:last-of-type { margin-bottom: 18px; }
+.practice-answer .practice-equation { overflow-wrap: anywhere; color: var(--text-color); font-size: clamp(18px, 2vw, 23px); font-weight: 700; line-height: 1.45; }
+.practice-answer a { font-weight: 700; text-underline-offset: 4px; }
+@media (max-width: 600px) {
+    .practice-method, .practice-list { margin-top: 72px; }
+    .practice-card { padding: 24px 0 28px; }
+    .practice-answer { padding: 20px; }
+}
+
 .observation-guide-shell {
     width: min(1180px, calc(100% - 48px));
     margin: 28px auto 0;
