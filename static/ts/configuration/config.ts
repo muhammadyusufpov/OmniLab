@@ -19,7 +19,7 @@ export interface Particle {
 export interface LabState {
     chemicalDatabase: Chemical[];
     selectedChemicals: string[];
-    currentVessel: 'flask' | 'beaker' | 'tube';
+    currentVessel: 'flask' | 'beaker' | 'tube' | 'cylinder';
     theme: 'light' | 'dark';
     targetLiquidVol: number;
     currentLiquidVol: number;
@@ -44,6 +44,10 @@ export interface LabState {
     isBubbling: boolean;
     precipitateColor: '#5ba7d1' | '#f2c94c' | '#f5f3ea' | null;
     burnerActive: boolean;
+    pipetteAmount: number;
+    stirringUntil: number;
+    filterProgress: number;
+    filteredLiquidVol: number;
 }
 
 export interface ReactionDemoConfig {
@@ -418,7 +422,11 @@ let state: LabState = {
     explosionParticles: [],
     isBubbling: false,
     precipitateColor: null,
-    burnerActive: false
+    burnerActive: false,
+    pipetteAmount: 0,
+    stirringUntil: 0,
+    filterProgress: 0,
+    filteredLiquidVol: 0
 };
 
 export function getLabState(): LabState {

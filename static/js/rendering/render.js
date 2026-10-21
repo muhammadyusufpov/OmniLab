@@ -1,5 +1,6 @@
 import * as config from '../configuration/config.js';
 import { liquidSurfaceDisplacement } from './liquidMotion.js';
+import { drawApparatus } from '../apparatus/apparatus.js';
 export function updateAndDrawAmbientBubbles(cx, cy) {
     if (!config.getLabState().burnerActive) {
         config.updateLabState({ ambientBubbles: [] });
@@ -11,7 +12,7 @@ export function updateAndDrawAmbientBubbles(cx, cy) {
         return;
     }
     let vesselWidth = 180;
-    if (state.currentVessel === 'tube')
+    if (state.currentVessel === 'tube' || state.currentVessel === 'cylinder')
         vesselWidth = 70;
     let spawnChance = state.burnerActive ? 0.65 : 0.15;
     let maxBubbles = state.burnerActive ? 90 : 30;
@@ -42,7 +43,7 @@ export function updateAndDrawAmbientBubbles(cx, cy) {
         let inside = false;
         if (state.currentVessel === 'beaker' && Math.abs(currentX - cx) < 85)
             inside = true;
-        else if (state.currentVessel === 'tube' && Math.abs(currentX - cx) < 30)
+        else if ((state.currentVessel === 'tube' || state.currentVessel === 'cylinder') && Math.abs(currentX - cx) < 30)
             inside = true;
         else if (state.currentVessel === 'flask') {
             let currentLiquidHeight = (cy + 120) - b.y;
@@ -140,7 +141,7 @@ export function drawVesselAndFluid() {
         config.ctx.strokeStyle = streamGradient;
         config.ctx.lineWidth = 5;
         config.ctx.lineCap = 'round';
-        let baseLevel = updatedState.currentVessel === 'tube' ? cy + 104 : cy + 106;
+        let baseLevel = updatedState.currentVessel === 'tube' || updatedState.currentVessel === 'cylinder' ? cy + 104 : cy + 106;
         if (updatedState.burnerActive) {
             baseLevel -= 40;
         }
@@ -254,6 +255,11 @@ export function drawVesselAndFluid() {
             config.ctx.arc(cx, cy + 75, 33, Math.PI, 0, true);
             config.ctx.lineTo(cx + 33, cy - 90);
         }
+        else if (updatedState.currentVessel === 'cylinder') {
+            startX = cx - 33;
+            endX = cx + 33;
+            config.ctx.rect(cx - 33, cy - 90, 66, 194);
+        }
         else if (updatedState.currentVessel === 'flask') {
             startX = cx - 106;
             endX = cx + 106;
@@ -275,7 +281,7 @@ export function drawVesselAndFluid() {
         liquidGrad.addColorStop(1, config.hexToRgbA(currentRenderColor, 0.7));
         config.ctx.fillStyle = liquidGrad;
         config.ctx.beginPath();
-        let baseLevel = updatedState.currentVessel === 'tube' ? cy + 104 : cy + 106;
+        let baseLevel = updatedState.currentVessel === 'tube' || updatedState.currentVessel === 'cylinder' ? cy + 104 : cy + 106;
         let liquidTopY = baseLevel - updatedState.currentLiquidVol;
         let amplitude = updatedState.burnerActive ? 6 : (updatedState.streamActive ? 5.5 : 0);
         config.ctx.moveTo(startX - 10, liquidTopY);
@@ -289,7 +295,7 @@ export function drawVesselAndFluid() {
             config.ctx.lineTo(cx + 100, cy + 130);
             config.ctx.lineTo(cx - 100, cy + 130);
         }
-        else if (updatedState.currentVessel === 'tube') {
+        else if (updatedState.currentVessel === 'tube' || updatedState.currentVessel === 'cylinder') {
             config.ctx.lineTo(cx + 50, cy + 130);
             config.ctx.lineTo(cx - 50, cy + 130);
         }
@@ -300,7 +306,7 @@ export function drawVesselAndFluid() {
         config.ctx.closePath();
         config.ctx.fill();
         if (updatedState.streamActive) {
-            const rippleWidth = updatedState.currentVessel === 'tube' ? 16 : 28;
+            const rippleWidth = updatedState.currentVessel === 'tube' || updatedState.currentVessel === 'cylinder' ? 16 : 28;
             config.ctx.strokeStyle = 'rgba(255, 255, 255, 0.58)';
             config.ctx.lineWidth = 1.5;
             for (let ripple = 0; ripple < 2; ripple++) {
@@ -310,14 +316,14 @@ export function drawVesselAndFluid() {
                 config.ctx.stroke();
             }
         }
-        if (updatedState.precipitateColor) {
+        if (updatedState.precipitateColor && updatedState.filterProgress === 0) {
             drawPrecipitate(cx, liquidTopY, baseLevel, startX, endX, updatedState.precipitateColor);
         }
         if (updatedState.burnerActive) {
             let topY = baseLevel - updatedState.currentLiquidVol;
             config.ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
             for (let i = 0; i < 15; i++) {
-                let fx = cx + (Math.random() - 0.5) * (updatedState.currentVessel === 'tube' ? 50 : 130);
+                let fx = cx + (Math.random() - 0.5) * (updatedState.currentVessel === 'tube' || updatedState.currentVessel === 'cylinder' ? 50 : 130);
                 let fy = topY + (Math.random() * 14 - 7);
                 config.ctx.beginPath();
                 config.ctx.arc(fx, fy, Math.random() * 4 + 2, 0, Math.PI * 2);
@@ -373,6 +379,30 @@ export function drawVesselAndFluid() {
         config.ctx.ellipse(cx, cy - 100, 35, 7, 0, 0, Math.PI * 2);
         config.ctx.stroke();
     }
+    else if (updatedState.currentVessel === 'cylinder') {
+        config.ctx.moveTo(cx - 36, cy - 100);
+        config.ctx.lineTo(cx - 36, cy + 104);
+        config.ctx.lineTo(cx + 36, cy + 104);
+        config.ctx.lineTo(cx + 36, cy - 100);
+        config.ctx.stroke();
+        config.ctx.fill();
+        config.ctx.beginPath();
+        config.ctx.ellipse(cx, cy - 100, 36, 7, 0, 0, Math.PI * 2);
+        config.ctx.stroke();
+        config.ctx.beginPath();
+        config.ctx.moveTo(cx - 54, cy + 108);
+        config.ctx.lineTo(cx + 54, cy + 108);
+        config.ctx.stroke();
+        config.ctx.strokeStyle = updatedState.theme === 'dark' ? '#c5d2df' : '#637383';
+        config.ctx.lineWidth = 1;
+        for (let tick = 0; tick < 10; tick++) {
+            const y = cy + 85 - tick * 18;
+            config.ctx.beginPath();
+            config.ctx.moveTo(cx - 35, y);
+            config.ctx.lineTo(cx - (tick % 2 === 0 ? 21 : 27), y);
+            config.ctx.stroke();
+        }
+    }
     else if (updatedState.currentVessel === 'flask') {
         config.ctx.moveTo(cx - 25, cy - 100);
         config.ctx.lineTo(cx - 25, cy - 30);
@@ -394,13 +424,14 @@ export function drawVesselAndFluid() {
     if (updatedState.currentVessel === 'beaker') {
         config.ctx.ellipse(cx - 74, cy + 10, 4, 70, 0.02, 0, Math.PI * 2);
     }
-    else if (updatedState.currentVessel === 'tube') {
+    else if (updatedState.currentVessel === 'tube' || updatedState.currentVessel === 'cylinder') {
         config.ctx.ellipse(cx - 25, cy - 10, 3, 60, 0.01, 0, Math.PI * 2);
     }
     else if (updatedState.currentVessel === 'flask') {
         config.ctx.ellipse(cx - 68, cy + 50, 5, 35, 0.45, 0, Math.PI * 2);
     }
     config.ctx.fill();
+    drawApparatus(config.ctx, cx, cy, updatedState);
 }
 export function triggerThermalBlast() {
     cancelReactionEffects();

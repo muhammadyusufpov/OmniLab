@@ -244,7 +244,7 @@ export function addChemicalToLab(name, color, streamX = config.canvas ? config.c
     const state = config.getLabState();
     if (!state.selectedChemicals.includes(name)) {
         const updatedChemicals = [...state.selectedChemicals, name];
-        const targetVol = Math.min(updatedChemicals.length * 30, 210);
+        const targetVol = Math.min(updatedChemicals.length * 30, 210) - state.pipetteAmount;
         config.updateLabState({
             selectedChemicals: updatedChemicals,
             liquidColor: color,
@@ -252,6 +252,8 @@ export function addChemicalToLab(name, color, streamX = config.canvas ? config.c
             streamActive: true,
             streamX,
             targetLiquidVol: targetVol,
+            filterProgress: 0,
+            filteredLiquidVol: 0,
             ...(state.targetLiquidVol > 0 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches
                 ? pourIntoLiquid(state)
                 : {})
@@ -317,7 +319,11 @@ export function resetLaboratory() {
         liquidTilt: 0,
         liquidTiltVelocity: 0,
         liquidRipple: 0,
-        liquidRippleVelocity: 0
+        liquidRippleVelocity: 0,
+        pipetteAmount: 0,
+        stirringUntil: 0,
+        filterProgress: 0,
+        filteredLiquidVol: 0
     });
     document.querySelectorAll('.chemical-card').forEach(card => {
         card.setAttribute('aria-pressed', 'false');
