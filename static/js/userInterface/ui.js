@@ -185,7 +185,7 @@ export function selectVessel(type) {
     }
     else {
         config.updateLabState({ currentVessel: type });
-        document.querySelectorAll('.apparatus-option-card').forEach(c => {
+        document.querySelectorAll('.apparatus-option-card[id^="opt-"]').forEach(c => {
             if (c.id !== 'opt-burner') {
                 c.classList.remove('selected');
                 c.setAttribute('aria-pressed', 'false');

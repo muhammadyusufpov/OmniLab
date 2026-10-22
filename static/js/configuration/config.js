@@ -19,9 +19,9 @@ const supportedReactionPairs = window.supportedReactionPairs || [['Na', 'Cl2']];
 const supportedReactionPairKeys = new Set(supportedReactionPairs.map(pair => [...pair].sort().join('+')));
 const reactionGuidesByPairKey = new Map([
     ['BaCl2+Na2CO3', [{
-        href: '/guides/barium-chloride-and-sodium-carbonate-reaction/',
-        title: 'Barium chloride and sodium carbonate reaction'
-    }]],
+                href: '/guides/barium-chloride-and-sodium-carbonate-reaction/',
+                title: 'Barium chloride and sodium carbonate reaction'
+            }]],
     [
         'Cl2+Na',
         [
@@ -96,9 +96,9 @@ const reactionGuidesByPairKey = new Map([
     [
         'HNO3+NH3',
         [{
-            href: '/guides/ammonia-with-nitric-acid/',
-            title: 'What happens when ammonia reacts with nitric acid?'
-        }]
+                href: '/guides/ammonia-with-nitric-acid/',
+                title: 'What happens when ammonia reacts with nitric acid?'
+            }]
     ],
     [
         'HCl+NaOH',
@@ -257,9 +257,9 @@ const reactionGuidesByPairKey = new Map([
             }]
     ],
     ['HF+NaOH', [{
-        href: '/guides/hydrofluoric-acid-sodium-hydroxide-reaction/',
-        title: 'What happens when hydrofluoric acid and sodium hydroxide react?'
-    }]],
+                href: '/guides/hydrofluoric-acid-sodium-hydroxide-reaction/',
+                title: 'What happens when hydrofluoric acid and sodium hydroxide react?'
+            }]],
     ['HBr+NaOH', [{
                 href: '/guides/hydrobromic-acid-sodium-hydroxide-reaction/',
                 title: 'What happens when hydrobromic acid and sodium hydroxide react?'
@@ -273,9 +273,9 @@ const reactionGuidesByPairKey = new Map([
                 title: 'Why does silver chloride dissolve in ammonia?'
             }]],
     ['HgCl2+NaOH', [{
-        href: '/guides/mercury-chloride-sodium-hydroxide-reaction/',
-        title: 'What happens when mercury(II) chloride and sodium hydroxide react?'
-    }]],
+                href: '/guides/mercury-chloride-sodium-hydroxide-reaction/',
+                title: 'What happens when mercury(II) chloride and sodium hydroxide react?'
+            }]],
     ['H2S+NaOH', [{
                 href: '/guides/hydrogen-sulfide-sodium-hydroxide-reaction/',
                 title: 'What happens when hydrogen sulfide and sodium hydroxide react?'
@@ -322,7 +322,11 @@ let state = {
     explosionParticles: [],
     isBubbling: false,
     precipitateColor: null,
-    burnerActive: false
+    burnerActive: false,
+    pipetteAmount: 0,
+    stirringUntil: 0,
+    filterProgress: 0,
+    filteredLiquidVol: 0
 };
 export function getLabState() {
     return state;

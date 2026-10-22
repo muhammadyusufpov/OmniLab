@@ -201,7 +201,11 @@ body {
 }
 
 #sub-panel-chemicals { width: 620px; }
-#sub-panel-apparatus { width: 340px; }
+#sub-panel-apparatus {
+    width: 340px;
+    max-height: calc(100vh - 110px);
+    overflow-y: auto;
+}
 
 .chemical-partner-guidance {
     min-height: 36px;
@@ -328,6 +332,25 @@ body {
 .apparatus-option-card:hover, .apparatus-option-card.selected {
     background: var(--text-color);
     color: var(--bg-main);
+}
+
+.apparatus-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border-color);
+}
+
+.apparatus-actions .apparatus-option-card:last-child {
+    grid-column: 1 / -1;
+}
+
+.apparatus-help {
+    margin: 0;
+    color: var(--muted-text);
+    font-size: 12px;
+    line-height: 1.5;
 }
 
 #canvas-zone {

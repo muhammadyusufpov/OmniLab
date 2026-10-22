@@ -5,6 +5,7 @@ import * as interactions from '../interactions/interactions.js';
 import * as firstExperiment from '../firstExperiment/firstExperiment.js';
 import { capture } from '../analytics/analytics.js';
 import { settleLiquid } from '../rendering/liquidMotion.js';
+import { bindApparatusTools, updateApparatus } from '../apparatus/apparatus.js';
 
 declare global {
     interface Window {
@@ -41,6 +42,7 @@ document.addEventListener("DOMContentLoaded", function(): void {
     if (burnerOpt) {
         burnerOpt.addEventListener('click', () => ui.selectVessel('burner'));
     }
+    bindApparatusTools();
 
     const jsonUrl: string = window.chemicalDataUrl || "/static/js/chemicaldata.json";
 
@@ -88,6 +90,7 @@ document.addEventListener("DOMContentLoaded", function(): void {
     const beakerOpt = document.getElementById('opt-beaker');
     const tubeOpt = document.getElementById('opt-tube');
     const flaskOpt = document.getElementById('opt-flask');
+    const cylinderOpt = document.getElementById('opt-cylinder');
 
     if (beakerOpt) beakerOpt.addEventListener('click', () => {
         ui.selectVessel('beaker');
@@ -99,6 +102,10 @@ document.addEventListener("DOMContentLoaded", function(): void {
     });
     if (flaskOpt) flaskOpt.addEventListener('click', () => {
         ui.selectVessel('flask');
+        firstExperiment.syncFirstExperimentGuide();
+    });
+    if (cylinderOpt) cylinderOpt.addEventListener('click', () => {
+        ui.selectVessel('cylinder');
         firstExperiment.syncFirstExperimentGuide();
     });
 
@@ -114,7 +121,9 @@ function engineLoop(now: number): void {
     const elapsed = lastFrameTime ? Math.min(now - lastFrameTime, 50) / 1000 : 1 / 60;
     lastFrameTime = now;
 
-    if (state.currentLiquidVol < state.targetLiquidVol) {
+    if (state.filterProgress > 0) {
+        updateApparatus(now, elapsed);
+    } else if (state.currentLiquidVol < state.targetLiquidVol) {
         const nextVolume = reducedMotion.matches
             ? state.targetLiquidVol
             : Math.min(state.targetLiquidVol, state.currentLiquidVol + 240 * elapsed);
@@ -137,6 +146,7 @@ function engineLoop(now: number): void {
     if (state.currentLiquidVol > 0 && !reducedMotion.matches) {
         config.updateLabState(settleLiquid(config.getLabState(), elapsed));
     }
+    if (state.filterProgress === 0) updateApparatus(now, elapsed);
     render.drawVesselAndFluid();
     requestAnimationFrame(engineLoop);
 }

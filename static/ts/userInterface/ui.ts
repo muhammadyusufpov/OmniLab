@@ -219,7 +219,7 @@ export function closeAllPopovers(): void {
     });
 }
 
-export function selectVessel(type: 'flask' | 'beaker' | 'tube' | 'burner'): void {
+export function selectVessel(type: 'flask' | 'beaker' | 'tube' | 'cylinder' | 'burner'): void {
     const state = config.getLabState();
     
     if (type === 'burner') {
@@ -233,7 +233,7 @@ export function selectVessel(type: 'flask' | 'beaker' | 'tube' | 'burner'): void
         }
     } else {
         config.updateLabState({ currentVessel: type });
-        document.querySelectorAll('.apparatus-option-card').forEach(c => {
+        document.querySelectorAll('.apparatus-option-card[id^="opt-"]').forEach(c => {
             if (c.id !== 'opt-burner') {
                 (c as HTMLElement).classList.remove('selected');
                 c.setAttribute('aria-pressed', 'false');
