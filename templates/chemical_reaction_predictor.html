@@ -32,7 +32,7 @@
     <main>
         <article class="reaction-lab-shell">
             <nav class="guide-breadcrumb" aria-label="Breadcrumb">
-                <a href="{% url 'index' %}">Virtual lab</a>
+                <a href="{% url 'chemistry_lab' %}">Virtual lab</a>
                 <span aria-hidden="true">/</span>
                 <span>Reaction predictor</span>
             </nav>
@@ -126,7 +126,7 @@
                 <p>The prepared Sodium and Chlorine setup opens ready for your Analyze choice.</p>
                 <div class="reaction-lab-final-links">
                     <a href="{% url 'sodium_chlorine_demo' %}?source=guide_reaction_predictor">Open the prepared reaction <span aria-hidden="true">→</span></a>
-                    <a href="{% url 'index' %}#lab-workspace">Browse the full lab <span aria-hidden="true">→</span></a>
+                    <a href="{% url 'chemistry_lab' %}#lab-workspace">Browse the full lab <span aria-hidden="true">→</span></a>
                     <a href="{% url 'chemical_reaction_practice' %}">Practice five reaction questions <span aria-hidden="true">→</span></a>
                 </div>
             </section>

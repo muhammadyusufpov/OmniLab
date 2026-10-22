@@ -45,6 +45,7 @@ SOCIAL_PREVIEW_ALT = (
 PUBLIC_CANONICAL_URLS = {
     'barium_chloride_sodium_carbonate': f"{PRODUCTION_BASE_URL}/guides/barium-chloride-and-sodium-carbonate-reaction/",
     "index": f"{PRODUCTION_BASE_URL}/",
+    "chemistry_lab": f"{PRODUCTION_BASE_URL}/lab/",
     "pricing": f"{PRODUCTION_BASE_URL}/pricing/",
     "contact": f"{PRODUCTION_BASE_URL}/contact/",
     "faq": f"{PRODUCTION_BASE_URL}/faq/",
@@ -5168,7 +5169,7 @@ def homepage_context(reaction_demo=None, first_experiment=None):
         "@context": "https://schema.org",
         "@type": "SoftwareApplication",
         "name": "OmniLab",
-        "url": PUBLIC_CANONICAL_URLS["index"],
+        "url": PUBLIC_CANONICAL_URLS["chemistry_lab"],
         "description": (
             "An interactive virtual chemistry laboratory for chemistry "
             "students to mix compounds, choose lab equipment, and review "
@@ -5190,8 +5191,8 @@ def homepage_context(reaction_demo=None, first_experiment=None):
         "codeRepository": "https://github.com/Yusupov-Muhammadyusuf/OmniLab",
     }
     context = {
-        "canonical_url": PUBLIC_CANONICAL_URLS["index"],
-        "social_url": PUBLIC_CANONICAL_URLS["index"],
+        "canonical_url": PUBLIC_CANONICAL_URLS["chemistry_lab"],
+        "social_url": PUBLIC_CANONICAL_URLS["chemistry_lab"],
         "page_title": "Virtual chemistry lab for students | OmniLab",
         "social_title": "OmniLab - Test chemical reactions in a virtual lab",
         "page_description": (
@@ -5231,8 +5232,20 @@ def homepage_context(reaction_demo=None, first_experiment=None):
     return context
 
 
-@ensure_csrf_cookie
 def index(request):
+    return render(request, "landing.html", {
+        "canonical_url": PUBLIC_CANONICAL_URLS["index"],
+        "social_preview_url": SOCIAL_PREVIEW_URL,
+        "social_preview_alt": SOCIAL_PREVIEW_ALT,
+        "page_description": (
+            "OmniLab builds virtual labs for STEM learning. Start with the "
+            "free chemistry lab and explore the electronics lab coming soon."
+        ),
+    })
+
+
+@ensure_csrf_cookie
+def chemistry_lab(request):
     return render(request, "index.html", homepage_context())
 
 

@@ -8,6 +8,7 @@ INDEXNOW_KEY = (
 )
 
 urlpatterns = [
+    path('lab/', views.chemistry_lab, name='chemistry_lab'),
     path('guides/ammonia-with-nitric-acid/', views.observation_guide,
          {'guide_key': 'ammonia-nitric-acid'}, name='guide_ammonia_nitric_acid'),
     path('demo/ammonia-nitric-acid/', views.prepared_reaction_demo,

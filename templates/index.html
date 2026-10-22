@@ -47,7 +47,7 @@
         <p class="app-subheadline" id="first-experiment-instruction" aria-live="polite">
             Open Chemicals and select Sodium (Na). OmniLab will then mark its supported partner.
         </p>
-        <a class="first-experiment-exit" href="{% url 'index' %}">Use the open lab instead</a>
+        <a class="first-experiment-exit" href="{% url 'chemistry_lab' %}">Use the open lab instead</a>
         {% elif reaction_demo %}
         <p class="app-wordmark">OmniLab guided demo</p>
         <h1>{{ reaction_demo.title }}</h1>
