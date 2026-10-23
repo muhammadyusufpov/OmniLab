@@ -172,28 +172,27 @@
                         <div>
                             <p class="chat-eyebrow">A future way to explore</p>
                             <h3>Talk through your experiment</h3>
-                            <p>Choose a model to preview your future chat workspace.</p>
+                            <p>Explore how a future chat could support your experiment.</p>
                         </div>
                     </div>
-                    <fieldset class="chat-models">
-                        <legend>Choose a model</legend>
-                        <div class="chat-model-grid">
-                            <label class="chat-model-option"><input type="radio" name="chat-model" value="GPT" checked><span class="chat-model-name">GPT</span><span class="chat-model-status">Coming soon</span></label>
-                            <label class="chat-model-option"><input type="radio" name="chat-model" value="Claude"><span class="chat-model-name">Claude</span><span class="chat-model-status">Coming soon</span></label>
-                            <label class="chat-model-option"><input type="radio" name="chat-model" value="Grok"><span class="chat-model-name">Grok</span><span class="chat-model-status">Coming soon</span></label>
-                            <label class="chat-model-option"><input type="radio" name="chat-model" value="DeepSeek"><span class="chat-model-name">DeepSeek</span><span class="chat-model-status">Coming soon</span></label>
-                            <label class="chat-model-option"><input type="radio" name="chat-model" value="Qwen"><span class="chat-model-name">Qwen</span><span class="chat-model-status">Coming soon</span></label>
-                        </div>
-                    </fieldset>
                     <div class="chat-preview-conversation" aria-label="Future chat preview">
                         <span class="chat-preview-spark" aria-hidden="true">✳</span>
                         <h4>Questions start with your setup</h4>
                         <p>Ask about the equation, visible changes, or safety once chat is available.</p>
                     </div>
                     <div class="chat-composer-preview">
-                        <label for="chat-preview-input">Your question</label>
-                        <div class="chat-composer-row"><input id="chat-preview-input" type="text" placeholder="Ask about this experiment..." disabled><button type="button" disabled aria-label="Send question when AI chat is available">↗</button></div>
-                        <p>Chat is coming soon. No question is sent or saved.</p>
+                        <label class="chat-composer-label" for="chat-preview-input">Your question</label>
+                        <div class="chat-composer">
+                            <input id="chat-preview-input" type="text" placeholder="Ask about this experiment..." disabled>
+                            <label class="chat-model-label" for="chat-model-select">Model</label>
+                            <select id="chat-model-select" aria-label="Preview chat model">
+                                <option value="GPT">GPT · Coming soon</option>
+                                <option value="Claude">Claude · Coming soon</option>
+                                <option value="Grok">Grok · Coming soon</option>
+                                <option value="DeepSeek">DeepSeek · Coming soon</option>
+                                <option value="Qwen">Qwen · Coming soon</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
             </div>
