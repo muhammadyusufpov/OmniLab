@@ -53,6 +53,22 @@ document.addEventListener("DOMContentLoaded", function () {
     const themeBtn = document.getElementById('trigger-theme');
     const resetBtn = document.getElementById('btn-reset-lab');
     const analyzeBtn = document.getElementById('btn-fire-analysis');
+    const workspace = document.getElementById('lab-workspace');
+    const hideAnalysisBtn = document.getElementById('btn-hide-analysis');
+    const showAnalysisBtn = document.getElementById('btn-show-analysis');
+    function setAnalysisCollapsed(collapsed) {
+        if (!workspace || !hideAnalysisBtn || !showAnalysisBtn) return;
+        workspace.classList.toggle('is-analysis-collapsed', collapsed);
+        hideAnalysisBtn.setAttribute('aria-expanded', String(!collapsed));
+        showAnalysisBtn.setAttribute('aria-expanded', String(!collapsed));
+        showAnalysisBtn.hidden = !collapsed;
+        requestAnimationFrame(() => {
+            ui.resizeCanvas();
+            (collapsed ? showAnalysisBtn : hideAnalysisBtn).focus();
+        });
+    }
+    hideAnalysisBtn?.addEventListener('click', () => setAnalysisCollapsed(true));
+    showAnalysisBtn?.addEventListener('click', () => setAnalysisCollapsed(false));
     if (chemBtn)
         chemBtn.addEventListener('click', (e) => {
             ui.toggleCustomPopover(e, 'chemicals');

@@ -522,12 +522,146 @@ body {
 
 .ai-sidebar {
     height: 100vh;
-    border-left: 2px solid var(--text-color);
+    min-width: 0;
+    padding: 24px;
+    border-left: 1px solid color-mix(in srgb, var(--text-color) 14%, transparent);
     background: var(--bg-main);
     display: flex;
     flex-direction: column;
     z-index: 1020;
+    gap: 16px;
 }
+
+.lab-workspace { position: relative; }
+
+.analysis-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid color-mix(in srgb, var(--text-color) 12%, transparent);
+}
+
+.analysis-eyebrow {
+    margin: 0 0 9px;
+    color: var(--muted-text);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .12em;
+}
+
+.analysis-header h2 {
+    margin: 0;
+    color: var(--text-color);
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -.03em;
+}
+
+.analysis-header-note {
+    margin: 7px 0 0;
+    color: var(--muted-text);
+    font-size: 12px;
+}
+
+.analysis-collapse,
+.analysis-reopen {
+    min-width: 44px;
+    min-height: 44px;
+    border: 1px solid color-mix(in srgb, var(--text-color) 18%, transparent);
+    border-radius: 10px;
+    background: var(--bg-main);
+    color: var(--text-color);
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color .16s ease-out, border-color .16s ease-out;
+}
+
+.analysis-collapse:hover,
+.analysis-reopen:hover {
+    background: var(--bg-canvas);
+    border-color: var(--text-color);
+}
+
+.analysis-collapse:focus-visible,
+.analysis-reopen:focus-visible,
+.analysis-reset:focus-visible {
+    outline: 3px solid #e3384f;
+    outline-offset: 3px;
+}
+
+.analysis-collapse span { font-size: 19px; line-height: 1; }
+
+.analysis-reopen {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    z-index: 1021;
+    width: auto;
+    max-width: max-content;
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 14px;
+    box-shadow: var(--shadow);
+}
+
+.analysis-reopen[hidden] { display: none; }
+.analysis-reopen-icon { font-size: 20px; line-height: 1; }
+
+.lab-workspace.is-analysis-collapsed #canvas-zone {
+    flex: 0 0 100%;
+    width: 100%;
+    max-width: 100%;
+}
+
+.lab-workspace.is-analysis-collapsed .ai-sidebar { display: none; }
+
+.analysis-setup {
+    padding: 16px;
+    border: 1px solid color-mix(in srgb, var(--text-color) 14%, transparent);
+    border-radius: 12px;
+    background: var(--bg-canvas);
+}
+
+.analysis-section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    color: var(--muted-text);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .02em;
+}
+
+.analysis-setup h3 {
+    margin: 14px 0 0;
+    color: var(--text-color);
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+}
+
+.analysis-reset {
+    min-height: 44px;
+    padding: 0 4px;
+    border: 0;
+    background: transparent;
+    color: var(--muted-text);
+    font-size: 11px;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.analysis-reset:hover { color: var(--text-color); }
+.analysis-result-heading { margin-top: 4px; }
+.analysis-result-mark { font-variant-numeric: tabular-nums; opacity: .65; }
 
 .lab-instruction {
     color: var(--muted-text);
@@ -702,7 +836,8 @@ body {
 
 .response-container {
     flex-grow: 1;
-    border: 2px solid var(--text-color);
+    min-height: 160px;
+    border: 1px solid color-mix(in srgb, var(--text-color) 14%, transparent);
     border-radius: 12px;
     background: var(--bg-canvas);
     overflow-y: auto;
@@ -1044,7 +1179,7 @@ body {
 @media (max-width: 991.98px) {
     body { overflow-y: auto; height: auto; }
     #canvas-zone { height: 500px; }
-    .ai-sidebar { height: auto; border-left: none; border-top: 2px solid var(--text-color); }
+    .ai-sidebar { height: auto; border-left: none; border-top: 1px solid color-mix(in srgb, var(--text-color) 14%, transparent); }
     .excalidraw-floating-toolbar {
         position: sticky;
         top: 10px;

@@ -71,6 +71,24 @@ document.addEventListener("DOMContentLoaded", function(): void {
     const themeBtn = document.getElementById('trigger-theme');
     const resetBtn = document.getElementById('btn-reset-lab');
     const analyzeBtn = document.getElementById('btn-fire-analysis');
+    const workspace = document.getElementById('lab-workspace');
+    const hideAnalysisBtn = document.getElementById('btn-hide-analysis') as HTMLButtonElement | null;
+    const showAnalysisBtn = document.getElementById('btn-show-analysis') as HTMLButtonElement | null;
+
+    function setAnalysisCollapsed(collapsed: boolean): void {
+        if (!workspace || !hideAnalysisBtn || !showAnalysisBtn) return;
+        workspace.classList.toggle('is-analysis-collapsed', collapsed);
+        hideAnalysisBtn.setAttribute('aria-expanded', String(!collapsed));
+        showAnalysisBtn.setAttribute('aria-expanded', String(!collapsed));
+        showAnalysisBtn.hidden = !collapsed;
+        requestAnimationFrame(() => {
+            ui.resizeCanvas();
+            (collapsed ? showAnalysisBtn : hideAnalysisBtn).focus();
+        });
+    }
+
+    hideAnalysisBtn?.addEventListener('click', () => setAnalysisCollapsed(true));
+    showAnalysisBtn?.addEventListener('click', () => setAnalysisCollapsed(false));
 
     if (chemBtn) chemBtn.addEventListener('click', (e: MouseEvent) => {
         ui.toggleCustomPopover(e, 'chemicals');
