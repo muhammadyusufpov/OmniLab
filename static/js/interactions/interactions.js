@@ -15,13 +15,13 @@ const DEFAULT_REACTION_INSTRUCTION = `
         </a>
     </div>
 `;
-const DEMO_REACTION_INSTRUCTION = '<p class="text-center mt-5 lab-instruction">This setup is ready. Select Analyze Chemical Reaction to request the prediction.</p>';
+const DEMO_REACTION_INSTRUCTION = '<p class="text-center mt-5 lab-instruction">This setup is ready. Select Analyze Chemical Reaction to see the result.</p>';
 const FIRST_EXPERIMENT_INSTRUCTION = `
     <div class="text-center mt-5 lab-empty-state">
         <p class="lab-instruction mb-2">Follow the highlighted control through four short steps. Your equation, explanation, and safety rules will appear here.</p>
     </div>
 `;
-const REACTION_RETRY_MESSAGE = "OmniLab couldn't complete this prediction. Please try again.";
+const REACTION_RETRY_MESSAGE = "OmniLab couldn't complete this analysis. Please try again.";
 let activeAnalysisController = null;
 let currentAnalysisRunId = 0;
 function getDefaultReactionInstruction() {
@@ -83,7 +83,7 @@ export function renderReactionResult(panel, reaction, selectedChemicals) {
         ? `
             <nav class="reaction-study" aria-labelledby="reaction-study-title">
                 <p class="reaction-study-label">Study this result</p>
-                <h3 class="reaction-study-title" id="reaction-study-title">Follow the chemistry behind the prediction</h3>
+                <h3 class="reaction-study-title" id="reaction-study-title">Follow the chemistry behind this result</h3>
                 <div class="reaction-study-links">
                     ${matchingReactionGuides.map(guide => `
                     <a href="${guide.href}">
@@ -104,7 +104,7 @@ export function renderReactionResult(panel, reaction, selectedChemicals) {
                 </h3>
                 <div class="fs-5 text-center py-2 px-2 text-white border border-secondary border-opacity-50 rounded-3 reaction-equation"
                     style="font-family: 'Fira Code', monospace; font-weight: 500; background-color: #1e1e24; letter-spacing: 1.5px;"></div>
-                <p class="reaction-result-boundary">Educational prediction, not a verified simulation. It can be incomplete or wrong and cannot replace instructor supervision.</p>
+                <p class="reaction-result-boundary">Educational estimate, not a verified simulation. It can be incomplete or wrong and cannot replace instructor supervision.</p>
             </div>
 
             <div class="mb-4 conceptual-breakdown px-2">

@@ -56,8 +56,91 @@ document.addEventListener("DOMContentLoaded", function () {
     const workspace = document.getElementById('lab-workspace');
     const hideAnalysisBtn = document.getElementById('btn-hide-analysis');
     const showAnalysisBtn = document.getElementById('btn-show-analysis');
+    const resultTab = document.getElementById('analysis-tab-result');
+    const chatTab = document.getElementById('analysis-tab-chat');
+    const resultView = document.getElementById('analysis-view-result');
+    const chatView = document.getElementById('analysis-view-chat');
+    const chatForm = document.getElementById('chat-preview-form');
+    const chatInput = document.getElementById('chat-preview-input');
+    const chatSend = document.getElementById('chat-preview-send');
+    const chatModel = document.getElementById('chat-model-select');
+    const chatVersion = document.getElementById('chat-version-select');
+    const chatOutput = document.getElementById('chat-preview-output');
+    const previewVersions = {
+        GPT: ['GPT Standard', 'GPT Fast'],
+        Claude: ['Claude Standard', 'Claude Fast'],
+        Grok: ['Grok Standard', 'Grok Fast'],
+        DeepSeek: ['DeepSeek Standard', 'DeepSeek Fast'],
+        Qwen: ['Qwen 3.5 Flash', 'Qwen 3.5']
+    };
+    function syncChatVersions() {
+        if (!chatModel || !chatVersion)
+            return;
+        chatVersion.replaceChildren(...(previewVersions[chatModel.value] || []).map((version) => new Option(version, version)));
+    }
+    function syncChatSend() {
+        if (chatInput && chatSend)
+            chatSend.disabled = !chatInput.value.trim();
+    }
+    function previewSendQuestion() {
+        if (!chatInput || !chatOutput)
+            return;
+        const question = chatInput.value.trim();
+        if (!question)
+            return;
+        const message = document.createElement('div');
+        message.className = 'chat-preview-question';
+        message.textContent = question;
+        const response = document.createElement('p');
+        response.className = 'chat-preview-response';
+        response.textContent = 'Preview only. No question was sent to an AI model.';
+        chatOutput.replaceChildren(message, response);
+        chatInput.value = '';
+        syncChatSend();
+        chatInput.focus();
+    }
+    chatModel?.addEventListener('change', syncChatVersions);
+    chatInput?.addEventListener('input', syncChatSend);
+    chatInput?.addEventListener('keydown', (event) => {
+        if (event.key !== 'Enter' || event.shiftKey || event.isComposing)
+            return;
+        event.preventDefault();
+        previewSendQuestion();
+    });
+    chatForm?.addEventListener('submit', (event) => {
+        event.preventDefault();
+        previewSendQuestion();
+    });
+    syncChatVersions();
+    syncChatSend();
+    function showAnalysisView(view) {
+        if (!resultTab || !chatTab || !resultView || !chatView)
+            return;
+        const showResult = view === 'result';
+        resultView.hidden = !showResult;
+        chatView.hidden = showResult;
+        resultTab.classList.toggle('is-active', showResult);
+        chatTab.classList.toggle('is-active', !showResult);
+        resultTab.setAttribute('aria-selected', String(showResult));
+        chatTab.setAttribute('aria-selected', String(!showResult));
+        resultTab.tabIndex = showResult ? 0 : -1;
+        chatTab.tabIndex = showResult ? -1 : 0;
+    }
+    resultTab?.addEventListener('click', () => showAnalysisView('result'));
+    chatTab?.addEventListener('click', () => showAnalysisView('chat'));
+    for (const tab of [resultTab, chatTab]) {
+        tab?.addEventListener('keydown', (event) => {
+            if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight')
+                return;
+            event.preventDefault();
+            const nextView = tab === resultTab ? 'chat' : 'result';
+            showAnalysisView(nextView);
+            (nextView === 'result' ? resultTab : chatTab)?.focus();
+        });
+    }
     function setAnalysisCollapsed(collapsed) {
-        if (!workspace || !hideAnalysisBtn || !showAnalysisBtn) return;
+        if (!workspace || !hideAnalysisBtn || !showAnalysisBtn)
+            return;
         workspace.classList.toggle('is-analysis-collapsed', collapsed);
         hideAnalysisBtn.setAttribute('aria-expanded', String(!collapsed));
         showAnalysisBtn.setAttribute('aria-expanded', String(!collapsed));

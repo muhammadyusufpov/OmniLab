@@ -4995,7 +4995,7 @@ class LabJourneyRepairTests(TestCase):
         equation_heading = render_block.index("Chemical Equation Formula")
         analysis_heading = render_block.index("Analysis")
         safety_heading = render_block.index("Safety rules")
-        prediction_limit = render_block.index("Educational prediction, not a verified simulation.")
+        prediction_limit = render_block.index("Educational estimate, not a verified simulation.")
         self.assertLess(equation_heading, analysis_heading)
         self.assertLess(equation_heading, prediction_limit)
         self.assertLess(prediction_limit, analysis_heading)
@@ -5295,7 +5295,7 @@ class LabJourneyRepairTests(TestCase):
         ).read_text()
 
         self.assertIn(
-            "OmniLab couldn't complete this prediction. Please try again.",
+            "OmniLab couldn't complete this analysis. Please try again.",
             interactions,
         )
         self.assertEqual(interactions.count("renderReactionRetry(panel);"), 2)

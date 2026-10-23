@@ -82,7 +82,7 @@ export function bindApparatusTools(): void {
     }
     document.getElementById('btn-reset-lab')?.addEventListener('click', () => {
         syncPipetteButton(false);
-        announce('Tools show a visual technique. Volumes are not calibrated. Results remain educational predictions.');
+        announce('Tools show a visual technique. Volumes are not calibrated. Results are educational estimates.');
     });
 }
 
