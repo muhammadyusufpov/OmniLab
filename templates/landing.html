@@ -1,0 +1,84 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="pTc0pLcOShqcQfWfDLPq04vaqqyFLVJ22Xq-rKsvH6A">
+    <meta name="description" content="{{ page_description }}">
+    <title>OmniLab | Virtual labs for STEM learning</title>
+    <link rel="canonical" href="{{ canonical_url }}">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="OmniLab">
+    <meta property="og:title" content="OmniLab | Virtual labs for STEM learning">
+    <meta property="og:description" content="{{ page_description }}">
+    <meta property="og:url" content="{{ canonical_url }}">
+    <meta property="og:image" content="{{ social_preview_url }}">
+    <meta property="og:image:secure_url" content="{{ social_preview_url }}">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="{{ social_preview_alt }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="OmniLab | Virtual labs for STEM learning">
+    <meta name="twitter:description" content="{{ page_description }}">
+    <meta name="twitter:image" content="{{ social_preview_url }}">
+    <meta name="twitter:image:alt" content="{{ social_preview_alt }}">
+    <link rel="icon" href="{% static 'favicon.png' %}" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/landing.css' %}">
+    {% include "partials/product_analytics.html" %}
+</head>
+<body class="landing-page">
+    <header class="landing-header">
+        <a class="landing-brand" href="{% url 'index' %}" aria-label="OmniLab home">OmniLab<span class="landing-brand-dot" aria-hidden="true">.</span></a>
+        <nav class="landing-nav" aria-label="Main navigation">
+            <a href="#products">Products</a>
+            <a href="{% url 'guide_library' %}">Chemistry guides</a>
+            <a href="{% url 'pricing' %}">Pricing</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="landing-hero" aria-labelledby="landing-title">
+            <div class="landing-hero-copy">
+                <p class="landing-eyebrow">LEARNING BY EXPERIMENTING</p>
+                <h1 id="landing-title">A virtual lab for <span>STEM learning.</span></h1>
+                <p class="landing-intro">OmniLab makes subject-specific labs you can explore in your browser. Start with chemistry today.</p>
+                <a class="landing-primary" href="{% url 'chemistry_lab' %}">Explore the chemistry lab <span aria-hidden="true">↗</span></a>
+                <p class="landing-access">Free in the current public release · No account needed</p>
+            </div>
+            <figure class="landing-hero-visual">
+                <div class="landing-preview-head"><span class="landing-live-dot" aria-hidden="true"></span> CHEMISTRY LAB · AVAILABLE NOW</div>
+                <img src="{% static 'images/stem-chemistry-preview.png' %}" alt="Preview of the OmniLab chemistry workspace with chemical controls and reaction analysis">
+                <figcaption>Choose materials, use lab tools, and explore predicted reactions.</figcaption>
+            </figure>
+        </section>
+
+        <section class="landing-products" id="products" aria-labelledby="products-title">
+            <div class="landing-section-head">
+                <div>
+                    <p class="landing-eyebrow">OMNILAB PRODUCTS</p>
+                    <h2 id="products-title">Pick a lab. Start exploring.</h2>
+                </div>
+                <p>One place for hands-on STEM learning, one subject at a time.</p>
+            </div>
+            <div class="landing-product-grid">
+                <a class="landing-product landing-product--chemistry" href="{% url 'chemistry_lab' %}">
+                    <span class="landing-product-top"><span class="landing-subject">01 / CHEMISTRY</span><span class="landing-status landing-status--live">Available now</span></span>
+                    <span class="landing-product-art landing-product-art--chemistry" aria-hidden="true"><span class="landing-flask"></span><span class="landing-flask-neck"></span><span class="landing-bubble landing-bubble-one"></span><span class="landing-bubble landing-bubble-two"></span></span>
+                    <span class="landing-product-bottom"><strong>Chemistry lab</strong><span>Mix supported chemicals and study predicted results.</span><span class="landing-product-arrow" aria-hidden="true">↗</span></span>
+                </a>
+                <div class="landing-product landing-product--soon" aria-label="Electronics lab, coming soon">
+                    <span class="landing-product-top"><span class="landing-subject">02 / ELECTRONICS</span><span class="landing-status landing-status--soon">Coming soon</span></span>
+                    <span class="landing-product-art landing-product-art--electronics" aria-hidden="true"><span class="landing-circuit-line"></span><span class="landing-circuit-node landing-node-one"></span><span class="landing-circuit-node landing-node-two"></span><span class="landing-circuit-node landing-node-three"></span></span>
+                    <span class="landing-product-bottom"><strong>Electronics lab</strong><span>A new way to explore circuits is on the way.</span></span>
+                </div>
+            </div>
+            <p class="landing-boundary">Chemistry results are educational predictions. They do not replace a supervised physical lab.</p>
+        </section>
+    </main>
+    {% include "partials/site_footer.html" %}
+</body>
+</html>

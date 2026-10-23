@@ -215,8 +215,8 @@ class DeploymentConfigurationTests(SimpleTestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         discovery = json.loads(result.stdout)
         self.assertEqual(discovery["origin"], configured_origin)
-        self.assertEqual(len(discovery["canonicals"]), 46)
-        self.assertEqual(len(set(discovery["canonicals"])), 46)
+        self.assertEqual(len(discovery["canonicals"]), 47)
+        self.assertEqual(len(set(discovery["canonicals"])), 47)
         for url in (
             discovery["canonicals"]
             + discovery["demo_urls"]
@@ -230,7 +230,7 @@ class DeploymentConfigurationTests(SimpleTestCase):
         )
         self.assertEqual(
             discovery["sitemap"].count(f"<loc>{configured_origin}/"),
-            46,
+            47,
         )
         self.assertTrue(discovery["noindex"])
 
@@ -323,7 +323,7 @@ class SearchIndexControlTests(SimpleTestCase):
             for node in root.findall("sitemap:url/sitemap:loc", namespace)
         ]
 
-        self.assertEqual(len(public_paths), 46)
+        self.assertEqual(len(public_paths), 47)
         for path in public_paths:
             with self.subTest(path=path):
                 response = self.client.get(path)
@@ -739,7 +739,7 @@ class HomepageResponsiveLayoutTests(SimpleTestCase):
         )
 
     def test_homepage_first_experiment_entry_stays_visible_on_mobile(self):
-        homepage = self.client.get("/")
+        homepage = self.client.get("/lab/")
 
         self.assertContains(
             homepage,
@@ -774,7 +774,7 @@ class HomepageResponsiveLayoutTests(SimpleTestCase):
         )
 
     def test_guided_demo_keeps_its_mobile_instruction_card(self):
-        homepage = self.client.get("/")
+        homepage = self.client.get("/lab/")
         guided_demo = self.client.get("/demo/sodium-chlorine/")
 
         self.assertContains(homepage, '<header class="app-title-card">')
@@ -1082,7 +1082,7 @@ class GuideLibraryPageTests(TestCase):
         self.assertEqual(self.html.count('class="guide-primary"'), 1)
         self.assertContains(
             self.response,
-            '<a class="guide-primary" href="/#lab-workspace">',
+            '<a class="guide-primary" href="/lab/#lab-workspace">',
             html=False,
         )
         self.assertNotIn(
@@ -1167,7 +1167,7 @@ class GuideLibraryPageTests(TestCase):
 
 class HomepageGuideLibraryTests(TestCase):
     def test_homepage_uses_one_compact_route_to_the_complete_library(self):
-        response = self.client.get("/")
+        response = self.client.get("/lab/")
         html = response.content.decode()
 
         self.assertEqual(response.status_code, 200)
@@ -1194,7 +1194,7 @@ class HomepageGuideLibraryTests(TestCase):
                 self.assertNotIn(f'href="{guide_path}"', html)
 
     def test_guide_library_route_is_secondary_to_the_analyze_action(self):
-        response = self.client.get("/")
+        response = self.client.get("/lab/")
         html = response.content.decode()
 
         self.assertEqual(html.count('class="btn action-btn-primary'), 1)
@@ -1877,16 +1877,12 @@ class SearchDiscoveryTests(TestCase):
             'href="/guides/chemical-reaction-virtual-lab/"',
         )
 
-    def test_homepage_description_states_audience_action_and_boundary(self):
+    def test_homepage_description_states_stem_scope_and_current_lab(self):
         response = self.client.get("/")
 
         self.assertContains(
             response,
-            (
-                '<meta name="description" content="Explore predicted reactions '
-                "in a virtual lab built for chemistry students. OmniLab is "
-                "educational and doesn't replace physical lab procedures.\">"
-            ),
+            '<meta name="description" content="OmniLab builds virtual labs for STEM learning. Start with the free chemistry lab and explore the electronics lab coming soon.">',
             html=True,
         )
 
@@ -1910,7 +1906,7 @@ class SearchDiscoveryTests(TestCase):
         )
         metadata = []
 
-        self.assertEqual(len(paths), 46)
+        self.assertEqual(len(paths), 47)
         for path in paths:
             with self.subTest(path=path):
                 response = self.client.get(path)
@@ -1939,13 +1935,14 @@ class SearchDiscoveryTests(TestCase):
 
         titles = [title for title, _description in metadata]
         descriptions = [description for _title, description in metadata]
-        self.assertEqual(len(set(titles)), 46)
-        self.assertEqual(len(set(descriptions)), 46)
+        self.assertEqual(len(set(titles)), 47)
+        self.assertEqual(len(set(descriptions)), 47)
         self.assertNotIn("12 guides", " ".join(descriptions))
 
     def test_public_pages_use_production_canonical_urls(self):
         routes = {
             "/": "index",
+            "/lab/": "chemistry_lab",
             "/pricing/": "pricing",
             "/contact/": "contact",
             "/faq/": "faq",
@@ -1991,7 +1988,7 @@ class SearchDiscoveryTests(TestCase):
         self.assertEqual(locations, list(PUBLIC_CANONICAL_URLS.values()))
 
     def test_homepage_has_factual_software_application_schema(self):
-        response = self.client.get("/")
+        response = self.client.get("/lab/")
         html = response.content.decode()
         schemas = [
             json.loads(match)
@@ -2008,7 +2005,7 @@ class SearchDiscoveryTests(TestCase):
         )
 
         self.assertEqual(software_schema["name"], "OmniLab")
-        self.assertEqual(software_schema["url"], PUBLIC_CANONICAL_URLS["index"])
+        self.assertEqual(software_schema["url"], PUBLIC_CANONICAL_URLS["chemistry_lab"])
         self.assertEqual(
             software_schema["applicationCategory"],
             "EducationalApplication",
@@ -3493,16 +3490,8 @@ class SocialPreviewTests(TestCase):
         tags = (
             '<meta property="og:type" content="website">',
             '<meta property="og:site_name" content="OmniLab">',
-            (
-                '<meta property="og:title" content="OmniLab - Test chemical '
-                'reactions in a virtual lab">'
-            ),
-            (
-                '<meta property="og:description" content="Explore predicted '
-                "reactions in a virtual lab built for chemistry students. "
-                "OmniLab is educational and doesn't replace physical lab "
-                'procedures.">'
-            ),
+            '<meta property="og:title" content="OmniLab | Virtual labs for STEM learning">',
+            '<meta property="og:description" content="OmniLab builds virtual labs for STEM learning. Start with the free chemistry lab and explore the electronics lab coming soon.">',
             f'<meta property="og:url" content="{PUBLIC_CANONICAL_URLS["index"]}">',
             f'<meta property="og:image" content="{SOCIAL_PREVIEW_URL}">',
             f'<meta property="og:image:secure_url" content="{SOCIAL_PREVIEW_URL}">',
@@ -3521,16 +3510,8 @@ class SocialPreviewTests(TestCase):
     def test_homepage_exposes_large_twitter_card_metadata(self):
         tags = (
             '<meta name="twitter:card" content="summary_large_image">',
-            (
-                '<meta name="twitter:title" content="OmniLab - Test chemical '
-                'reactions in a virtual lab">'
-            ),
-            (
-                '<meta name="twitter:description" content="Explore predicted '
-                "reactions in a virtual lab built for chemistry students. "
-                "OmniLab is educational and doesn't replace physical lab "
-                'procedures.">'
-            ),
+            '<meta name="twitter:title" content="OmniLab | Virtual labs for STEM learning">',
+            '<meta name="twitter:description" content="OmniLab builds virtual labs for STEM learning. Start with the free chemistry lab and explore the electronics lab coming soon.">',
             f'<meta name="twitter:image" content="{SOCIAL_PREVIEW_URL}">',
             f'<meta name="twitter:image:alt" content="{SOCIAL_PREVIEW_ALT}">',
         )
@@ -3550,10 +3531,33 @@ class SocialPreviewTests(TestCase):
         self.assertLess(len(image_bytes), 200_000)
 
 
+class StemLandingTests(TestCase):
+    def test_products_show_only_the_available_lab_as_a_link(self):
+        response = self.client.get("/")
+
+        self.assertContains(response, "Virtual labs for STEM learning")
+        self.assertContains(response, 'href="#products"')
+        self.assertContains(response, 'href="/lab/"', count=2)
+        self.assertContains(response, "Electronics lab")
+        self.assertContains(response, "Coming soon")
+        self.assertNotContains(response, 'href="/electronics/"')
+
+    def test_existing_chemistry_lab_remains_available(self):
+        response = self.client.get("/lab/")
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Reaction Analytics")
+        self.assertContains(
+            response,
+            f'<link rel="canonical" href="{PUBLIC_CANONICAL_URLS["chemistry_lab"]}">',
+            html=True,
+        )
+
+
 class AnalyticsInstrumentationTests(TestCase):
     def test_homepage_uses_privacy_limited_posthog_configuration(self):
         response = self.client.get(
-            "/",
+            "/lab/",
             HTTP_HOST="omnilab-bk8q.onrender.com",
         )
 
@@ -3923,7 +3927,7 @@ class ShareableReactionDemoTests(TestCase):
 
         self.assertContains(
             response,
-            f'<link rel="canonical" href="{PUBLIC_CANONICAL_URLS["index"]}">',
+            f'<link rel="canonical" href="{PUBLIC_CANONICAL_URLS["chemistry_lab"]}">',
             html=True,
         )
         self.assertContains(
@@ -3940,7 +3944,7 @@ class ShareableReactionDemoTests(TestCase):
         self.assertNotIn(SODIUM_CHLORINE_DEMO_URL, sitemap)
 
     def test_homepage_keeps_its_empty_unscripted_start(self):
-        response = self.client.get("/")
+        response = self.client.get("/lab/")
 
         self.assertContains(
             response,
@@ -3989,7 +3993,7 @@ class ShareableReactionDemoTests(TestCase):
         self.assertNotIn("window.reactionDemo", default_instruction)
 
     def test_lab_pages_do_not_request_unused_icon_or_three_dimensional_assets(self):
-        for path in ("/", "/demo/sodium-chlorine/"):
+        for path in ("/lab/", "/demo/sodium-chlorine/"):
             with self.subTest(path=path):
                 response = self.client.get(path)
 
@@ -4027,7 +4031,7 @@ class ShareableReactionDemoTests(TestCase):
 
 class PredictionInputClarityTests(TestCase):
     def test_normal_lab_and_demo_explain_prediction_inputs_before_analysis(self):
-        for path in ("/", "/demo/sodium-chlorine/"):
+        for path in ("/lab/", "/demo/sodium-chlorine/"):
             with self.subTest(path=path):
                 response = self.client.get(path)
                 html = response.content.decode()
@@ -4050,7 +4054,7 @@ class PredictionInputClarityTests(TestCase):
 
 class AccessibleLabSetupTests(TestCase):
     def test_apparatus_choices_are_native_pressed_buttons(self):
-        normal_html = self.client.get("/").content.decode()
+        normal_html = self.client.get("/lab/").content.decode()
         demo_html = self.client.get("/demo/sodium-chlorine/").content.decode()
 
         for html in (normal_html, demo_html):
@@ -4095,7 +4099,7 @@ class AccessibleLabSetupTests(TestCase):
         self.assertIn("addChemicalToLab(name, color", drop_block)
 
     def test_setup_controls_expose_state_focus_and_touch_targets(self):
-        html = self.client.get("/").content.decode()
+        html = self.client.get("/lab/").content.decode()
         ui = (settings.BASE_DIR / "static/ts/userInterface/ui.ts").read_text()
         css = (settings.BASE_DIR / "static/css/style.css").read_text()
 
@@ -4126,7 +4130,7 @@ class SupportedSetupAnalysisStateTests(TestCase):
         self.assertContains(response, "Add sodium")
         self.assertContains(response, "Empty Vessel")
         self.assertContains(response, "window.firstExperiment = true;")
-        self.assertContains(response, 'href="/">Use the open lab instead</a>')
+        self.assertContains(response, 'href="/lab/">Use the open lab instead</a>')
         self.assertNotContains(response, "Thirty chemistry guides")
         button = html.split('id="btn-fire-analysis"', 1)[1].split(">", 1)[0]
         self.assertIn("disabled", button)
@@ -4164,7 +4168,7 @@ class SupportedSetupAnalysisStateTests(TestCase):
         self.assertIn("`firstExperiment:v1:${baseKey}`", configuration)
 
     def test_normal_lab_starts_disabled_with_missing_input_guidance(self):
-        response = self.client.get("/")
+        response = self.client.get("/lab/")
 
         self.assertEqual(response.status_code, 200)
         self.assertContains(
@@ -4202,7 +4206,7 @@ class SupportedSetupAnalysisStateTests(TestCase):
         self.assertIn("supportedReactionPairKeys.has", support_rule)
 
     def test_catalog_marks_compatible_partners_from_the_server_pair_list(self):
-        response = self.client.get("/")
+        response = self.client.get("/lab/")
         configuration = (
             settings.BASE_DIR / "static/ts/configuration/config.ts"
         ).read_text()
@@ -4831,7 +4835,7 @@ class ReactionCsrfProtectionTests(TestCase):
             **headers,
         )
 
-    def get_token(self, path="/"):
+    def get_token(self, path="/lab/"):
         response = self.client.get(path, secure=True)
         self.assertEqual(response.status_code, 200)
         self.assertIn("csrftoken", response.cookies)
@@ -4899,7 +4903,7 @@ class LabJourneyRepairTests(TestCase):
         )
 
     def test_homepage_and_runtime_use_the_same_canvas_identifier(self):
-        response = self.client.get("/")
+        response = self.client.get("/lab/")
         runtime = (
             settings.BASE_DIR / "static/ts/configuration/config.ts"
         ).read_text()
@@ -4965,7 +4969,7 @@ class LabJourneyRepairTests(TestCase):
         )
 
     def test_instruction_text_uses_contrast_token_without_opacity(self):
-        response = self.client.get("/")
+        response = self.client.get("/lab/")
         css = (settings.BASE_DIR / "static/css/style.css").read_text()
         interactions = (
             settings.BASE_DIR / "static/ts/interactions/interactions.ts"
