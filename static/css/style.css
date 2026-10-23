@@ -689,7 +689,9 @@ body {
 }
 
 .analysis-view-tab:focus-visible,
-.chat-composer select:focus-visible {
+.chat-composer select:focus-visible,
+.chat-composer textarea:focus-visible,
+.chat-send-button:focus-visible {
     outline: 3px solid #e3384f;
     outline-offset: 2px;
 }
@@ -775,35 +777,79 @@ body {
 .chat-composer {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    min-height: 102px;
-    padding: 12px;
+    justify-content: space-between;
+    gap: 14px;
+    min-height: 142px;
+    padding: 14px;
     border: 1px solid var(--border-color);
-    border-radius: 14px;
-    background: var(--bg-canvas);
+    border-radius: 16px;
+    background: var(--bg-main);
+    box-shadow: 0 8px 24px color-mix(in srgb, var(--text-color) 5%, transparent);
+    transition: border-color .2s ease, box-shadow .2s ease;
 }
-.chat-composer input {
+.chat-composer:focus-within {
+    border-color: color-mix(in srgb, var(--text-color) 44%, var(--border-color));
+    box-shadow: 0 10px 28px color-mix(in srgb, var(--text-color) 9%, transparent);
+}
+.chat-composer textarea {
     min-width: 0;
     width: 100%;
-    padding: 4px 2px;
+    min-height: 54px;
+    padding: 2px;
     border: 0;
     background: transparent;
-    color: var(--muted-text);
-    font-size: 13px;
+    color: var(--text-color);
+    font: inherit;
+    font-size: 14px;
+    line-height: 1.5;
+    resize: none;
 }
-.chat-composer input::placeholder { color: var(--muted-text); opacity: 1; }
+.chat-composer textarea:focus-visible { outline: none; }
+.chat-composer textarea::placeholder { color: var(--muted-text); opacity: 1; }
 .chat-composer .chat-model-label { display: none; }
+.chat-composer-toolbar,
+.chat-model-controls { display: flex; align-items: center; }
+.chat-composer-toolbar { justify-content: space-between; gap: 12px; }
+.chat-model-controls { flex: 1; min-width: 0; gap: 8px; }
 .chat-composer select {
-    align-self: flex-start;
-    max-width: 100%;
-    padding: 6px 24px 6px 9px;
+    min-width: 0;
+    padding: 8px 24px 8px 10px;
     border: 1px solid var(--border-color);
-    border-radius: 8px;
-    background: var(--bg-main);
+    border-radius: 999px;
+    background: var(--bg-canvas);
     color: var(--text-color);
     font-size: 11px;
-    font-weight: 700;
+    font-weight: 600;
     cursor: pointer;
+}
+.chat-model-controls #chat-model-select { flex: 0 0 98px; width: 98px; }
+.chat-model-controls #chat-version-select { flex: 0 1 160px; width: 160px; }
+.chat-send-button {
+    flex: 0 0 36px;
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--text-color) 43%, var(--bg-main));
+    color: var(--bg-main);
+    transition: background .2s ease, transform .2s ease;
+}
+.chat-send-button:not(:disabled) { background: #e3384f; color: #fff; cursor: pointer; }
+.chat-send-button:not(:disabled):hover { transform: translateY(-2px); }
+.chat-send-button svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.chat-preview-hint { margin: 8px 2px 0; color: var(--muted-text); font-size: 10px; }
+.chat-preview-output:empty { display: none; }
+.chat-preview-output { display: grid; gap: 8px; margin-top: 16px; }
+.chat-preview-question { justify-self: end; max-width: 90%; padding: 10px 13px; border-radius: 13px 13px 3px 13px; background: var(--text-color); color: var(--bg-main); font-size: 12px; overflow-wrap: anywhere; white-space: pre-wrap; }
+.chat-preview-response { margin: 0; color: var(--muted-text); font-size: 11px; line-height: 1.5; }
+@media (max-width: 560px) {
+    .chat-composer-toolbar { align-items: flex-end; }
+    .chat-model-controls { flex-wrap: wrap; gap: 6px; }
+    .chat-model-controls #chat-model-select { flex-basis: 88px; width: 88px; }
+    .chat-model-controls #chat-version-select { flex-basis: 148px; width: 148px; }
 }
 .analysis-result-heading { margin-top: 4px; }
 .analysis-result-mark { font-variant-numeric: tabular-nums; opacity: .65; }

@@ -78,6 +78,58 @@ document.addEventListener("DOMContentLoaded", function(): void {
     const chatTab = document.getElementById('analysis-tab-chat') as HTMLButtonElement | null;
     const resultView = document.getElementById('analysis-view-result');
     const chatView = document.getElementById('analysis-view-chat');
+    const chatForm = document.getElementById('chat-preview-form') as HTMLFormElement | null;
+    const chatInput = document.getElementById('chat-preview-input') as HTMLTextAreaElement | null;
+    const chatSend = document.getElementById('chat-preview-send') as HTMLButtonElement | null;
+    const chatModel = document.getElementById('chat-model-select') as HTMLSelectElement | null;
+    const chatVersion = document.getElementById('chat-version-select') as HTMLSelectElement | null;
+    const chatOutput = document.getElementById('chat-preview-output');
+    const previewVersions: Record<string, string[]> = {
+        GPT: ['GPT Standard', 'GPT Fast'],
+        Claude: ['Claude Standard', 'Claude Fast'],
+        Grok: ['Grok Standard', 'Grok Fast'],
+        DeepSeek: ['DeepSeek Standard', 'DeepSeek Fast'],
+        Qwen: ['Qwen 3.5 Flash', 'Qwen 3.5']
+    };
+
+    function syncChatVersions(): void {
+        if (!chatModel || !chatVersion) return;
+        chatVersion.replaceChildren(...(previewVersions[chatModel.value] || []).map((version) => new Option(version, version)));
+    }
+
+    function syncChatSend(): void {
+        if (chatInput && chatSend) chatSend.disabled = !chatInput.value.trim();
+    }
+
+    function previewSendQuestion(): void {
+        if (!chatInput || !chatOutput) return;
+        const question = chatInput.value.trim();
+        if (!question) return;
+        const message = document.createElement('div');
+        message.className = 'chat-preview-question';
+        message.textContent = question;
+        const response = document.createElement('p');
+        response.className = 'chat-preview-response';
+        response.textContent = 'Preview only. No question was sent to an AI model.';
+        chatOutput.replaceChildren(message, response);
+        chatInput.value = '';
+        syncChatSend();
+        chatInput.focus();
+    }
+
+    chatModel?.addEventListener('change', syncChatVersions);
+    chatInput?.addEventListener('input', syncChatSend);
+    chatInput?.addEventListener('keydown', (event: KeyboardEvent) => {
+        if (event.key !== 'Enter' || event.shiftKey || event.isComposing) return;
+        event.preventDefault();
+        previewSendQuestion();
+    });
+    chatForm?.addEventListener('submit', (event: SubmitEvent) => {
+        event.preventDefault();
+        previewSendQuestion();
+    });
+    syncChatVersions();
+    syncChatSend();
 
     function showAnalysisView(view: 'result' | 'chat'): void {
         if (!resultTab || !chatTab || !resultView || !chatView) return;

@@ -182,17 +182,28 @@
                     </div>
                     <div class="chat-composer-preview">
                         <label class="chat-composer-label" for="chat-preview-input">Your question</label>
-                        <div class="chat-composer">
-                            <input id="chat-preview-input" type="text" placeholder="Ask about this experiment..." disabled>
-                            <label class="chat-model-label" for="chat-model-select">Model</label>
-                            <select id="chat-model-select" aria-label="Preview chat model">
-                                <option value="GPT">GPT · Coming soon</option>
-                                <option value="Claude">Claude · Coming soon</option>
-                                <option value="Grok">Grok · Coming soon</option>
-                                <option value="DeepSeek">DeepSeek · Coming soon</option>
-                                <option value="Qwen">Qwen · Coming soon</option>
-                            </select>
-                        </div>
+                        <form class="chat-composer" id="chat-preview-form">
+                            <textarea id="chat-preview-input" rows="2" maxlength="1000" placeholder="Ask about this experiment..." aria-describedby="chat-preview-hint"></textarea>
+                            <div class="chat-composer-toolbar">
+                                <div class="chat-model-controls">
+                                    <label class="chat-model-label" for="chat-model-select">Model family</label>
+                                    <select id="chat-model-select" aria-label="Model family, coming soon">
+                                        <option value="GPT">GPT</option>
+                                        <option value="Claude">Claude</option>
+                                        <option value="Grok">Grok</option>
+                                        <option value="DeepSeek">DeepSeek</option>
+                                        <option value="Qwen" selected>Qwen</option>
+                                    </select>
+                                    <label class="chat-model-label" for="chat-version-select">Model version</label>
+                                    <select id="chat-version-select" aria-label="Model version, coming soon"></select>
+                                </div>
+                                <button class="chat-send-button" id="chat-preview-send" type="submit" aria-label="Preview sending question" disabled>
+                                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 19V5m0 0-6 6m6-6 6 6"/></svg>
+                                </button>
+                            </div>
+                        </form>
+                        <p class="chat-preview-hint" id="chat-preview-hint">Enter to preview send · Shift+Enter for a new line</p>
+                        <div class="chat-preview-output" id="chat-preview-output" aria-live="polite"></div>
                     </div>
                 </div>
             </div>
