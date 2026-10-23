@@ -39,7 +39,7 @@
 
             <section class="reaction-lab-hero" aria-labelledby="practice-heading">
                 <div class="reaction-lab-hero-copy">
-                    <p class="guide-context">Five questions · Worked answers · Matching lab examples</p>
+                    <p class="guide-context">Ten questions · Worked answers · Matching lab examples</p>
                     <h1 id="practice-heading">Practice chemical reactions you can actually check</h1>
                     <p class="reaction-lab-lede">Predict a product or observation first. Then reveal the equation and reasoning. Each example links to a supported OmniLab reaction.</p>
                     <a class="guide-primary" href="#practice-questions">Start question 1 <span aria-hidden="true">→</span></a>
@@ -57,13 +57,13 @@
             <section class="practice-method" aria-labelledby="practice-method-heading">
                 <p class="guide-section-label">How to use this set</p>
                 <h2 id="practice-method-heading">Try the question before opening its answer</h2>
-                <p>For each pair, write what you expect to form. Look for a balanced equation and a clue you could discuss in class. Open the answer only after you make a prediction. These five examples cover a precipitate, a gas, neutralization, combustion, and a metal-acid reaction.</p>
+                <p>For each pair, write what you expect to form. Look for a balanced equation and a clue you could discuss in class. Open the answer only after you make a prediction. The ten examples cover solids, gases, neutralization, oxidation, and metal-acid reactions.</p>
             </section>
 
             <section class="practice-list" id="practice-questions" aria-labelledby="practice-list-heading">
                 <div class="practice-list-intro">
                     <p class="guide-section-label">Work through the reactions</p>
-                    <h2 id="practice-list-heading">Five questions, five different clues</h2>
+                    <h2 id="practice-list-heading">Ten questions, several different clues</h2>
                     <p>Each answer explains one useful step. The full guides go deeper after you check your work.</p>
                 </div>
 
@@ -124,6 +124,66 @@
                         <p>Zinc forms dissolved zinc chloride while hydrogen gas can appear as bubbles. Zinc chloride has two chlorine atoms, so the left side needs 2HCl. Those two hydrogen atoms form one H₂ molecule.</p>
                         <p>Real observations depend on surface condition and solution strength. Hydrogen is flammable, so a virtual prediction cannot replace supervised safety steps.</p>
                         <a href="{% url 'guide_zinc_hydrochloric_acid' %}">Read the zinc and acid guide →</a>
+                    </div></details>
+                </article>
+
+                <article class="practice-card">
+                    <div class="practice-card-head"><span class="practice-number">06</span><span class="practice-type">Yellow precipitate</span></div>
+                    <h3>What solid forms when silver nitrate meets potassium iodide?</h3>
+                    <p>Exchange the ions. Name the solid and check whether the equation needs any coefficients.</p>
+                    <details><summary>Show the worked answer</summary><div class="practice-answer">
+                        <p class="practice-equation">AgNO₃(aq) + KI(aq) → AgI(s) + KNO₃(aq)</p>
+                        <p>Silver and iodide ions form solid silver iodide. Potassium and nitrate ions stay dissolved. There is one of each ion on both sides, so every coefficient is 1.</p>
+                        <p>The predicted yellow solid is an educational clue, not proof of an unknown sample. Handle silver salts only under trained supervision.</p>
+                        <a href="{% url 'guide_silver_nitrate_potassium_iodide' %}">Read the silver iodide guide →</a>
+                    </div></details>
+                </article>
+
+                <article class="practice-card">
+                    <div class="practice-card-head"><span class="practice-number">07</span><span class="practice-type">Blue precipitate</span></div>
+                    <h3>Why does copper sulfate form a solid with potassium hydroxide?</h3>
+                    <p>Write the two products. Count the hydroxide ions needed for one copper ion.</p>
+                    <details><summary>Show the worked answer</summary><div class="practice-answer">
+                        <p class="practice-equation">CuSO₄(aq) + 2KOH(aq) → Cu(OH)₂(s) + K₂SO₄(aq)</p>
+                        <p>Copper and two hydroxide ions form solid copper hydroxide. Two KOH units also supply the two potassium ions in dissolved potassium sulfate.</p>
+                        <p>The blue precipitate is a predicted observation. Real results depend on conditions, and copper waste needs supervised disposal.</p>
+                        <a href="{% url 'guide_copper_sulfate_potassium_hydroxide' %}">Read the copper hydroxide guide →</a>
+                    </div></details>
+                </article>
+
+                <article class="practice-card">
+                    <div class="practice-card-head"><span class="practice-number">08</span><span class="practice-type">Acidic oxide</span></div>
+                    <h3>What forms when carbon dioxide meets excess sodium hydroxide?</h3>
+                    <p>Predict the salt and water. Then balance the sodium atoms.</p>
+                    <details><summary>Show the worked answer</summary><div class="practice-answer">
+                        <p class="practice-equation">CO₂(g) + 2NaOH(aq) → Na₂CO₃(aq) + H₂O(l)</p>
+                        <p>Carbon dioxide reacts with hydroxide to form carbonate and water. Sodium carbonate contains two sodium atoms, so the reactants need 2NaOH.</p>
+                        <p>This predicts the excess-base case only. Amounts and concentrations can change the products in a real mixture; follow supervised procedures.</p>
+                        <a href="{% url 'guide_carbon_dioxide_sodium_hydroxide' %}">Read the carbon dioxide and base guide →</a>
+                    </div></details>
+                </article>
+
+                <article class="practice-card">
+                    <div class="practice-card-head"><span class="practice-number">09</span><span class="practice-type">Oxidation</span></div>
+                    <h3>How do iron and oxygen form iron oxide?</h3>
+                    <p>Start with Fe + O₂ → Fe₂O₃. Balance oxygen first, then iron.</p>
+                    <details><summary>Show the worked answer</summary><div class="practice-answer">
+                        <p class="practice-equation">4Fe(s) + 3O₂(g) → 2Fe₂O₃(s)</p>
+                        <p>Two iron oxide units contain six oxygen atoms, supplied by three O₂ molecules. They also contain four iron atoms, supplied by 4Fe.</p>
+                        <p>This is a simplified educational prediction. Bulk iron may react slowly, while heated or fine iron needs supervised safety controls.</p>
+                        <a href="{% url 'guide_iron_oxygen' %}">Read the iron oxide guide →</a>
+                    </div></details>
+                </article>
+
+                <article class="practice-card">
+                    <div class="practice-card-head"><span class="practice-number">10</span><span class="practice-type">Gas and solid</span></div>
+                    <h3>What can permanganate and peroxide produce in neutral or alkaline conditions?</h3>
+                    <p>Find the gas and the solid. Then check the coefficient of hydrogen peroxide.</p>
+                    <details><summary>Show the worked answer</summary><div class="practice-answer">
+                        <p class="practice-equation">2KMnO₄(aq) + 3H₂O₂(aq) → 2MnO₂(s) + 3O₂(g) + 2KOH(aq) + 2H₂O(l)</p>
+                        <p>Three peroxide units appear in the balanced equation. The model predicts oxygen gas and brown manganese dioxide. Both sides contain two potassium and two manganese atoms.</p>
+                        <p>Acidity can change the products. This educational prediction cannot replace supervised handling of oxidizers or the oxygen gas produced.</p>
+                        <a href="{% url 'guide_potassium_permanganate_hydrogen_peroxide' %}">Read the permanganate and peroxide guide →</a>
                     </div></details>
                 </article>
             </section>
