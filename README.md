@@ -4,7 +4,7 @@ OmniLab builds virtual labs for STEM learning. The chemistry lab is available no
 
 [Explore OmniLab](https://omnilab-bk8q.onrender.com/) · [Open the chemistry lab](https://omnilab-bk8q.onrender.com/lab/) · [Start the guided experiment](https://omnilab-bk8q.onrender.com/first-experiment/)
 
-![OmniLab's STEM homepage with the available chemistry lab and planned electronics lab](docs/images/omnilab-stem-homepage.png)
+![Current chemistry lab showing a sodium and chlorine result in an Erlenmeyer flask beside Reaction Analytics](docs/images/omnilab-chemistry-lab.png)
 
 ## What is available now
 
