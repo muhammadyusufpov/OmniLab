@@ -104,16 +104,32 @@
                 <canvas id="lab-canvas"></canvas>
             </div>
 
-            <div class="col-lg-4 ai-sidebar p-4">
-                <h2 class="fw-bold mb-3">Reaction Analytics</h2>
+            <button type="button" class="analysis-reopen" id="btn-show-analysis" aria-controls="reaction-analysis" aria-expanded="false" hidden>
+                <span class="analysis-reopen-icon" aria-hidden="true">&#8592;</span> Show analysis
+            </button>
+
+            <div class="col-lg-4 ai-sidebar" id="reaction-analysis">
+                <div class="analysis-header">
+                    <div>
+                        <p class="analysis-eyebrow">LAB WORKSPACE / 01</p>
+                        <h2>Reaction Analytics</h2>
+                        <p class="analysis-header-note">Your setup and predicted result</p>
+                    </div>
+                    <button type="button" class="analysis-collapse" id="btn-hide-analysis" aria-controls="reaction-analysis" aria-expanded="true" aria-label="Hide reaction analysis and expand lab" title="Expand lab">
+                        <span aria-hidden="true">&#8594;</span>
+                    </button>
+                </div>
                 
-                <div class="border border-2 rounded-3 p-3 mb-3" style="border-color: var(--border-color) !important; background: var(--bg-canvas);">
-                    <span class="d-block small fw-bold mb-1" style="color: var(--text-color); opacity: 0.7;">COMPOUNDS MATRIX:</span>
-                    <h3 id="current-mixture" class="m-0 fw-bold text-danger">{% if reaction_demo %}{{ reaction_demo.mixture_label }}{% else %}Empty Vessel{% endif %}</h3>
-                    <button class="btn btn-sm action-btn-secondary mt-3 px-3 py-1" id="btn-reset-lab">Reset Setup</button>
+                <div class="analysis-setup">
+                    <div class="analysis-section-heading">
+                        <span>Current setup</span>
+                        <button type="button" class="analysis-reset" id="btn-reset-lab">Reset setup</button>
+                    </div>
+                    <h3 id="current-mixture">{% if reaction_demo %}{{ reaction_demo.mixture_label }}{% else %}Empty Vessel{% endif %}</h3>
                 </div>
 
-                <div class="response-container mb-3">
+                <div class="analysis-section-heading analysis-result-heading"><span>Prediction</span><span class="analysis-result-mark" aria-hidden="true">01 / 01</span></div>
+                <div class="response-container">
                     <div id="ai-response-content" style="color: var(--text-color);">
                         {% if reaction_demo %}
                         <p class="text-center mt-5 lab-instruction">This setup is ready. Select Analyze Chemical Reaction to request the prediction.</p>
