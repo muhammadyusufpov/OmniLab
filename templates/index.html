@@ -109,6 +109,7 @@
             </button>
 
             <div class="col-lg-4 ai-sidebar" id="reaction-analysis">
+                <div class="analysis-resize-handle" id="analysis-resize-handle" role="separator" aria-label="Resize reaction panel" aria-orientation="vertical" aria-valuemin="320" tabindex="0"></div>
                 <div class="analysis-header">
                     <div>
                         <p class="analysis-eyebrow">LAB WORKSPACE / 01</p>
@@ -181,13 +182,12 @@
                         <p>Ask about the equation, visible changes, or safety once chat is available.</p>
                     </div>
                     <div class="chat-composer-preview">
-                        <label class="chat-composer-label" for="chat-preview-input">Your question</label>
                         <form class="chat-composer" id="chat-preview-form">
-                            <textarea id="chat-preview-input" rows="2" maxlength="1000" placeholder="Ask about this experiment..." aria-describedby="chat-preview-hint"></textarea>
+                            <textarea id="chat-preview-input" rows="2" maxlength="1000" placeholder="Ask about this experiment..." aria-label="Your question"></textarea>
                             <div class="chat-composer-toolbar">
                                 <div class="chat-model-controls">
                                     <label class="chat-model-label" for="chat-model-select">Model family</label>
-                                    <select id="chat-model-select" aria-label="Model family, coming soon">
+                                    <select id="chat-model-select" aria-label="Model family, coming soon" hidden>
                                         <option value="GPT">GPT</option>
                                         <option value="Claude">Claude</option>
                                         <option value="Grok">Grok</option>
@@ -195,14 +195,21 @@
                                         <option value="Qwen" selected>Qwen</option>
                                     </select>
                                     <label class="chat-model-label" for="chat-version-select">Model version</label>
-                                    <select id="chat-version-select" aria-label="Model version, coming soon"></select>
+                                    <select id="chat-version-select" aria-label="Model version, coming soon" hidden></select>
+                                    <div class="chat-picker" id="chat-model-picker">
+                                        <button type="button" class="chat-picker-trigger chat-picker-family" aria-label="Model family, coming soon" aria-haspopup="listbox" aria-expanded="false"></button>
+                                        <div class="chat-picker-menu" role="listbox" aria-label="Model family" hidden></div>
+                                    </div>
+                                    <div class="chat-picker chat-picker-version" id="chat-version-picker">
+                                        <button type="button" class="chat-picker-trigger" aria-label="Model version, coming soon" aria-haspopup="listbox" aria-expanded="false"></button>
+                                        <div class="chat-picker-menu" role="listbox" aria-label="Model version" hidden></div>
+                                    </div>
                                 </div>
                                 <button class="chat-send-button" id="chat-preview-send" type="submit" aria-label="Preview sending question" disabled>
                                     <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 19V5m0 0-6 6m6-6 6 6"/></svg>
                                 </button>
                             </div>
                         </form>
-                        <p class="chat-preview-hint" id="chat-preview-hint">Enter to preview send · Shift+Enter for a new line</p>
                         <div class="chat-preview-output" id="chat-preview-output" aria-live="polite"></div>
                     </div>
                 </div>

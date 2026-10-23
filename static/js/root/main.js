@@ -54,6 +54,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const resetBtn = document.getElementById('btn-reset-lab');
     const analyzeBtn = document.getElementById('btn-fire-analysis');
     const workspace = document.getElementById('lab-workspace');
+    const analysisResize = document.getElementById('analysis-resize-handle');
     const hideAnalysisBtn = document.getElementById('btn-hide-analysis');
     const showAnalysisBtn = document.getElementById('btn-show-analysis');
     const resultTab = document.getElementById('analysis-tab-result');
@@ -65,6 +66,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const chatSend = document.getElementById('chat-preview-send');
     const chatModel = document.getElementById('chat-model-select');
     const chatVersion = document.getElementById('chat-version-select');
+    const modelPicker = document.getElementById('chat-model-picker');
+    const versionPicker = document.getElementById('chat-version-picker');
     const chatOutput = document.getElementById('chat-preview-output');
     const previewVersions = {
         GPT: ['GPT Standard', 'GPT Fast'],
@@ -77,7 +80,113 @@ document.addEventListener("DOMContentLoaded", function () {
         if (!chatModel || !chatVersion)
             return;
         chatVersion.replaceChildren(...(previewVersions[chatModel.value] || []).map((version) => new Option(version, version)));
+        renderChatPickers();
     }
+    const modelIcons = { GPT: '✳', Claude: '✻', Grok: '✕', DeepSeek: '✦', Qwen: '✥' };
+    function closeChatPickers() {
+        for (const picker of [modelPicker, versionPicker]) {
+            const trigger = picker?.querySelector('.chat-picker-trigger');
+            const menu = picker?.querySelector('.chat-picker-menu');
+            if (trigger && menu) {
+                trigger.setAttribute('aria-expanded', 'false');
+                menu.hidden = true;
+            }
+        }
+    }
+    function renderChatPicker(picker, select, family) {
+        const trigger = picker?.querySelector('.chat-picker-trigger');
+        const menu = picker?.querySelector('.chat-picker-menu');
+        if (!trigger || !menu || !select)
+            return;
+        trigger.replaceChildren();
+        const glyph = document.createElement('span');
+        glyph.className = 'chat-picker-icon';
+        glyph.setAttribute('aria-hidden', 'true');
+        if (family)
+            glyph.textContent = modelIcons[select.value] || '✦';
+        else
+            glyph.innerHTML = '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M7 13c0-1.7-2-2.3-2-5a5 5 0 0 1 10 0c0 2.7-2 3.3-2 5M7 13h6m-5 2h4m-3 2h2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+        const name = document.createElement('span');
+        name.className = 'chat-picker-name';
+        name.textContent = select.value;
+        const chevron = document.createElement('span');
+        chevron.className = 'chat-picker-chevron';
+        chevron.setAttribute('aria-hidden', 'true');
+        chevron.innerHTML = '<span>⌃</span><span>⌄</span>';
+        trigger.append(glyph, name);
+        if (!family)
+            trigger.append(chevron);
+        menu.replaceChildren(...Array.from(select.options).map((option) => {
+            const item = document.createElement('button');
+            item.type = 'button';
+            item.className = 'chat-picker-option';
+            item.setAttribute('role', 'option');
+            item.setAttribute('aria-selected', String(option.value === select.value));
+            const itemIcon = document.createElement('span');
+            itemIcon.className = 'chat-picker-icon';
+            itemIcon.setAttribute('aria-hidden', 'true');
+            itemIcon.textContent = modelIcons[option.value] || '✦';
+            const label = document.createElement('span');
+            label.textContent = option.textContent;
+            if (family)
+                item.append(itemIcon);
+            item.append(label);
+            if (option.value === select.value) {
+                const check = document.createElement('span');
+                check.className = 'chat-picker-check';
+                check.setAttribute('aria-hidden', 'true');
+                check.textContent = '✓';
+                item.append(check);
+            }
+            item.addEventListener('click', () => {
+                select.value = option.value;
+                select.dispatchEvent(new Event('change', { bubbles: true }));
+                renderChatPicker(picker, select, family);
+                closeChatPickers();
+                trigger.focus();
+            });
+            return item;
+        }));
+    }
+    function renderChatPickers() {
+        renderChatPicker(modelPicker, chatModel, true);
+        renderChatPicker(versionPicker, chatVersion, false);
+    }
+    for (const picker of [modelPicker, versionPicker]) {
+        const trigger = picker?.querySelector('.chat-picker-trigger');
+        const menu = picker?.querySelector('.chat-picker-menu');
+        trigger?.addEventListener('click', () => {
+            const open = !!menu?.hidden;
+            closeChatPickers();
+            if (menu && open) {
+                menu.hidden = false;
+                trigger.setAttribute('aria-expanded', 'true');
+            }
+        });
+        trigger?.addEventListener('keydown', (event) => {
+            if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp')
+                return;
+            event.preventDefault();
+            trigger.click();
+            menu?.querySelector('.chat-picker-option')?.focus();
+        });
+        menu?.addEventListener('keydown', (event) => {
+            const items = Array.from(menu.querySelectorAll('.chat-picker-option'));
+            const index = items.indexOf(document.activeElement);
+            if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+                event.preventDefault();
+                items[(index + (event.key === 'ArrowDown' ? 1 : -1) + items.length) % items.length]?.focus();
+            }
+            if (event.key === 'Escape') {
+                closeChatPickers();
+                trigger?.focus();
+            }
+        });
+    }
+    document.addEventListener('pointerdown', (event) => {
+        if (!modelPicker?.contains(event.target) && !versionPicker?.contains(event.target))
+            closeChatPickers();
+    });
     function syncChatSend() {
         if (chatInput && chatSend)
             chatSend.disabled = !chatInput.value.trim();
@@ -152,6 +261,48 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     hideAnalysisBtn?.addEventListener('click', () => setAnalysisCollapsed(true));
     showAnalysisBtn?.addEventListener('click', () => setAnalysisCollapsed(false));
+    if (workspace && analysisResize) {
+        const sidebar = document.getElementById('reaction-analysis');
+        const widthBounds = () => {
+            const total = workspace.getBoundingClientRect().width;
+            return [320, Math.max(320, Math.min(620, total * .5, total - 420))];
+        };
+        const setWidth = (requested) => {
+            const [min, max] = widthBounds();
+            const width = Math.round(Math.max(min, Math.min(max, requested)));
+            workspace.style.setProperty('--analysis-width', `${width}px`);
+            analysisResize.setAttribute('aria-valuenow', String(width));
+            analysisResize.setAttribute('aria-valuemax', String(Math.round(max)));
+            requestAnimationFrame(ui.resizeCanvas);
+        };
+        analysisResize.addEventListener('pointerdown', (event) => {
+            if (window.matchMedia('(max-width: 991.98px)').matches || !sidebar)
+                return;
+            event.preventDefault();
+            const startX = event.clientX;
+            const startWidth = sidebar.getBoundingClientRect().width;
+            analysisResize.setPointerCapture(event.pointerId);
+            const move = (motion) => setWidth(startWidth + startX - motion.clientX);
+            const end = () => {
+                analysisResize.removeEventListener('pointermove', move);
+                analysisResize.removeEventListener('pointerup', end);
+                analysisResize.removeEventListener('pointercancel', end);
+            };
+            analysisResize.addEventListener('pointermove', move);
+            analysisResize.addEventListener('pointerup', end);
+            analysisResize.addEventListener('pointercancel', end);
+        });
+        analysisResize.addEventListener('keydown', (event) => {
+            if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight')
+                return;
+            event.preventDefault();
+            setWidth((sidebar?.getBoundingClientRect().width || 320) + (event.key === 'ArrowLeft' ? 20 : -20));
+        });
+        window.addEventListener('resize', () => {
+            if (workspace.style.getPropertyValue('--analysis-width') && sidebar)
+                setWidth(sidebar.getBoundingClientRect().width);
+        });
+    }
     if (chemBtn)
         chemBtn.addEventListener('click', (e) => {
             ui.toggleCustomPopover(e, 'chemicals');

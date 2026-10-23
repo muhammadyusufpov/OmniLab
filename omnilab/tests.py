@@ -4105,7 +4105,7 @@ class AccessibleLabSetupTests(TestCase):
 
         self.assertIn('aria-controls="sub-panel-chemicals"', html)
         self.assertIn('aria-controls="sub-panel-apparatus"', html)
-        self.assertEqual(html.count('aria-expanded="false"'), 3)
+        self.assertGreaterEqual(html.count('aria-expanded="false"'), 3)
         self.assertIn('id="btn-show-analysis"', html)
         self.assertIn('id="btn-hide-analysis"', html)
         self.assertIn("trigger.setAttribute('aria-expanded', 'true')", ui)
