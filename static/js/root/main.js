@@ -56,8 +56,38 @@ document.addEventListener("DOMContentLoaded", function () {
     const workspace = document.getElementById('lab-workspace');
     const hideAnalysisBtn = document.getElementById('btn-hide-analysis');
     const showAnalysisBtn = document.getElementById('btn-show-analysis');
+    const resultTab = document.getElementById('analysis-tab-result');
+    const chatTab = document.getElementById('analysis-tab-chat');
+    const resultView = document.getElementById('analysis-view-result');
+    const chatView = document.getElementById('analysis-view-chat');
+    function showAnalysisView(view) {
+        if (!resultTab || !chatTab || !resultView || !chatView)
+            return;
+        const showResult = view === 'result';
+        resultView.hidden = !showResult;
+        chatView.hidden = showResult;
+        resultTab.classList.toggle('is-active', showResult);
+        chatTab.classList.toggle('is-active', !showResult);
+        resultTab.setAttribute('aria-selected', String(showResult));
+        chatTab.setAttribute('aria-selected', String(!showResult));
+        resultTab.tabIndex = showResult ? 0 : -1;
+        chatTab.tabIndex = showResult ? -1 : 0;
+    }
+    resultTab?.addEventListener('click', () => showAnalysisView('result'));
+    chatTab?.addEventListener('click', () => showAnalysisView('chat'));
+    for (const tab of [resultTab, chatTab]) {
+        tab?.addEventListener('keydown', (event) => {
+            if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight')
+                return;
+            event.preventDefault();
+            const nextView = tab === resultTab ? 'chat' : 'result';
+            showAnalysisView(nextView);
+            (nextView === 'result' ? resultTab : chatTab)?.focus();
+        });
+    }
     function setAnalysisCollapsed(collapsed) {
-        if (!workspace || !hideAnalysisBtn || !showAnalysisBtn) return;
+        if (!workspace || !hideAnalysisBtn || !showAnalysisBtn)
+            return;
         workspace.classList.toggle('is-analysis-collapsed', collapsed);
         hideAnalysisBtn.setAttribute('aria-expanded', String(!collapsed));
         showAnalysisBtn.setAttribute('aria-expanded', String(!collapsed));

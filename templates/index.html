@@ -51,11 +51,11 @@
         {% elif reaction_demo %}
         <p class="app-wordmark">OmniLab guided demo</p>
         <h1>{{ reaction_demo.title }}</h1>
-        <p class="app-subheadline">The supported inputs and a beaker are prepared. Select Analyze Chemical Reaction when you want an educational prediction.</p>
+        <p class="app-subheadline">The supported inputs and a beaker are prepared. Select Analyze Chemical Reaction to see an educational result.</p>
         {% else %}
         <p class="app-wordmark">OmniLab</p>
         <h1>Test chemical reactions in a virtual lab</h1>
-        <p class="app-subheadline">For chemistry students to mix compounds, try lab equipment, and understand predicted outcomes before working with real materials.</p>
+        <p class="app-subheadline">For chemistry students to mix compounds, try lab equipment, and study possible outcomes before working with real materials.</p>
         <a class="home-first-experiment-entry" href="{% url 'first_experiment' %}">
             Run your first experiment
             <span aria-hidden="true">&rarr;</span>
@@ -93,7 +93,7 @@
                 <button type="button" class="apparatus-option-card" id="tool-stir">Stir with glass rod</button>
                 <button type="button" class="apparatus-option-card" id="tool-filter">Filter precipitate</button>
             </div>
-            <p class="apparatus-help" id="apparatus-status" role="status" aria-live="polite">Tools show a visual technique. Volumes are not calibrated. Results remain educational predictions.</p>
+            <p class="apparatus-help" id="apparatus-status" role="status" aria-live="polite">Tools show a visual technique. Volumes are not calibrated. Results are educational estimates.</p>
         </div>
     </div>
 
@@ -113,7 +113,7 @@
                     <div>
                         <p class="analysis-eyebrow">LAB WORKSPACE / 01</p>
                         <h2>Reaction Analytics</h2>
-                        <p class="analysis-header-note">Your setup and predicted result</p>
+                        <p class="analysis-header-note">Your setup, reaction analysis, and future chat</p>
                     </div>
                     <button type="button" class="analysis-collapse" id="btn-hide-analysis" aria-controls="reaction-analysis" aria-expanded="true" aria-label="Hide reaction analysis and expand lab" title="Expand lab">
                         <span aria-hidden="true">&#8594;</span>
@@ -128,11 +128,16 @@
                     <h3 id="current-mixture">{% if reaction_demo %}{{ reaction_demo.mixture_label }}{% else %}Empty Vessel{% endif %}</h3>
                 </div>
 
-                <div class="analysis-section-heading analysis-result-heading"><span>Prediction</span><span class="analysis-result-mark" aria-hidden="true">01 / 01</span></div>
+                <div class="analysis-view-switch" role="tablist" aria-label="Reaction panel views">
+                    <button type="button" class="analysis-view-tab is-active" id="analysis-tab-result" role="tab" aria-selected="true" aria-controls="analysis-view-result">Reaction analysis</button>
+                    <button type="button" class="analysis-view-tab" id="analysis-tab-chat" role="tab" aria-selected="false" aria-controls="analysis-view-chat" tabindex="-1">AI chat <span class="analysis-tab-preview">Preview</span></button>
+                </div>
+                <div class="analysis-view-result" id="analysis-view-result" role="tabpanel" aria-labelledby="analysis-tab-result">
+                <div class="analysis-section-heading analysis-result-heading"><span>Reaction result</span><span class="analysis-result-mark" aria-hidden="true">01 / 01</span></div>
                 <div class="response-container">
                     <div id="ai-response-content" style="color: var(--text-color);">
                         {% if reaction_demo %}
-                        <p class="text-center mt-5 lab-instruction">This setup is ready. Select Analyze Chemical Reaction to request the prediction.</p>
+                        <p class="text-center mt-5 lab-instruction">This setup is ready. Select Analyze Chemical Reaction to see the result.</p>
                         {% elif first_experiment %}
                         <div class="text-center mt-5 lab-empty-state">
                             <p class="lab-instruction mb-2">Follow the highlighted control through four short steps. Your equation, explanation, and safety rules will appear here.</p>
@@ -153,12 +158,44 @@
                     <span class="analysis-availability-message" id="analysis-availability-message">
                         {% if reaction_demo %}Ready to analyze this supported reaction pair.{% else %}Add two chemicals from a supported reaction pair.{% endif %}
                     </span>
-                    <span class="prediction-input-boundary"><strong>Prediction inputs:</strong> Selected chemicals only. Vessel and burner choices are visual setup aids.</span>
+                    <span class="prediction-input-boundary"><strong>Analysis inputs:</strong> Selected chemicals only. Vessel and burner choices are visual setup aids.</span>
                 </p>
 
                 <button class="btn action-btn-primary w-100 py-3" id="btn-fire-analysis" aria-describedby="prediction-input-note"{% if not reaction_demo %} disabled{% endif %}>
                     Analyze Chemical Reaction
                 </button>
+                </div>
+
+                <div class="analysis-view-chat" id="analysis-view-chat" role="tabpanel" aria-labelledby="analysis-tab-chat" hidden>
+                    <div class="chat-intro">
+                        <span class="chat-intro-icon" aria-hidden="true">✳</span>
+                        <div>
+                            <p class="chat-eyebrow">A future way to explore</p>
+                            <h3>Talk through your experiment</h3>
+                            <p>Choose a model to preview your future chat workspace.</p>
+                        </div>
+                    </div>
+                    <fieldset class="chat-models">
+                        <legend>Choose a model</legend>
+                        <div class="chat-model-grid">
+                            <label class="chat-model-option"><input type="radio" name="chat-model" value="GPT" checked><span class="chat-model-name">GPT</span><span class="chat-model-status">Coming soon</span></label>
+                            <label class="chat-model-option"><input type="radio" name="chat-model" value="Claude"><span class="chat-model-name">Claude</span><span class="chat-model-status">Coming soon</span></label>
+                            <label class="chat-model-option"><input type="radio" name="chat-model" value="Grok"><span class="chat-model-name">Grok</span><span class="chat-model-status">Coming soon</span></label>
+                            <label class="chat-model-option"><input type="radio" name="chat-model" value="DeepSeek"><span class="chat-model-name">DeepSeek</span><span class="chat-model-status">Coming soon</span></label>
+                            <label class="chat-model-option"><input type="radio" name="chat-model" value="Qwen"><span class="chat-model-name">Qwen</span><span class="chat-model-status">Coming soon</span></label>
+                        </div>
+                    </fieldset>
+                    <div class="chat-preview-conversation" aria-label="Future chat preview">
+                        <span class="chat-preview-spark" aria-hidden="true">✳</span>
+                        <h4>Questions start with your setup</h4>
+                        <p>Ask about the equation, visible changes, or safety once chat is available.</p>
+                    </div>
+                    <div class="chat-composer-preview">
+                        <label for="chat-preview-input">Your question</label>
+                        <div class="chat-composer-row"><input id="chat-preview-input" type="text" placeholder="Ask about this experiment..." disabled><button type="button" disabled aria-label="Send question when AI chat is available">↗</button></div>
+                        <p>Chat is coming soon. No question is sent or saved.</p>
+                    </div>
+                </div>
             </div>
 
         </section>

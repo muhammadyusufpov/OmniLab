@@ -21,14 +21,14 @@ const STEP_COPY = {
     },
     analyze: {
         label: 'Step 4 of 4',
-        title: 'Run the prediction',
+        title: 'Run the analysis',
         instruction: null,
         progress: 4
     },
     complete: {
         label: 'Experiment complete',
         title: 'Read the result',
-        instruction: 'Compare the equation and explanation, then read all three safety rules. This prediction does not replace a physical lab procedure.',
+        instruction: 'Compare the equation and explanation, then read all three safety rules. This result does not replace a physical lab procedure.',
         progress: 4
     }
 };

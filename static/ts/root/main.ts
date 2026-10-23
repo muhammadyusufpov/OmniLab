@@ -74,6 +74,35 @@ document.addEventListener("DOMContentLoaded", function(): void {
     const workspace = document.getElementById('lab-workspace');
     const hideAnalysisBtn = document.getElementById('btn-hide-analysis') as HTMLButtonElement | null;
     const showAnalysisBtn = document.getElementById('btn-show-analysis') as HTMLButtonElement | null;
+    const resultTab = document.getElementById('analysis-tab-result') as HTMLButtonElement | null;
+    const chatTab = document.getElementById('analysis-tab-chat') as HTMLButtonElement | null;
+    const resultView = document.getElementById('analysis-view-result');
+    const chatView = document.getElementById('analysis-view-chat');
+
+    function showAnalysisView(view: 'result' | 'chat'): void {
+        if (!resultTab || !chatTab || !resultView || !chatView) return;
+        const showResult = view === 'result';
+        resultView.hidden = !showResult;
+        chatView.hidden = showResult;
+        resultTab.classList.toggle('is-active', showResult);
+        chatTab.classList.toggle('is-active', !showResult);
+        resultTab.setAttribute('aria-selected', String(showResult));
+        chatTab.setAttribute('aria-selected', String(!showResult));
+        resultTab.tabIndex = showResult ? 0 : -1;
+        chatTab.tabIndex = showResult ? -1 : 0;
+    }
+
+    resultTab?.addEventListener('click', () => showAnalysisView('result'));
+    chatTab?.addEventListener('click', () => showAnalysisView('chat'));
+    for (const tab of [resultTab, chatTab]) {
+        tab?.addEventListener('keydown', (event: KeyboardEvent) => {
+            if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+            event.preventDefault();
+            const nextView = tab === resultTab ? 'chat' : 'result';
+            showAnalysisView(nextView);
+            (nextView === 'result' ? resultTab : chatTab)?.focus();
+        });
+    }
 
     function setAnalysisCollapsed(collapsed: boolean): void {
         if (!workspace || !hideAnalysisBtn || !showAnalysisBtn) return;
