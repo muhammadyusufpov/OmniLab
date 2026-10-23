@@ -1,19 +1,21 @@
 # OmniLab
 
-OmniLab is a no-account virtual chemistry lab for chemistry students. The current release includes a deterministic matrix of common reactions and returns an educational equation, short explanation, and three safety rules for each supported pair.
+OmniLab builds virtual labs for STEM learning. The chemistry lab is available now. An electronics lab is planned but is not available yet. The current public release is free and needs no account.
 
-[Open the live lab](https://omnilab-bk8q.onrender.com/) · [Try the prepared Sodium and Chlorine demo](https://omnilab-bk8q.onrender.com/demo/sodium-chlorine/)
+[Explore OmniLab](https://omnilab-bk8q.onrender.com/) · [Open the chemistry lab](https://omnilab-bk8q.onrender.com/lab/) · [Start the guided experiment](https://omnilab-bk8q.onrender.com/first-experiment/)
 
-![OmniLab showing the supported Sodium and Chlorine reaction](static/images/omnilab-social-preview.png)
+![OmniLab's STEM homepage with the available chemistry lab and planned electronics lab](docs/images/omnilab-stem-homepage.png)
 
-## What the current release does
+## What is available now
 
-- Opens directly in the browser without an account or payment.
-- Provides 38 substances in the searchable catalog, including common acids, bases, salts, oxidizers, and metals.
-- Supports 34 order-independent reaction pairs, including ammonia with nitric acid and copper(II) sulfate with potassium hydroxide.
-- Lets a student assemble the mixture and choose when to request a prediction.
-- Returns an equation, a short explanation, and three safety rules for a supported result.
-- Keeps the current setup and last result in the visitor's browser until they reset it.
+- A browser-based chemistry lab with 38 searchable substances and 34 supported, order-independent reaction pairs.
+- Beakers, flasks, test tubes, a graduated cylinder, a pipette, a glass rod, filter paper, and a burner for setting up a virtual experiment.
+- A reaction analysis panel that can be hidden to make more room for the workspace.
+- An educational prediction for supported pairs, with an equation, explanation, safety guidance, and a link to a matching study guide.
+- A [guided first experiment](https://omnilab-bk8q.onrender.com/first-experiment/), prepared demos, and a [chemistry guide library](https://omnilab-bk8q.onrender.com/guides/).
+- Browser storage for the current setup and last supported result, with a Reset control.
+
+The electronics lab is marked **Coming soon**. It is not part of the current release.
 
 ## Start with the supported demo
 
@@ -27,7 +29,7 @@ The prepared demo opens the real lab with Sodium and Chlorine already selected. 
 
 OmniLab returns a stored educational reaction for supported chemical pairs selected in the browser. Its equations, explanations, and safety guidance simplify real chemistry and can be incomplete for a particular physical setup. Check important information against trusted chemistry sources and follow an instructor's guidance, trained supervision, and the safety procedures of any physical laboratory.
 
-The current release supports a defined matrix of common reactions. It is a narrow educational prediction tool, not a validated chemistry simulation, and it does not reproduce every real-world condition, concentration, catalyst, or energy requirement.
+The current chemistry lab supports a defined matrix of common reactions. It is an educational prediction tool, not a validated chemistry simulation. Vessel and burner choices are visual setup aids; only the selected chemicals determine the prediction. The lab does not reproduce every real-world condition, concentration, catalyst, or energy requirement.
 
 ## Run locally
 
@@ -46,7 +48,7 @@ python manage.py migrate
 python manage.py runserver
 ```
 
-Then open `http://127.0.0.1:8000/`.
+Then open `http://127.0.0.1:8000/` for the STEM homepage or `http://127.0.0.1:8000/lab/` for the chemistry workspace.
 
 Local development uses an explicitly non-production Django secret. Production
 must provide `OMNILAB_DJANGO_SECRET_KEY` through protected environment settings;
