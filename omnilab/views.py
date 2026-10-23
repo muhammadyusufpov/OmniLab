@@ -5485,7 +5485,7 @@ def chemical_reaction_predictor(request):
 def chemical_reaction_practice(request):
     canonical_url = PUBLIC_CANONICAL_URLS["chemical_reaction_practice"]
     description = (
-        "Practice five chemical reactions with questions, worked answers, "
+        "Practice ten chemical reactions with questions, worked answers, "
         "balanced equations, and matching virtual lab examples."
     )
     page_schema = {
@@ -5499,7 +5499,7 @@ def chemical_reaction_practice(request):
                      "url": PUBLIC_CANONICAL_URLS["index"]},
     }
     return render(request, "chemical_reaction_practice.html", {
-        "page_title": "Chemical reaction practice: 5 worked problems | OmniLab",
+        "page_title": "Chemical reaction practice: 10 worked problems | OmniLab",
         "page_description": description,
         "canonical_url": canonical_url,
         "social_preview_url": SOCIAL_PREVIEW_URL,
