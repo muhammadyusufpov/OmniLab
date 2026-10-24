@@ -5411,7 +5411,7 @@ class LabJourneyRepairTests(TestCase):
 class PublicPageTrackingTests(TestCase):
     def test_all_public_html_routes_have_one_pageview_entry(self):
         from omnilab.urls import urlpatterns
-        excluded = {'health', 'indexnow_key', 'robots_txt', 'sitemap_xml', 'ai_insights'}
+        excluded = {'health', 'indexnow_key', 'robots_txt', 'sitemap_xml', 'ai_insights', 'chat_models', 'chat_reply'}
         routes = ['/'] + ['/' + str(p.pattern) for p in urlpatterns if p.name not in excluded]
         for route in routes:
             with self.subTest(route=route):

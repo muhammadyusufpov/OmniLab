@@ -2,12 +2,15 @@ from django.urls import path
 from django.views.generic import TemplateView
 
 from . import views
+from . import groq_chat
 
 INDEXNOW_KEY = (
     "a94d996aed18be0932540221541260e95651607e49a7bbc46deecc9dbe788b35"
 )
 
 urlpatterns = [
+    path('api/chat/models/', groq_chat.chat_models, name='chat_models'),
+    path('api/chat/', groq_chat.chat_reply, name='chat_reply'),
     path('lab/', views.chemistry_lab, name='chemistry_lab'),
     path('guides/ammonia-with-nitric-acid/', views.observation_guide,
          {'guide_key': 'ammonia-nitric-acid'}, name='guide_ammonia_nitric_acid'),
