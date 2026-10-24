@@ -69,7 +69,7 @@ health checks, and failure behavior.
 
 ## AI configuration
 
-The current reaction library is deterministic and does not call an external AI model. If a future feature adds AI-backed functionality, `GITHUB_MODELS_API_KEY` is the only supported credential; copy `.env.example` to configure it locally.
+The reaction library remains deterministic. The optional chat panel uses Groq to answer chemistry questions with a selected DeepSeek or Qwen model. Set `GROQ_API_KEY` in protected environment settings to enable it. The panel loads available model versions from Groq, so retired versions do not appear. Chat messages reach Groq when sent; the browser keeps only the current conversation in memory.
 
 ## Tests
 
