@@ -87,21 +87,19 @@ document.addEventListener("DOMContentLoaded", function(): void {
     const modelPicker = document.getElementById('chat-model-picker');
     const versionPicker = document.getElementById('chat-version-picker');
     const chatOutput = document.getElementById('chat-preview-output');
-    const previewVersions: Record<string, string[]> = {
-        GPT: ['GPT Standard', 'GPT Fast'],
-        Claude: ['Claude Standard', 'Claude Fast'],
-        Grok: ['Grok Standard', 'Grok Fast'],
-        DeepSeek: ['DeepSeek Standard', 'DeepSeek Fast'],
-        Qwen: ['Qwen 3.5 Flash', 'Qwen 3.5']
-    };
+    const availableVersions: Record<string, string[]> = { DeepSeek: [], Qwen: [] };
+    let sendingChat = false;
+    let chatHistory: Array<{ role: 'user' | 'assistant'; content: string }> = [];
+    let historyModel = '';
 
     function syncChatVersions(): void {
         if (!chatModel || !chatVersion) return;
-        chatVersion.replaceChildren(...(previewVersions[chatModel.value] || []).map((version) => new Option(version, version)));
+        chatVersion.replaceChildren(...(availableVersions[chatModel.value] || []).map((version) => new Option(version, version)));
         renderChatPickers();
+        syncChatSend();
     }
 
-    const modelIcons: Record<string, string> = { GPT: '✳', Claude: '✻', Grok: '✕', DeepSeek: '✦', Qwen: '✥' };
+    const modelIcons: Record<string, string> = { DeepSeek: '✦', Qwen: '✥' };
     function closeChatPickers(): void {
         for (const picker of [modelPicker, versionPicker]) {
             const trigger = picker?.querySelector<HTMLButtonElement>('.chat-picker-trigger');
@@ -195,23 +193,71 @@ document.addEventListener("DOMContentLoaded", function(): void {
     });
 
     function syncChatSend(): void {
-        if (chatInput && chatSend) chatSend.disabled = !chatInput.value.trim();
+        if (chatInput && chatSend) chatSend.disabled = sendingChat || !chatInput.value.trim() || !chatVersion?.value;
     }
 
-    function previewSendQuestion(): void {
-        if (!chatInput || !chatOutput) return;
+    function showChatMessage(content: string, className: string): HTMLElement | null {
+        if (!chatOutput) return null;
+        const element = document.createElement(className === 'chat-preview-question' ? 'div' : 'p');
+        element.className = className;
+        element.textContent = content;
+        chatOutput.append(element);
+        chatOutput.scrollTop = chatOutput.scrollHeight;
+        return element;
+    }
+
+    async function loadChatModels(): Promise<void> {
+        try {
+            const response = await fetch('/api/chat/models/', { credentials: 'same-origin' });
+            const result = await response.json();
+            if (!response.ok) throw new Error(result.message || 'Models are unavailable.');
+            for (const family of ['DeepSeek', 'Qwen']) {
+                availableVersions[family] = Array.isArray(result.models?.[family]) ? result.models[family] : [];
+            }
+            if (chatModel && !availableVersions[chatModel.value]?.length) {
+                chatModel.value = availableVersions.DeepSeek.length ? 'DeepSeek' : 'Qwen';
+            }
+            syncChatVersions();
+            if (!availableVersions.DeepSeek.length && !availableVersions.Qwen.length) {
+                showChatMessage('No DeepSeek or Qwen models are available in this Groq account.', 'chat-preview-response');
+            }
+        } catch (error) {
+            showChatMessage(error instanceof Error ? error.message : 'Models are unavailable.', 'chat-preview-response');
+        }
+    }
+
+    async function sendChatQuestion(): Promise<void> {
+        if (!chatInput || !chatOutput || !chatVersion?.value || sendingChat) return;
         const question = chatInput.value.trim();
         if (!question) return;
-        const message = document.createElement('div');
-        message.className = 'chat-preview-question';
-        message.textContent = question;
-        const response = document.createElement('p');
-        response.className = 'chat-preview-response';
-        response.textContent = 'Preview only. No question was sent to an AI model.';
-        chatOutput.replaceChildren(message, response);
-        chatInput.value = '';
+        const model = chatVersion.value;
+        if (historyModel !== model) { chatHistory = []; chatOutput.replaceChildren(); historyModel = model; }
+        sendingChat = true;
         syncChatSend();
-        chatInput.focus();
+        const pending = showChatMessage('Thinking…', 'chat-preview-response');
+        try {
+            const csrf = document.cookie.split('; ').find((part) => part.startsWith('csrftoken='))?.split('=')[1] || '';
+            const response = await fetch('/api/chat/', {
+                method: 'POST',
+                credentials: 'same-origin',
+                headers: { 'Content-Type': 'application/json', 'X-CSRFToken': decodeURIComponent(csrf) },
+                body: JSON.stringify({ model, question, history: chatHistory.slice(-10) })
+            });
+            const result = await response.json();
+            if (!response.ok) throw new Error(result.message || 'Chat is unavailable.');
+            pending?.remove();
+            showChatMessage(question, 'chat-preview-question');
+            showChatMessage(result.answer, 'chat-preview-response');
+            chatHistory.push({ role: 'user', content: question }, { role: 'assistant', content: result.answer.slice(0, 4000) });
+            chatHistory = chatHistory.slice(-10);
+            chatInput.value = '';
+            chatInput.focus();
+        } catch (error) {
+            if (pending) pending.textContent = error instanceof Error ? error.message : 'Chat is unavailable.';
+        } finally {
+            sendingChat = false;
+            syncChatSend();
+        }
     }
 
     chatModel?.addEventListener('change', syncChatVersions);
@@ -219,14 +265,15 @@ document.addEventListener("DOMContentLoaded", function(): void {
     chatInput?.addEventListener('keydown', (event: KeyboardEvent) => {
         if (event.key !== 'Enter' || event.shiftKey || event.isComposing) return;
         event.preventDefault();
-        previewSendQuestion();
+        void sendChatQuestion();
     });
     chatForm?.addEventListener('submit', (event: SubmitEvent) => {
         event.preventDefault();
-        previewSendQuestion();
+        void sendChatQuestion();
     });
     syncChatVersions();
     syncChatSend();
+    void loadChatModels();
 
     function showAnalysisView(view: 'result' | 'chat'): void {
         if (!resultTab || !chatTab || !resultView || !chatView) return;
