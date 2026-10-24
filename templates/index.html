@@ -168,20 +168,8 @@
                 </div>
 
                 <div class="analysis-view-chat" id="analysis-view-chat" role="tabpanel" aria-labelledby="analysis-tab-chat" hidden>
-                    <div class="chat-intro">
-                        <span class="chat-intro-icon" aria-hidden="true">✳</span>
-                        <div>
-                            <p class="chat-eyebrow">A future way to explore</p>
-                            <h3>Talk through your experiment</h3>
-                            <p>Explore how a future chat could support your experiment.</p>
-                        </div>
-                    </div>
-                    <div class="chat-preview-conversation" aria-label="Future chat preview">
-                        <span class="chat-preview-spark" aria-hidden="true">✳</span>
-                        <h4>Questions start with your setup</h4>
-                        <p>Ask about the equation, visible changes, or safety once chat is available.</p>
-                    </div>
                     <div class="chat-composer-preview">
+                        <div class="chat-preview-output" id="chat-preview-output" aria-live="polite"></div>
                         <form class="chat-composer" id="chat-preview-form">
                             <textarea id="chat-preview-input" rows="2" maxlength="1000" placeholder="Ask about this experiment..." aria-label="Your question"></textarea>
                             <div class="chat-composer-toolbar">
@@ -210,7 +198,6 @@
                                 </button>
                             </div>
                         </form>
-                        <div class="chat-preview-output" id="chat-preview-output" aria-live="polite"></div>
                     </div>
                 </div>
             </div>

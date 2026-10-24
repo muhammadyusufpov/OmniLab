@@ -742,61 +742,8 @@ body {
 .analysis-view-result { display: flex; flex-direction: column; gap: 16px; }
 .analysis-view-result[hidden],
 .analysis-view-chat[hidden] { display: none; }
-.analysis-view-chat { overflow-y: auto; }
-
-.chat-intro {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    padding: 16px;
-    border: 1px solid color-mix(in srgb, var(--text-color) 14%, transparent);
-    border-radius: 12px;
-    background: var(--bg-canvas);
-}
-
-.chat-intro-icon,
-.chat-preview-spark {
-    color: var(--text-color);
-    font-size: 22px;
-    line-height: 1;
-}
-
-.chat-eyebrow {
-    margin: 0 0 5px;
-    color: var(--muted-text);
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: .09em;
-    text-transform: uppercase;
-}
-
-.chat-intro h3,
-.chat-preview-conversation h4 {
-    margin: 0 0 6px;
-    color: var(--text-color);
-    font-size: 15px;
-    font-weight: 700;
-    line-height: 1.3;
-}
-
-.chat-intro p:last-child,
-.chat-preview-conversation p {
-    margin: 0;
-    color: var(--muted-text);
-    font-size: 12px;
-    line-height: 1.5;
-}
-
-.chat-preview-conversation {
-    margin-top: 20px;
-    padding: 24px 18px;
-    border: 1px dashed color-mix(in srgb, var(--text-color) 23%, transparent);
-    border-radius: 12px;
-    background: var(--bg-canvas);
-    text-align: center;
-}
-.chat-preview-spark { display: block; margin-bottom: 12px; }
-.chat-composer-preview { margin-top: 20px; }
+.analysis-view-chat { display: flex; flex-direction: column; overflow-y: auto; }
+.chat-composer-preview { display: flex; flex-direction: column; gap: 16px; margin-top: auto; }
 .chat-composer {
     display: flex;
     flex-direction: column;
@@ -912,7 +859,7 @@ body {
 .chat-send-button:not(:disabled):hover { transform: translateY(-2px); }
 .chat-send-button svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .chat-preview-output:empty { display: none; }
-.chat-preview-output { display: grid; gap: 8px; margin-top: 16px; }
+.chat-preview-output { display: grid; gap: 8px; }
 .chat-preview-question { justify-self: end; max-width: 90%; padding: 10px 13px; border-radius: 13px 13px 3px 13px; background: var(--text-color); color: var(--bg-main); font-size: 12px; overflow-wrap: anywhere; white-space: pre-wrap; }
 .chat-preview-response { margin: 0; color: var(--muted-text); font-size: 11px; line-height: 1.5; }
 @media (max-width: 560px) {
