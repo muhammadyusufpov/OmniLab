@@ -196,7 +196,7 @@ export function setupCanvasDrag() {
         const mouseX = e.clientX - rect.left;
         const mouseY = e.clientY - rect.top;
         const state = config.getLabState();
-        let cx = config.canvas.width / 2 + state.vesselOffsetX;
+        let cx = config.vesselCenterX();
         let cy = config.canvas.height / 2 + 50 + state.vesselOffsetY;
         let checkCy = state.burnerActive ? cy - 40 : cy;
         let btnX = cx;
