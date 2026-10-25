@@ -1,4 +1,4 @@
-.landing-page { height: auto; min-height: 100vh; overflow-x: hidden; overflow-y: auto; background: #f7f8f7; color: #202321; font-family: 'Plus Jakarta Sans', sans-serif; }
+.landing-page { margin: 0; height: auto; min-height: 100vh; overflow-x: hidden; overflow-y: auto; background: #f7f8f7; color: #202321; font-family: 'Plus Jakarta Sans', sans-serif; }
 .landing-page *, .landing-page *::before, .landing-page *::after { box-sizing: border-box; }
 .landing-page a { text-decoration: none; }
 .landing-header { max-width: 1240px; margin: 0 auto; padding: 24px 32px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
@@ -68,8 +68,9 @@ a.landing-product:hover { color: #202821; border-color: #9ac6a3; box-shadow: 0 1
 .landing-how-links { grid-column: 2; display: flex; flex-wrap: wrap; gap: 12px 32px; }
 .landing-how-links a { min-height: 44px; display: inline-flex; align-items: center; gap: 8px; color: #245c39; font-size: 14px; font-weight: 700; text-decoration: underline; text-underline-offset: 4px; }
 .landing-how-links a:hover { color: #143b23; }
-.landing-page .site-footer { margin: 0 auto; background: #fff; }
+.landing-page .site-footer { width: 100%; margin: 0; padding-right: max(24px, calc((100% - 1180px) / 2)); padding-left: max(24px, calc((100% - 1180px) / 2)); background: #fff; }
 @media (max-width: 800px) { .landing-hero { gap: 35px; grid-template-columns: 1fr; padding-top: 52px; } .landing-hero-visual { max-width: 650px; transform: none; } }
 @media (max-width: 800px) { .landing-how-inner { grid-template-columns: 1fr; gap: 40px; } .landing-how-links { grid-column: 1; } }
 @media (max-width: 600px) { .landing-header { padding: 20px 22px; flex-wrap: wrap; } .landing-nav { width: 100%; gap: 22px; overflow-x: auto; white-space: nowrap; } .landing-nav a { font-size: 12px; } .landing-hero { min-height: 0; padding: 56px 22px 74px; } .landing-hero h1 { font-size: clamp(42px, 11vw, 54px); } .landing-intro { font-size: 15px; margin: 22px 0 28px; } .landing-products { padding: 62px 22px 72px; } .landing-section-head { display: block; } .landing-section-head > p { margin-top: 14px; } .landing-product-grid { grid-template-columns: 1fr; } .landing-product { min-height: 300px; } .landing-how { padding: 72px 22px 80px; } .landing-how-steps li { grid-template-columns: 32px minmax(0, 1fr); gap: 14px; } .landing-how-links { display: grid; gap: 4px; } }
+@media (max-width: 560px) { .landing-page .site-footer { padding-right: 16px; padding-left: 16px; } }
 @media (prefers-reduced-motion: reduce) { .landing-primary { transition: none; } }
