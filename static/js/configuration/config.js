@@ -331,6 +331,15 @@ let state = {
 export function getLabState() {
     return state;
 }
+// Keep the workbench anchored while the analysis panel is resized.
+// A fully collapsed panel still centers the vessel in the expanded canvas.
+export function vesselCenterX() {
+    if (!canvas)
+        return 0;
+    const collapsed = canvas.closest('.lab-workspace')?.classList.contains('is-analysis-collapsed');
+    const anchoredWidth = Number(canvas.dataset.expandedAnchorWidth) || canvas.width;
+    return (collapsed ? canvas.width : anchoredWidth) / 2 + state.vesselOffsetX;
+}
 export function updateLabState(newState) {
     state = { ...state, ...newState };
 }
