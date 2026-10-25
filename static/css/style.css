@@ -537,7 +537,7 @@ body {
 
 @media (min-width: 992px) {
     .lab-workspace #canvas-zone { flex: 1 1 0; width: auto; max-width: none; min-width: 420px; }
-    .lab-workspace .ai-sidebar { flex: 0 0 var(--analysis-width, 33.333333%); width: var(--analysis-width, 33.333333%); max-width: 50%; }
+    .lab-workspace .ai-sidebar { flex: 0 0 var(--analysis-width, 30%); width: var(--analysis-width, 30%); max-width: 50%; }
 }
 
 .analysis-resize-handle {
