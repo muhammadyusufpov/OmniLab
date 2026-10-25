@@ -148,7 +148,7 @@ export function drawVesselAndFluid(): void {
     config.ctx.clearRect(0, 0, config.canvas.width, config.canvas.height);
     
     const state = config.getLabState();
-    const cx = config.canvas.width / 2 + state.vesselOffsetX;
+    const cx = config.vesselCenterX();
     let cy = config.canvas.height / 2 + 50 + state.vesselOffsetY;
 
     const updatedState = config.getLabState();
