@@ -73,10 +73,15 @@ document.addEventListener("DOMContentLoaded", function () {
     let sendingChat = false;
     let chatHistory = [];
     let historyModel = '';
+    let modelsError = '';
     function syncChatVersions() {
         if (!chatModel || !chatVersion)
             return;
-        chatVersion.replaceChildren(...(availableVersions[chatModel.value] || []).map((version) => new Option(version, version)));
+        const versions = availableVersions[chatModel.value] || [];
+        chatVersion.replaceChildren(...(versions.length
+            ? versions.map((version) => new Option(version, version))
+            : [new Option(modelsError || 'Loading models…', '')]));
+        chatVersion.disabled = !versions.length;
         renderChatPickers();
         syncChatSend();
     }
@@ -96,6 +101,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const menu = picker?.querySelector('.chat-picker-menu');
         if (!trigger || !menu || !select)
             return;
+        trigger.disabled = select.disabled;
         trigger.replaceChildren();
         const glyph = document.createElement('span');
         glyph.className = 'chat-picker-icon';
@@ -106,7 +112,7 @@ document.addEventListener("DOMContentLoaded", function () {
             glyph.innerHTML = '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M7 13c0-1.7-2-2.3-2-5a5 5 0 0 1 10 0c0 2.7-2 3.3-2 5M7 13h6m-5 2h4m-3 2h2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
         const name = document.createElement('span');
         name.className = 'chat-picker-name';
-        name.textContent = select.value;
+        name.textContent = family ? select.value : select.selectedOptions[0]?.textContent || select.value;
         const chevron = document.createElement('span');
         chevron.className = 'chat-picker-chevron';
         chevron.setAttribute('aria-hidden', 'true');
@@ -208,6 +214,7 @@ document.addEventListener("DOMContentLoaded", function () {
             for (const family of ['DeepSeek', 'Qwen']) {
                 availableVersions[family] = Array.isArray(result.models?.[family]) ? result.models[family] : [];
             }
+            modelsError = 'No active models available';
             if (chatModel && !availableVersions[chatModel.value]?.length) {
                 chatModel.value = availableVersions.DeepSeek.length ? 'DeepSeek' : 'Qwen';
             }
@@ -217,6 +224,10 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
         catch (error) {
+            modelsError = error instanceof Error && error.message === 'Chat is not configured yet.'
+                ? 'Groq key required'
+                : 'Models unavailable';
+            syncChatVersions();
             showChatMessage(error instanceof Error ? error.message : 'Models are unavailable.', 'chat-preview-response');
         }
     }
@@ -319,6 +330,7 @@ document.addEventListener("DOMContentLoaded", function () {
     showAnalysisBtn?.addEventListener('click', () => setAnalysisCollapsed(false));
     if (workspace && analysisResize) {
         const sidebar = document.getElementById('reaction-analysis');
+        const canvas = config.canvas;
         const widthBounds = () => {
             const total = workspace.getBoundingClientRect().width;
             return [320, Math.max(320, Math.min(620, total * .5, total - 420))];
@@ -335,6 +347,9 @@ document.addEventListener("DOMContentLoaded", function () {
             if (window.matchMedia('(max-width: 991.98px)').matches || !sidebar)
                 return;
             event.preventDefault();
+            if (canvas && !canvas.dataset.expandedAnchorWidth) {
+                canvas.dataset.expandedAnchorWidth = String(canvas.width);
+            }
             const startX = event.clientX;
             const startWidth = sidebar.getBoundingClientRect().width;
             analysisResize.setPointerCapture(event.pointerId);
@@ -352,11 +367,24 @@ document.addEventListener("DOMContentLoaded", function () {
             if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight')
                 return;
             event.preventDefault();
+            if (canvas && !canvas.dataset.expandedAnchorWidth) {
+                canvas.dataset.expandedAnchorWidth = String(canvas.width);
+            }
             setWidth((sidebar?.getBoundingClientRect().width || 320) + (event.key === 'ArrowLeft' ? 20 : -20));
         });
         window.addEventListener('resize', () => {
             if (workspace.style.getPropertyValue('--analysis-width') && sidebar)
                 setWidth(sidebar.getBoundingClientRect().width);
+            requestAnimationFrame(() => {
+                if (!canvas)
+                    return;
+                if (workspace.classList.contains('is-analysis-collapsed')) {
+                    delete canvas.dataset.expandedAnchorWidth;
+                }
+                else {
+                    canvas.dataset.expandedAnchorWidth = String(canvas.width);
+                }
+            });
         });
     }
     if (chemBtn)
