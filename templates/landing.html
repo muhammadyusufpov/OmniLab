@@ -35,8 +35,9 @@
         <a class="landing-brand" href="{% url 'index' %}" aria-label="OmniLab home">OmniLab<span class="landing-brand-dot" aria-hidden="true">.</span></a>
         <nav class="landing-nav" aria-label="Main navigation">
             <a href="#products">Products</a>
-            <a href="{% url 'guide_library' %}">Chemistry guides</a>
             <a href="{% url 'pricing' %}">Pricing</a>
+            <a href="{% url 'faq' %}">FAQ</a>
+            <a href="{% url 'contact' %}">Contact</a>
         </nav>
     </header>
 
@@ -77,6 +78,25 @@
                 </div>
             </div>
             <p class="landing-boundary">Chemistry results are educational predictions. They do not replace a supervised physical lab.</p>
+        </section>
+
+        <section class="landing-how" aria-labelledby="landing-how-title">
+            <div class="landing-how-inner">
+                <div class="landing-how-heading">
+                    <p class="landing-eyebrow">INSIDE THE CHEMISTRY LAB</p>
+                    <h2 id="landing-how-title">Try a reaction. Understand the result.</h2>
+                    <p>Start with a chemistry question and explore a supported setup in your browser.</p>
+                </div>
+                <ol class="landing-how-steps">
+                    <li><span>01</span><div><h3>Choose chemicals</h3><p>Search the catalog and add a supported pair to a vessel.</p></div></li>
+                    <li><span>02</span><div><h3>Work with lab tools</h3><p>Pour, stir, or move the vessel to explore the setup.</p></div></li>
+                    <li><span>03</span><div><h3>Read the prediction</h3><p>Analyze the pair, then use its guide to study the reaction.</p></div></li>
+                </ol>
+                <div class="landing-how-links">
+                    <a href="{% url 'first_experiment' %}">Follow your first experiment <span aria-hidden="true">↗</span></a>
+                    <a href="{% url 'guide_library' %}">Browse chemistry guides <span aria-hidden="true">↗</span></a>
+                </div>
+            </div>
         </section>
     </main>
     {% include "partials/site_footer.html" %}
