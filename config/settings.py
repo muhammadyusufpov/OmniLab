@@ -37,7 +37,7 @@ SECRET_KEY = get_django_secret_key()
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['muhammadyusufpov.pythonanywhere.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['muhammadyusufpov.pythonanywhere.com', *get_allowed_hosts()]
 
 # One origin owns every canonical, social preview, sitemap, robots, and
 # prepared-demo URL. A host change requires only this setting and its matching
