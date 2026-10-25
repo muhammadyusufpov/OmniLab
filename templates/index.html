@@ -114,7 +114,7 @@
                     <div>
                         <p class="analysis-eyebrow">LAB WORKSPACE / 01</p>
                         <h2>Reaction Analytics</h2>
-                        <p class="analysis-header-note">Your setup, reaction analysis, and future chat</p>
+                        <p class="analysis-header-note">Your setup, reaction analysis, and AI chat</p>
                     </div>
                     <button type="button" class="analysis-collapse" id="btn-hide-analysis" aria-controls="reaction-analysis" aria-expanded="true" aria-label="Hide reaction analysis and expand lab" title="Expand lab">
                         <span aria-hidden="true">&#8594;</span>
@@ -131,7 +131,7 @@
 
                 <div class="analysis-view-switch" role="tablist" aria-label="Reaction panel views">
                     <button type="button" class="analysis-view-tab is-active" id="analysis-tab-result" role="tab" aria-selected="true" aria-controls="analysis-view-result">Reaction analysis</button>
-                    <button type="button" class="analysis-view-tab" id="analysis-tab-chat" role="tab" aria-selected="false" aria-controls="analysis-view-chat" tabindex="-1">AI chat <span class="analysis-tab-preview">Preview</span></button>
+                    <button type="button" class="analysis-view-tab" id="analysis-tab-chat" role="tab" aria-selected="false" aria-controls="analysis-view-chat" tabindex="-1">AI chat</button>
                 </div>
                 <div class="analysis-view-result" id="analysis-view-result" role="tabpanel" aria-labelledby="analysis-tab-result">
                 <div class="analysis-section-heading analysis-result-heading"><span>Reaction result</span><span class="analysis-result-mark" aria-hidden="true">01 / 01</span></div>
@@ -175,25 +175,22 @@
                             <div class="chat-composer-toolbar">
                                 <div class="chat-model-controls">
                                     <label class="chat-model-label" for="chat-model-select">Model family</label>
-                                    <select id="chat-model-select" aria-label="Model family, coming soon" hidden>
-                                        <option value="GPT">GPT</option>
-                                        <option value="Claude">Claude</option>
-                                        <option value="Grok">Grok</option>
+                                    <select id="chat-model-select" aria-label="Model family" hidden>
                                         <option value="DeepSeek">DeepSeek</option>
                                         <option value="Qwen" selected>Qwen</option>
                                     </select>
                                     <label class="chat-model-label" for="chat-version-select">Model version</label>
-                                    <select id="chat-version-select" aria-label="Model version, coming soon" hidden></select>
+                                    <select id="chat-version-select" aria-label="Model version" hidden></select>
                                     <div class="chat-picker" id="chat-model-picker">
-                                        <button type="button" class="chat-picker-trigger chat-picker-family" aria-label="Model family, coming soon" aria-haspopup="listbox" aria-expanded="false"></button>
+                                        <button type="button" class="chat-picker-trigger chat-picker-family" aria-label="Model family" aria-haspopup="listbox" aria-expanded="false"></button>
                                         <div class="chat-picker-menu" role="listbox" aria-label="Model family" hidden></div>
                                     </div>
                                     <div class="chat-picker chat-picker-version" id="chat-version-picker">
-                                        <button type="button" class="chat-picker-trigger" aria-label="Model version, coming soon" aria-haspopup="listbox" aria-expanded="false"></button>
+                                        <button type="button" class="chat-picker-trigger" aria-label="Model version" aria-haspopup="listbox" aria-expanded="false"></button>
                                         <div class="chat-picker-menu" role="listbox" aria-label="Model version" hidden></div>
                                     </div>
                                 </div>
-                                <button class="chat-send-button" id="chat-preview-send" type="submit" aria-label="Preview sending question" disabled>
+                                <button class="chat-send-button" id="chat-preview-send" type="submit" aria-label="Send question" disabled>
                                     <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 19V5m0 0-6 6m6-6 6 6"/></svg>
                                 </button>
                             </div>

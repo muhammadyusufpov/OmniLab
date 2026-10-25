@@ -742,8 +742,8 @@ body {
 .analysis-view-result { display: flex; flex-direction: column; gap: 16px; }
 .analysis-view-result[hidden],
 .analysis-view-chat[hidden] { display: none; }
-.analysis-view-chat { display: flex; flex-direction: column; overflow-y: auto; }
-.chat-composer-preview { display: flex; flex-direction: column; gap: 16px; margin-top: auto; }
+.analysis-view-chat { display: flex; flex-direction: column; overflow: hidden; }
+.chat-composer-preview { display: flex; flex-direction: column; flex: 1; min-height: 0; gap: 16px; }
 .chat-composer {
     display: flex;
     flex-direction: column;
@@ -859,9 +859,9 @@ body {
 .chat-send-button:not(:disabled):hover { transform: translateY(-2px); }
 .chat-send-button svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .chat-preview-output:empty { display: none; }
-.chat-preview-output { display: grid; gap: 8px; }
+.chat-preview-output { display: grid; align-content: end; gap: 10px; flex: 1; min-height: 0; overflow-y: auto; }
 .chat-preview-question { justify-self: end; max-width: 90%; padding: 10px 13px; border-radius: 13px 13px 3px 13px; background: var(--text-color); color: var(--bg-main); font-size: 12px; overflow-wrap: anywhere; white-space: pre-wrap; }
-.chat-preview-response { margin: 0; color: var(--muted-text); font-size: 11px; line-height: 1.5; }
+.chat-preview-response { margin: 0; color: var(--text-color); font-size: 13px; line-height: 1.55; overflow-wrap: anywhere; white-space: pre-wrap; }
 @media (max-width: 560px) {
     .chat-composer-toolbar { align-items: flex-end; }
     .chat-model-controls { flex-wrap: wrap; gap: 6px; }
