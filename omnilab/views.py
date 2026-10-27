@@ -3469,19 +3469,18 @@ REACTION_DEMOS.update({
 CHEMICAL_REACTION_VIRTUAL_LAB_PAGE = {
     "route_name": "chemical_reaction_virtual_lab",
     "canonical_key": "chemical_reaction_virtual_lab",
-    "title": "Chemical reaction simulator for students",
-    "page_title": "Chemical reaction simulator online for students | OmniLab",
+    "title": "Virtual lab for chemistry reactions",
+    "page_title": "Virtual lab for chemistry reactions | OmniLab",
     "description": (
-        "Try a free chemical reaction simulator. Choose one of 34 supported "
-        "pairs, then study its equation, observation, and safety notes. "
-        "No account required."
+        "Try a virtual lab for chemistry reactions. Explore 34 supported pairs, "
+        "compare predictions with equations, and check safety limits. No account needed."
     ),
-    "heading": "Try a chemical reaction simulator in your browser",
+    "heading": "A virtual lab for chemistry reaction practice",
     "direct_answer": (
-        "Choose a chemical, select a marked partner, and request an "
-        "educational prediction. OmniLab shows a balanced equation, a short "
-        "explanation, three safety notes, and a visible cue for supported "
-        "results that bubble or form a precipitate."
+        "Choose two supported chemicals and ask for an educational prediction. "
+        "Then read the balanced equation beside the expected observation. "
+        "Use that comparison to prepare a question for class, not to replace "
+        "a real experiment or your lab notes."
     ),
     "reaction_examples": [
         {
