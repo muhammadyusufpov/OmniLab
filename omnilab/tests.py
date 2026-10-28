@@ -1806,10 +1806,10 @@ class SearchDiscoveryTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(
             response,
-            "<h1 id=\"reaction-lab-heading\">Try a chemical reaction simulator in your browser</h1>",
+            "<h1 id=\"reaction-lab-heading\">A virtual lab for chemistry reaction practice</h1>",
             html=True,
         )
-        self.assertContains(response, "Chemical reaction simulator online for students | OmniLab")
+        self.assertContains(response, "Virtual lab for chemistry reactions | OmniLab")
         self.assertEqual(response.content.decode().count("Try this pair"), 6)
         self.assertContains(response, "34 supported reaction pairs")
         self.assertContains(response, "38 available substances")
