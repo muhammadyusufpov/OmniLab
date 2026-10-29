@@ -1,6 +1,6 @@
 # OmniLab student-session protocol
 
-Protocol version: 1.0
+Protocol version: 1.1
 
 Use this protocol for each outside-student session. Its purpose is to learn what
 the student is trying to accomplish and how OmniLab affects that progress. It
@@ -186,6 +186,17 @@ question only when both substances are clear.
 - Sodium carbonate + Hydrochloric acid
 - Barium chloride + Sodium carbonate
 - Zinc + Hydrochloric acid
+- Hydrofluoric acid + Sodium hydroxide
+- Hydrobromic acid + Sodium hydroxide
+- Hydroiodic acid + Sodium hydroxide
+- Silver chloride + Ammonia
+- Aluminium chloride + Sodium hydroxide
+- Magnesium sulfate + Sodium hydroxide
+- Mercury(II) chloride + Sodium hydroxide
+- Carbon monoxide + Oxygen
+- Nitrogen dioxide + Water
+- Hydrogen sulfide + Sodium hydroxide
+- Ozone + Hydrogen peroxide
 
 An original question with a different clear pair is `unsupported`. If one or
 both substances cannot be identified from what the student said, mark it
