@@ -299,6 +299,7 @@ let state = {
     chemicalDatabase: [],
     selectedChemicals: [],
     currentVessel: 'flask',
+    apparatusSelected: false,
     theme: 'light',
     targetLiquidVol: 0,
     currentLiquidVol: 0,
