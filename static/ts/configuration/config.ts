@@ -20,6 +20,7 @@ export interface LabState {
     chemicalDatabase: Chemical[];
     selectedChemicals: string[];
     currentVessel: 'flask' | 'beaker' | 'tube' | 'cylinder';
+    apparatusSelected: boolean;
     theme: 'light' | 'dark';
     targetLiquidVol: number;
     currentLiquidVol: number;
@@ -399,6 +400,7 @@ let state: LabState = {
     chemicalDatabase: [],
     selectedChemicals: [],
     currentVessel: 'flask',
+    apparatusSelected: false,
     theme: 'light',
     targetLiquidVol: 0,
     currentLiquidVol: 0,
