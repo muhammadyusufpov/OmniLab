@@ -24,6 +24,7 @@ document.addEventListener("DOMContentLoaded", function(): void {
     capture('lab_viewed', { route: window.location.pathname });
     const reactionDemo = config.getReactionDemoConfig();
     if (reactionDemo) {
+        config.updateLabState({ apparatusSelected: true });
         const visitSource = config.getVisitSource();
         capture('reaction_demo_entered', {
             demo_version: reactionDemo.version,
