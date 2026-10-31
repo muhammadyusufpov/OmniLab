@@ -174,6 +174,7 @@ export function closeAllPopovers() {
 }
 export function selectVessel(type) {
     const state = config.getLabState();
+    config.updateLabState({ apparatusSelected: true });
     if (type === 'burner') {
         const isActive = !state.burnerActive;
         config.updateLabState({ burnerActive: isActive });
