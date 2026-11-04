@@ -889,6 +889,31 @@ OBSERVATION_GUIDE_PAGES = {
         ),
         "observation_class": "observation-cloudy",
         "observation_label": "Cloudy white",
+        "show_result_jump": True,
+        "study_steps": [
+            {
+                "title": "Find the solid in the equation",
+                "body": (
+                    "CaCO3 has the (s) state symbol. That means calcium "
+                    "carbonate forms a solid rather than staying dissolved."
+                ),
+            },
+            {
+                "title": "Check the atom counts",
+                "body": (
+                    "One calcium, one carbon, two hydrogen, and four oxygen "
+                    "atoms appear on each side. Every coefficient is one."
+                ),
+            },
+            {
+                "title": "Connect the solid to the cloudiness",
+                "body": (
+                    "Small particles of calcium carbonate suspended in the "
+                    "liquid scatter light. The white cue represents that "
+                    "expected precipitate, not a measured amount."
+                ),
+            },
+        ],
         "safety": [
             (
                 "Avoid breathing calcium hydroxide dust or carbon dioxide-rich "
@@ -948,6 +973,31 @@ OBSERVATION_GUIDE_PAGES = {
         ),
         "observation_class": "observation-bubbles",
         "observation_label": "Visible fizzing",
+        "show_result_jump": True,
+        "study_steps": [
+            {
+                "title": "Find the gas in the equation",
+                "body": (
+                    "CO2 has the (g) state symbol. Escaping carbon dioxide "
+                    "explains the expected bubbles."
+                ),
+            },
+            {
+                "title": "Balance the acid",
+                "body": (
+                    "Two HCl units supply the two hydrogen atoms needed for "
+                    "water. They also supply two chloride ions for 2NaCl."
+                ),
+            },
+            {
+                "title": "Separate the cue from the rate",
+                "body": (
+                    "The bubble cue identifies a predicted gas product. "
+                    "It does not tell you how fast gas forms or how much "
+                    "gas a physical reaction produces."
+                ),
+            },
+        ],
         "safety": [
             "Wear splash goggles and acid-resistant gloves.",
             "Add hydrochloric acid slowly to control foaming and heat.",
@@ -1004,6 +1054,30 @@ OBSERVATION_GUIDE_PAGES = {
         ),
         "observation_class": "observation-yellow",
         "observation_label": "Yellow solid",
+        "show_result_jump": True,
+        "study_steps": [
+            {
+                "title": "Find the insoluble product",
+                "body": (
+                    "AgI has the (s) state symbol. Silver iodide separates "
+                    "from the solution as a yellow solid."
+                ),
+            },
+            {
+                "title": "Identify the dissolved ions",
+                "body": (
+                    "KNO3 remains aqueous. Potassium and nitrate ions stay "
+                    "in solution while silver and iodide form AgI."
+                ),
+            },
+            {
+                "title": "Check the one-to-one ratio",
+                "body": (
+                    "One AgNO3 unit and one KI unit give one AgI unit and "
+                    "one KNO3 unit. The equation needs no larger coefficients."
+                ),
+            },
+        ],
         "safety": [
             "Wear gloves and splash goggles when handling silver nitrate.",
             "Protect the silver iodide precipitate from strong light.",
