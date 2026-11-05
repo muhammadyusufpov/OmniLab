@@ -221,6 +221,7 @@ export function closeAllPopovers(): void {
 
 export function selectVessel(type: 'flask' | 'beaker' | 'tube' | 'cylinder' | 'burner'): void {
     const state = config.getLabState();
+    config.updateLabState({ apparatusSelected: true });
     
     if (type === 'burner') {
         const isActive = !state.burnerActive;

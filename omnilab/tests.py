@@ -4067,7 +4067,8 @@ class AccessibleLabSetupTests(TestCase):
                     )
                     self.assertIn(f'id="opt-{option_id}" aria-pressed=', html)
 
-        self.assertIn('id="opt-flask" aria-pressed="true"', normal_html)
+        self.assertIn('id="opt-flask" aria-pressed="false"', normal_html)
+        self.assertNotIn('apparatus-option-card selected', normal_html)
         self.assertIn('id="opt-beaker" aria-pressed="true"', demo_html)
 
     def test_chemical_buttons_share_one_pointer_keyboard_and_drag_path(self):
