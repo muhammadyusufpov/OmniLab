@@ -1,4 +1,5 @@
 import json
+from urllib import error
 from unittest.mock import patch
 
 from django.core.cache import cache
@@ -27,6 +28,31 @@ class GroqChatTests(TestCase):
             "DeepSeek": ["deepseek/test-current"],
             "Qwen": ["qwen/qwen3.8-27b"],
         })
+
+    @patch.object(groq_chat, "groq_request")
+    def test_pasted_key_with_quotes_and_spaces_is_normalized(self, upstream):
+        upstream.return_value = {"data": [{"id": "qwen/example", "active": True}]}
+        with patch.dict("os.environ", {"GROQ_API_KEY": '  "test-key"  '}):
+            response = self.client.get("/api/chat/models/")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json()["models"]["Qwen"], ["qwen/example"])
+        upstream.assert_called_once_with("/models", "test-key")
+
+    @patch.object(groq_chat, "groq_request")
+    def test_model_list_reports_rejected_key_without_provider_body(self, upstream):
+        upstream.side_effect = error.HTTPError("https://api.groq.com", 401, "secret provider text", {}, None)
+        response = self.client.get("/api/chat/models/")
+        self.assertEqual(response.status_code, 503)
+        self.assertEqual(response.json()["error_code"], "groq_key_rejected")
+        self.assertNotIn("secret provider text", response.content.decode())
+
+    @patch.object(groq_chat, "groq_request")
+    def test_last_verified_models_survive_temporary_provider_failure(self, upstream):
+        upstream.return_value = {"data": [{"id": "deepseek/example", "active": True}]}
+        self.assertEqual(groq_chat.available_models("test-key")["DeepSeek"], ["deepseek/example"])
+        cache.delete("omnilab:groq:models:" + groq_chat.hashlib.sha256(b"test-key").hexdigest())
+        upstream.side_effect = error.URLError("temporary connection failure")
+        self.assertEqual(groq_chat.available_models("test-key")["DeepSeek"], ["deepseek/example"])
 
     @patch.object(groq_chat, "increment_reaction_request_count", return_value=1)
     @patch.object(groq_chat, "available_models", return_value={"DeepSeek": ["deepseek-v"], "Qwen": ["qwen-v"]})
