@@ -63,6 +63,9 @@
                         <span aria-hidden="true">→</span>
                     </a>
                     <p class="guide-cta-note">The exact supported pair opens in a beaker. Nothing runs until you select Analyze.</p>
+                    {% if guide.show_result_jump %}
+                    <p class="guide-cta-note"><a href="#equation-heading">Read this pair's predicted result</a></p>
+                    {% endif %}
                 </div>
 
                 <figure class="observation-guide-preview">
