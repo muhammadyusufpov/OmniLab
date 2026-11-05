@@ -51,10 +51,20 @@ def groq_request(path, key, payload=None):
 def available_models(key):
     # Models are account-specific and change. Never advertise retired IDs.
     cache_key = "omnilab:groq:models:" + hashlib.sha256(key.encode()).hexdigest()
+    last_good_key = cache_key + ":last-good"
     cached = cache.get(cache_key)
     if cached is not None:
         return cached
-    data = groq_request("/models", key)
+    try:
+        data = groq_request("/models", key)
+    except (error.URLError, ValueError, json.JSONDecodeError, KeyError) as exc:
+        # Keep a previously verified list during a temporary provider outage.
+        # An authentication failure must not reuse it.
+        if not isinstance(exc, error.HTTPError) or exc.code not in (401, 403):
+            last_good = cache.get(last_good_key)
+            if last_good is not None:
+                return last_good
+        raise
     models = {"DeepSeek": [], "Qwen": []}
     for item in data.get("data", []):
         model_id = item.get("id") if isinstance(item, dict) else None
@@ -66,20 +76,41 @@ def available_models(key):
     for family in models:
         models[family] = sorted(set(models[family]))
     cache.set(cache_key, models, 300)
+    cache.set(last_good_key, models, 86400)
     return models
+
+
+def configured_key():
+    """Accept whitespace and shell-style quotes pasted into host settings."""
+    key = os.getenv("GROQ_API_KEY", "").strip()
+    if len(key) >= 2 and key[0] == key[-1] and key[0] in ('"', "'"):
+        key = key[1:-1].strip()
+    return key
+
+
+def model_list_error(exc):
+    # Only the status category reaches logs and clients, never provider details.
+    if isinstance(exc, error.HTTPError):
+        logger.warning("Groq model list HTTP status %s", exc.code)
+        if exc.code in (401, 403):
+            return JsonResponse({"message": "Chat setup needs attention.", "error_code": "groq_key_rejected"}, status=503)
+        if exc.code == 429:
+            return JsonResponse({"message": "Chat is busy. Try again shortly.", "error_code": "groq_rate_limited"}, status=503)
+    else:
+        logger.warning("Groq model list unavailable: %s", type(exc).__name__)
+    return JsonResponse({"message": "Models are unavailable. Try again later.", "error_code": "groq_unavailable"}, status=503)
 
 
 def chat_models(request):
     if request.method != "GET":
         return JsonResponse({"message": "Only GET requests are accepted."}, status=405)
-    key = os.getenv("GROQ_API_KEY", "")
+    key = configured_key()
     if not key:
         return JsonResponse({"message": "Chat is not configured yet."}, status=503)
     try:
         models = available_models(key)
-    except (error.URLError, ValueError, json.JSONDecodeError, KeyError):
-        logger.warning("Groq model list unavailable", exc_info=False)
-        return JsonResponse({"message": "Models are unavailable. Try again later."}, status=503)
+    except (error.URLError, ValueError, json.JSONDecodeError, KeyError) as exc:
+        return model_list_error(exc)
     return JsonResponse({"models": models})
 
 
@@ -106,7 +137,7 @@ def validate_history(history):
 def chat_reply(request):
     if request.method != "POST":
         return JsonResponse({"message": "Only POST requests are accepted."}, status=405)
-    key = os.getenv("GROQ_API_KEY", "")
+    key = configured_key()
     if not key:
         return JsonResponse({"message": "Chat is not configured yet."}, status=503)
     if len(request.body) > 20000:
@@ -130,8 +161,8 @@ def chat_reply(request):
         return JsonResponse({"message": "Check the model and question."}, status=400)
     try:
         models = available_models(key)
-    except (error.URLError, ValueError, json.JSONDecodeError, KeyError):
-        return JsonResponse({"message": "Models are unavailable. Try again later."}, status=503)
+    except (error.URLError, ValueError, json.JSONDecodeError, KeyError) as exc:
+        return model_list_error(exc)
     if model not in models["DeepSeek"] + models["Qwen"]:
         return JsonResponse({"message": "This model is no longer available."}, status=400)
 
