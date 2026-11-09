@@ -93,7 +93,10 @@ def model_list_error(exc):
     if isinstance(exc, error.HTTPError):
         logger.warning("Groq model list HTTP status %s", exc.code)
         if exc.code in (401, 403):
-            return JsonResponse({"message": "Chat setup needs attention.", "error_code": "groq_key_rejected"}, status=503)
+            return JsonResponse({
+                "message": "AI chat is unavailable. Use Reaction analysis to study supported chemical pairs.",
+                "error_code": "groq_key_rejected",
+            }, status=503)
         if exc.code == 429:
             return JsonResponse({"message": "Chat is busy. Try again shortly.", "error_code": "groq_rate_limited"}, status=503)
     else:
