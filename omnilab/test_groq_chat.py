@@ -44,6 +44,7 @@ class GroqChatTests(TestCase):
         response = self.client.get("/api/chat/models/")
         self.assertEqual(response.status_code, 503)
         self.assertEqual(response.json()["error_code"], "groq_key_rejected")
+        self.assertIn("Use Reaction analysis", response.json()["message"])
         self.assertNotIn("secret provider text", response.content.decode())
 
     @patch.object(groq_chat, "groq_request")
