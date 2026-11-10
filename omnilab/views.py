@@ -56,6 +56,9 @@ PUBLIC_CANONICAL_URLS = {
     "chemical_reaction_practice": (
         f"{PRODUCTION_BASE_URL}/guides/chemical-reaction-practice/"
     ),
+    "reaction_types_practice": (
+        f"{PRODUCTION_BASE_URL}/guides/types-of-chemical-reactions-practice/"
+    ),
     "privacy": f"{PRODUCTION_BASE_URL}/privacy/",
     "terms": f"{PRODUCTION_BASE_URL}/terms/",
     "sodium_chlorine_reaction": (
@@ -5573,6 +5576,32 @@ def chemical_reaction_practice(request):
     }
     return render(request, "chemical_reaction_practice.html", {
         "page_title": "Chemical reaction practice problems: 10 answers | OmniLab",
+        "page_description": description,
+        "canonical_url": canonical_url,
+        "social_preview_url": SOCIAL_PREVIEW_URL,
+        "social_preview_alt": SOCIAL_PREVIEW_ALT,
+        "page_schema_json": json.dumps(page_schema),
+    })
+
+
+def reaction_types_practice(request):
+    canonical_url = PUBLIC_CANONICAL_URLS["reaction_types_practice"]
+    description = (
+        "Practice identifying five types of chemical reactions with eight "
+        "worked examples, pattern clues, and matching virtual lab guides."
+    )
+    page_schema = {
+        "@context": "https://schema.org",
+        "@type": "LearningResource",
+        "name": "Types of chemical reactions practice",
+        "description": description,
+        "url": canonical_url,
+        "learningResourceType": "Practice problems",
+        "isPartOf": {"@type": "WebSite", "name": "OmniLab",
+                     "url": PUBLIC_CANONICAL_URLS["index"]},
+    }
+    return render(request, "reaction_types_practice.html", {
+        "page_title": "Types of chemical reactions practice: 8 worked answers | OmniLab",
         "page_description": description,
         "canonical_url": canonical_url,
         "social_preview_url": SOCIAL_PREVIEW_URL,
