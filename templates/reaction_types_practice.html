@@ -1,0 +1,126 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{{ page_description }}">
+    <title>{{ page_title }}</title>
+    <link rel="canonical" href="{{ canonical_url }}">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="OmniLab">
+    <meta property="og:title" content="{{ page_title }}">
+    <meta property="og:description" content="{{ page_description }}">
+    <meta property="og:url" content="{{ canonical_url }}">
+    <meta property="og:image" content="{{ social_preview_url }}">
+    <meta property="og:image:alt" content="{{ social_preview_alt }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ page_title }}">
+    <meta name="twitter:description" content="{{ page_description }}">
+    <meta name="twitter:image" content="{{ social_preview_url }}">
+    <link rel="icon" href="{% static 'favicon.png' %}" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% include "partials/product_analytics.html" %}
+    <script type="application/ld+json">{{ page_schema_json|safe }}</script>
+</head>
+<body class="guide-page">
+    <header class="guide-site-header">
+        <a class="guide-brand" href="{% url 'index' %}">OmniLab</a>
+        <span class="guide-site-label">Study tool</span>
+    </header>
+    <main>
+        <article class="reaction-lab-shell practice-shell">
+            <nav class="guide-breadcrumb" aria-label="Breadcrumb">
+                <a href="{% url 'guide_library' %}">Chemistry guides</a>
+                <span aria-hidden="true">/</span>
+                <span>Reaction types practice</span>
+            </nav>
+
+            <section class="reaction-lab-hero" aria-labelledby="types-heading">
+                <div class="reaction-lab-hero-copy">
+                    <p class="guide-context">Five patterns · Eight questions · Worked answers</p>
+                    <h1 id="types-heading">Types of chemical reactions practice</h1>
+                    <p class="reaction-lab-lede">Read each equation, name its pattern, then reveal the answer. Each worked answer explains the structural clue rather than asking you to memorize a label.</p>
+                    <a class="guide-primary" href="#questions">Start the questions <span aria-hidden="true">→</span></a>
+                    <p class="guide-cta-note">Use these examples for study. Physical chemistry work needs supervision.</p>
+                </div>
+                <figure class="guide-preview reaction-lab-preview">
+                    <div class="guide-preview-frame">
+                        <img src="{% static 'images/omnilab-social-preview.png' %}" alt="OmniLab chemistry result with selected reactants, equation, and safety guidance">
+                        <span class="guide-preview-label">Actual OmniLab result</span>
+                    </div>
+                    <figcaption>Open a linked guide to connect the equation with a supported lab prediction.</figcaption>
+                </figure>
+            </section>
+
+            <section class="practice-method" aria-labelledby="method-heading">
+                <p class="guide-section-label">A quick method</p>
+                <h2 id="method-heading">Look at the number and role of reactants</h2>
+                <p>One product from two simpler reactants suggests synthesis. One reactant splitting into smaller products suggests decomposition. An element replacing another element suggests single displacement. Two compounds exchanging partners suggests double displacement. A fuel reacting with oxygen suggests combustion.</p>
+                <p>These are classroom patterns, not laws that identify every reaction. A reaction may fit more than one description. For example, hydrogen burning in oxygen forms water and can be called both synthesis and combustion. State your reason and use your course's definition when labels overlap.</p>
+            </section>
+
+            <section class="practice-list" id="questions" aria-labelledby="questions-heading">
+                <div class="practice-list-intro">
+                    <p class="guide-section-label">Try before you reveal</p>
+                    <h2 id="questions-heading">Eight reaction-type questions</h2>
+                    <p>Read the equation first. Then compare your label and reason with the worked answer.</p>
+                </div>
+
+                <article class="practice-card"><div class="practice-card-head"><span class="practice-number">01</span></div>
+                    <h3>2Na + Cl₂ → 2NaCl</h3><p>Two elements make one compound. Which pattern best describes the change?</p>
+                    <details><summary>Show the worked answer</summary><div class="practice-answer"><p><strong>Synthesis.</strong> Sodium and chlorine combine into one product, sodium chloride. The coefficient 2 balances sodium atoms but does not change the reaction type.</p><p>This simplified equation does not describe safe handling or the energy released in a real reaction.</p><a href="{% url 'guide_sodium_chlorine_reaction' %}">Read the sodium and chlorine guide →</a></div></details>
+                </article>
+
+                <article class="practice-card"><div class="practice-card-head"><span class="practice-number">02</span></div>
+                    <h3>CaCO₃ → CaO + CO₂</h3><p>Heating one compound produces a metal oxide and a gas. Which pattern applies?</p>
+                    <details><summary>Show the worked answer</summary><div class="practice-answer"><p><strong>Decomposition.</strong> A single compound breaks into two products. Calcium carbonate must receive heat for this classroom example. Do not expect it to split just because the formula is written.</p><p>OmniLab's current two-chemical lab does not model this one-reactant heating process.</p></div></details>
+                </article>
+
+                <article class="practice-card"><div class="practice-card-head"><span class="practice-number">03</span></div>
+                    <h3>Zn + 2HCl → ZnCl₂ + H₂</h3><p>Which species takes hydrogen's place in the acid?</p>
+                    <details><summary>Show the worked answer</summary><div class="practice-answer"><p><strong>Single displacement.</strong> Zinc enters the compound and hydrogen leaves as H₂. Two acid units supply the two chloride ions in zinc chloride.</p><p>Hydrogen is flammable. A virtual result cannot establish safe real-world conditions.</p><a href="{% url 'guide_zinc_hydrochloric_acid' %}">Read the zinc and acid guide →</a></div></details>
+                </article>
+
+                <article class="practice-card"><div class="practice-card-head"><span class="practice-number">04</span></div>
+                    <h3>Fe + 2HCl → FeCl₂ + H₂</h3><p>Is this a new pattern or the same pattern as question three?</p>
+                    <details><summary>Show the worked answer</summary><div class="practice-answer"><p><strong>Single displacement again.</strong> Iron replaces hydrogen in the acid. Changing the metal changes the products and conditions, but the element-plus-compound pattern stays the same.</p><p>Iron's observed rate depends on its surface and the solution. The equation alone cannot predict timing.</p><a href="{% url 'guide_iron_hydrochloric_acid' %}">Read the iron and acid guide →</a></div></details>
+                </article>
+
+                <article class="practice-card"><div class="practice-card-head"><span class="practice-number">05</span></div>
+                    <h3>AgNO₃ + NaCl → AgCl + NaNO₃</h3><p>Which ions change partners, and what kind of reaction is this?</p>
+                    <details><summary>Show the worked answer</summary><div class="practice-answer"><p><strong>Double displacement.</strong> Silver pairs with chloride; sodium pairs with nitrate. In water, silver chloride forms a solid precipitate while sodium nitrate remains dissolved.</p><p>The precipitate is a predicted clue, not proof of an unknown sample.</p><a href="{% url 'guide_silver_nitrate_sodium_chloride' %}">Read the silver chloride guide →</a></div></details>
+                </article>
+
+                <article class="practice-card"><div class="practice-card-head"><span class="practice-number">06</span></div>
+                    <h3>HCl + NaOH → NaCl + H₂O</h3><p>Does the acid-base label replace the structural pattern?</p>
+                    <details><summary>Show the worked answer</summary><div class="practice-answer"><p><strong>Double displacement and neutralization.</strong> The ions exchange partners, and H⁺ plus OH⁻ form water. Neutralization describes the chemistry; double displacement describes the common formula pattern.</p><p>Amounts and concentrations determine the final pH. This equation does not.</p><a href="{% url 'guide_hydrochloric_acid_sodium_hydroxide' %}">Read the neutralization guide →</a></div></details>
+                </article>
+
+                <article class="practice-card"><div class="practice-card-head"><span class="practice-number">07</span></div>
+                    <h3>C + O₂ → CO₂</h3><p>Which reactant makes combustion the useful label here?</p>
+                    <details><summary>Show the worked answer</summary><div class="practice-answer"><p><strong>Combustion.</strong> Carbon reacts with oxygen to form carbon dioxide when oxygen is sufficient. It also has a synthesis shape because two reactants make one product. Combustion tells you more about the oxygen-driven process.</p><p>Limited oxygen can lead to different products, including toxic carbon monoxide.</p><a href="{% url 'guide_carbon_oxygen' %}">Read the carbon and oxygen guide →</a></div></details>
+                </article>
+
+                <article class="practice-card"><div class="practice-card-head"><span class="practice-number">08</span></div>
+                    <h3>2CO + O₂ → 2CO₂</h3><p>What changes from question seven, and which label still fits?</p>
+                    <details><summary>Show the worked answer</summary><div class="practice-answer"><p><strong>Combustion or oxidation.</strong> Carbon monoxide reacts with oxygen to form carbon dioxide. The reactant is already an oxide, so this is not the same starting material as burning elemental carbon. Some courses call this oxidation; explain the oxygen gain if you use that label.</p><p>Carbon monoxide is highly toxic. Never use a study prediction as a physical procedure.</p><a href="{% url 'guide_carbon_monoxide_oxygen' %}">Read the carbon monoxide guide →</a></div></details>
+                </article>
+            </section>
+
+            <section class="reaction-lab-boundary" aria-labelledby="boundary-heading">
+                <div><p class="guide-section-label">Study boundary</p><h2 id="boundary-heading">A pattern is a clue, not a full prediction.</h2></div>
+                <div><p>These worked answers and OmniLab results are educational predictions. They are not verified simulations. Reactant amounts, temperature, concentration, and other conditions can change a real outcome.</p><p>Check your course materials and follow trained supervision. Do not use this page to plan or run a physical experiment.</p></div>
+            </section>
+
+            <section class="reaction-lab-final" aria-labelledby="next-heading">
+                <p class="guide-section-label">Next step</p><h2 id="next-heading">Check one reaction in the virtual lab.</h2>
+                <p>Open a supported sodium and chlorine setup, then compare its result with your classification answer.</p>
+                <div class="reaction-lab-final-links"><a class="guide-primary" href="{% url 'sodium_chlorine_demo' %}?source=guide_reaction_types">Open a prepared reaction <span aria-hidden="true">→</span></a><a href="{% url 'chemical_reaction_practice' %}">Try product prediction problems <span aria-hidden="true">→</span></a></div>
+            </section>
+        </article>
+    </main>
+    {% include "partials/site_footer.html" %}
+</body>
+</html>
