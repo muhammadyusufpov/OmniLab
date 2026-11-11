@@ -215,8 +215,8 @@ class DeploymentConfigurationTests(SimpleTestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         discovery = json.loads(result.stdout)
         self.assertEqual(discovery["origin"], configured_origin)
-        self.assertEqual(len(discovery["canonicals"]), 47)
-        self.assertEqual(len(set(discovery["canonicals"])), 47)
+        self.assertEqual(len(discovery["canonicals"]), 48)
+        self.assertEqual(len(set(discovery["canonicals"])), 48)
         for url in (
             discovery["canonicals"]
             + discovery["demo_urls"]
@@ -230,7 +230,7 @@ class DeploymentConfigurationTests(SimpleTestCase):
         )
         self.assertEqual(
             discovery["sitemap"].count(f"<loc>{configured_origin}/"),
-            47,
+            48,
         )
         self.assertTrue(discovery["noindex"])
 
@@ -323,7 +323,7 @@ class SearchIndexControlTests(SimpleTestCase):
             for node in root.findall("sitemap:url/sitemap:loc", namespace)
         ]
 
-        self.assertEqual(len(public_paths), 47)
+        self.assertEqual(len(public_paths), 48)
         for path in public_paths:
             with self.subTest(path=path):
                 response = self.client.get(path)
@@ -1906,7 +1906,7 @@ class SearchDiscoveryTests(TestCase):
         )
         metadata = []
 
-        self.assertEqual(len(paths), 47)
+        self.assertEqual(len(paths), 48)
         for path in paths:
             with self.subTest(path=path):
                 response = self.client.get(path)
@@ -1935,8 +1935,8 @@ class SearchDiscoveryTests(TestCase):
 
         titles = [title for title, _description in metadata]
         descriptions = [description for _title, description in metadata]
-        self.assertEqual(len(set(titles)), 47)
-        self.assertEqual(len(set(descriptions)), 47)
+        self.assertEqual(len(set(titles)), 48)
+        self.assertEqual(len(set(descriptions)), 48)
         self.assertNotIn("12 guides", " ".join(descriptions))
 
     def test_public_pages_use_production_canonical_urls(self):
