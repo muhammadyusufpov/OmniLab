@@ -344,6 +344,8 @@ document.addEventListener("DOMContentLoaded", function () {
             analysisResize.setAttribute('aria-valuemax', String(Math.round(max)));
             requestAnimationFrame(ui.resizeCanvas);
         };
+        if (sidebar)
+            setWidth(sidebar.getBoundingClientRect().width);
         analysisResize.addEventListener('pointerdown', (event) => {
             if (window.matchMedia('(max-width: 991.98px)').matches || !sidebar)
                 return;
