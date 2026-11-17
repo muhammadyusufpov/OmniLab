@@ -215,8 +215,8 @@ class DeploymentConfigurationTests(SimpleTestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         discovery = json.loads(result.stdout)
         self.assertEqual(discovery["origin"], configured_origin)
-        self.assertEqual(len(discovery["canonicals"]), 48)
-        self.assertEqual(len(set(discovery["canonicals"])), 48)
+        self.assertEqual(len(discovery["canonicals"]), 49)
+        self.assertEqual(len(set(discovery["canonicals"])), 49)
         for url in (
             discovery["canonicals"]
             + discovery["demo_urls"]
@@ -230,7 +230,7 @@ class DeploymentConfigurationTests(SimpleTestCase):
         )
         self.assertEqual(
             discovery["sitemap"].count(f"<loc>{configured_origin}/"),
-            48,
+            49,
         )
         self.assertTrue(discovery["noindex"])
 
@@ -323,7 +323,7 @@ class SearchIndexControlTests(SimpleTestCase):
             for node in root.findall("sitemap:url/sitemap:loc", namespace)
         ]
 
-        self.assertEqual(len(public_paths), 48)
+        self.assertEqual(len(public_paths), 49)
         for path in public_paths:
             with self.subTest(path=path):
                 response = self.client.get(path)
@@ -1969,7 +1969,7 @@ class SearchDiscoveryTests(TestCase):
         )
         metadata = []
 
-        self.assertEqual(len(paths), 48)
+        self.assertEqual(len(paths), 49)
         for path in paths:
             with self.subTest(path=path):
                 response = self.client.get(path)
@@ -1998,8 +1998,8 @@ class SearchDiscoveryTests(TestCase):
 
         titles = [title for title, _description in metadata]
         descriptions = [description for _title, description in metadata]
-        self.assertEqual(len(set(titles)), 48)
-        self.assertEqual(len(set(descriptions)), 48)
+        self.assertEqual(len(set(titles)), 49)
+        self.assertEqual(len(set(descriptions)), 49)
         self.assertNotIn("12 guides", " ".join(descriptions))
 
     def test_public_pages_use_production_canonical_urls(self):
@@ -5485,3 +5485,30 @@ class PublicPageTrackingTests(TestCase):
                 self.assertContains(response, 'before_send: sanitizePayload', count=1)
                 preview = self.client.get(route, HTTP_HOST='localhost')
                 self.assertNotContains(preview, 'posthog.init(')
+
+
+class ReactionPairIndexTests(TestCase):
+    def test_every_supported_pair_has_one_working_guide_link(self):
+        from .reactions import supported_reaction_pairs
+
+        response = self.client.get(reverse("reaction_pair_index"))
+        self.assertEqual(response.status_code, 200)
+        pairs = response.context["pairs"]
+        self.assertEqual(len(pairs), 34)
+        self.assertEqual(
+            [pair["formula"] for pair in pairs],
+            [" + ".join(pair) for pair in supported_reaction_pairs()],
+        )
+        self.assertEqual(len({pair["formula"] for pair in pairs}), 34)
+        for pair in pairs:
+            with self.subTest(pair=pair["formula"]):
+                self.assertContains(response, f'href="{pair["guide_url"]}"', count=1)
+                self.assertEqual(self.client.get(pair["guide_url"]).status_code, 200)
+        self.assertContains(response, "educational predictions")
+        self.assertContains(response, "trained laboratory supervision")
+
+    def test_index_appears_once_in_sitemap(self):
+        sitemap = self.client.get("/sitemap.xml").content.decode()
+        self.assertEqual(
+            sitemap.count("/guides/reaction-pairs/"), 1
+        )
