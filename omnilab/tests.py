@@ -2559,6 +2559,36 @@ class ObservationGuidePageTests(TestCase):
             1,
         )
 
+    def test_three_search_guide_openings_state_prediction_limit(self):
+        guides = (
+            ("/guides/reaction-of-sodium-in-water/", "/demo/sodium-water/"),
+            (
+                "/guides/zinc-and-hydrochloric-acid-reaction/",
+                "/demo/zinc-hydrochloric-acid/",
+            ),
+            (
+                "/guides/acetic-acid-and-sodium-bicarbonate-reaction/",
+                "/demo/acetic-acid-sodium-bicarbonate/",
+            ),
+        )
+        warning = (
+            "educational prediction, not a verified simulation or a "
+            "replacement for trained supervision"
+        )
+
+        for guide_path, demo_path in guides:
+            with self.subTest(guide=guide_path):
+                response = self.client.get(guide_path)
+                html = response.content.decode()
+                answer = html.split('<p class="guide-answer">', 1)[1].split(
+                    "</p>", 1
+                )[0]
+
+                self.assertEqual(response.status_code, 200)
+                self.assertIn(warning, answer)
+                self.assertIn(f'href="{demo_path}?source=', html)
+                self.assertIn("The result can be incomplete or wrong.", html)
+
     def test_hydrogen_oxygen_guide_answers_the_target_query_completely(self):
         response = self.client.get(
             "/guides/hydrogen-and-oxygen-reaction/"
