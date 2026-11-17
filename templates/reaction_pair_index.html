@@ -1,0 +1,78 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{{ page_description }}">
+    <title>{{ page_title }}</title>
+    <link rel="canonical" href="{{ canonical_url }}">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="OmniLab">
+    <meta property="og:title" content="{{ page_title }}">
+    <meta property="og:description" content="{{ page_description }}">
+    <meta property="og:url" content="{{ canonical_url }}">
+    <meta property="og:image" content="{{ social_preview_url }}">
+    <meta property="og:image:alt" content="{{ social_preview_alt }}">
+    <link rel="icon" href="{% static 'favicon.png' %}" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% include "partials/product_analytics.html" %}
+    <script type="application/ld+json">{{ page_schema_json|safe }}</script>
+</head>
+<body class="guide-page reaction-pair-page">
+    <header class="guide-site-header">
+        <a class="guide-brand" href="{% url 'index' %}">OmniLab</a>
+        <span class="guide-site-label">Chemistry guides</span>
+    </header>
+    <main class="guide-index-shell">
+        <nav class="guide-breadcrumb" aria-label="Breadcrumb">
+            <a href="{% url 'guide_library' %}">Chemistry guides</a>
+            <span aria-hidden="true">/</span>
+            <span>Reaction pairs</span>
+        </nav>
+        <section class="guide-index-hero" aria-labelledby="pair-index-heading">
+            <div class="guide-index-hero-copy">
+                <p class="guide-context">34 supported pairs · 34 study paths</p>
+                <h1 id="pair-index-heading">Find your reaction pair.</h1>
+                <p>Choose the two chemicals in your question. Each pair leads to a guide with its predicted result.</p>
+                <a class="guide-primary" href="{% url 'chemistry_lab' %}#lab-workspace">Open the virtual lab <span aria-hidden="true">&rarr;</span></a>
+                <p class="guide-cta-note">No account or payment required in the current public release.</p>
+            </div>
+            <figure class="guide-index-preview">
+                <div class="guide-preview-frame">
+                    <img src="{% static 'images/omnilab-social-preview.png' %}" alt="OmniLab chemistry workspace with a reaction equation and analysis panel">
+                    <span class="guide-preview-label">OmniLab chemistry lab</span>
+                </div>
+                <figcaption>Read the guide, then test the supported pair in the virtual lab.</figcaption>
+            </figure>
+        </section>
+        <section class="reaction-pair-list-section" aria-labelledby="pair-list-heading">
+            <div class="reaction-pair-list-intro">
+                <p class="guide-section-label">Supported reactions</p>
+                <h2 id="pair-list-heading">Every pair in one place</h2>
+                <p>Pairs are listed by chemical formula. Select one to open its study guide.</p>
+            </div>
+            <ol class="reaction-pair-list">
+                {% for pair in pairs %}
+                <li>
+                    <a href="{{ pair.guide_url }}" aria-label="{{ pair.names }}: {{ pair.guide_title }}">
+                        <span class="reaction-pair-number" aria-hidden="true">{{ pair.number|stringformat:"02d" }}</span>
+                        <span class="reaction-pair-copy"><strong>{{ pair.names }}</strong><span>{{ pair.formula }}</span></span>
+                        <span class="reaction-pair-arrow" aria-hidden="true">&rarr;</span>
+                    </a>
+                </li>
+                {% endfor %}
+            </ol>
+        </section>
+        <aside class="guide-index-boundary" aria-labelledby="pair-boundary-heading">
+            <p class="guide-section-label">Study boundary</p>
+            <div>
+                <h2 id="pair-boundary-heading">Learn from a prediction. Use supervision for real work.</h2>
+                <p>These guides describe educational predictions, not verified physical simulations. Results can be incomplete or wrong. Check trusted course materials and follow trained laboratory supervision.</p>
+            </div>
+        </aside>
+    </main>
+    {% include "partials/site_footer.html" %}
+</body>
+</html>
