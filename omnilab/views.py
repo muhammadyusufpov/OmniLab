@@ -77,6 +77,9 @@ PUBLIC_CANONICAL_URLS = {
     "reaction_types_practice": (
         f"{PRODUCTION_BASE_URL}/guides/types-of-chemical-reactions-practice/"
     ),
+    "reaction_observations": (
+        f"{PRODUCTION_BASE_URL}/guides/observation-of-chemical-reaction/"
+    ),
     "privacy": f"{PRODUCTION_BASE_URL}/privacy/",
     "terms": f"{PRODUCTION_BASE_URL}/terms/",
     "sodium_chlorine_reaction": (
@@ -4842,6 +4845,14 @@ GUIDE_LIBRARY_GROUPS = [
     },
 ]
 
+GUIDE_LIBRARY_GROUPS[2]["guides"].append({
+    "number": "38",
+    "title": "Observation of a chemical reaction",
+    "summary": "Learn to record visible changes before explaining gas or precipitate formation.",
+    "route_name": "reaction_observations",
+    "canonical_key": "reaction_observations",
+})
+
 GUIDE_LIBRARY_GROUPS[-1]["guides"].append({
     "number": "26", "title": OBSERVATION_GUIDE_PAGES["ammonia-nitric-acid"]["title"],
     "summary": "Follow proton transfer and cancel nitrate in the net ionic equation.",
@@ -5495,7 +5506,7 @@ def chemical_reaction_virtual_lab(request):
 def guide_library(request):
     canonical_url = PUBLIC_CANONICAL_URLS["guides"]
     description = (
-        "Browse 37 free, no-account chemistry guides about virtual reaction "
+        "Browse 38 free, no-account chemistry guides about virtual reaction "
         "labs, equations, bonding, combustion, oxidation, acids, gases, and "
         "precipitates."
     )
@@ -5620,6 +5631,31 @@ def reaction_types_practice(request):
     }
     return render(request, "reaction_types_practice.html", {
         "page_title": "Types of chemical reactions practice: 8 worked answers | OmniLab",
+        "page_description": description,
+        "canonical_url": canonical_url,
+        "social_preview_url": SOCIAL_PREVIEW_URL,
+        "social_preview_alt": SOCIAL_PREVIEW_ALT,
+        "page_schema_json": json.dumps(page_schema),
+    })
+
+
+def reaction_observations(request):
+    canonical_url = PUBLIC_CANONICAL_URLS["reaction_observations"]
+    description = (
+        "Learn how to record an observation of a chemical reaction. Compare "
+        "gas, precipitate, and color examples with equations and study limits."
+    )
+    page_schema = {
+        "@context": "https://schema.org",
+        "@type": "LearningResource",
+        "name": "Observation of a chemical reaction: examples and study guide",
+        "description": description,
+        "url": canonical_url,
+        "isPartOf": {"@type": "WebSite", "name": "OmniLab",
+                     "url": PUBLIC_CANONICAL_URLS["index"]},
+    }
+    return render(request, "reaction_observations.html", {
+        "page_title": "Observation of a chemical reaction: examples | OmniLab",
         "page_description": description,
         "canonical_url": canonical_url,
         "social_preview_url": SOCIAL_PREVIEW_URL,
