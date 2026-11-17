@@ -1421,27 +1421,90 @@ class ContactFormTests(TestCase):
             logs.output,
             [
                 "ERROR:omnilab.contact:"
-                "contact_email_delivery_failed category=connection"
+                "contact_email_delivery_failed stage=email_send "
+                "category=connection exception_class=OSError"
             ],
         )
         self.assertNotIn("SMTP detail", logs.output[0])
         self.assertNotIn("amina@example.edu", logs.output[0])
         send.assert_called_once_with(fail_silently=False)
 
+    @patch("omnilab.views.EmailMessage.send")
+    @patch(
+        "omnilab.views.validate_contact_email_configuration",
+        side_effect=ContactEmailConfigurationError(),
+    )
+    def test_configuration_failure_names_stage_without_sending(
+        self, validate_configuration, send
+    ):
+        with self.assertLogs("omnilab.contact", level="ERROR") as logs:
+            response = self.client.post(
+                "/contact/",
+                {
+                    "name": "Amina Student",
+                    "email": "amina@example.edu",
+                    "message": "Private message text",
+                },
+            )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(
+            "stage=configuration category=configuration "
+            "exception_class=ContactEmailConfigurationError",
+            logs.output[0],
+        )
+        self.assertNotIn("amina@example.edu", logs.output[0])
+        self.assertNotIn("Private message text", logs.output[0])
+        validate_configuration.assert_called_once_with()
+        send.assert_not_called()
+
+    def test_unrecognized_exception_class_is_redacted(self):
+        class PrivateProviderFault(Exception):
+            pass
+
+        with patch(
+            "omnilab.views.EmailMessage.send",
+            side_effect=PrivateProviderFault("private provider detail"),
+        ):
+            with self.assertLogs("omnilab.contact", level="ERROR") as logs:
+                response = self.client.post(
+                    "/contact/",
+                    {
+                        "name": "Amina Student",
+                        "email": "amina@example.edu",
+                        "message": "Private message text",
+                    },
+                )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(
+            "stage=email_send category=unknown exception_class=OtherError",
+            logs.output[0],
+        )
+        self.assertNotIn("PrivateProviderFault", logs.output[0])
+        self.assertNotIn("private provider detail", logs.output[0])
+        self.assertNotIn("Private message text", logs.output[0])
+
     @patch("omnilab.views.EmailMessage.send", return_value=0)
     def test_zero_delivery_count_cannot_show_feedback_success(self, send):
-        response = self.client.post(
-            "/contact/",
-            {
-                "name": "Amina Student",
-                "email": "amina@example.edu",
-                "message": "I was comparing this result with my notes.",
-                "source": "reaction_feedback",
-            },
-        )
+        with self.assertLogs("omnilab.contact", level="ERROR") as logs:
+            response = self.client.post(
+                "/contact/",
+                {
+                    "name": "Amina Student",
+                    "email": "amina@example.edu",
+                    "message": "I was comparing this result with my notes.",
+                    "source": "reaction_feedback",
+                },
+            )
 
         self.assertEqual(response.status_code, 200)
         self.assertNotContains(response, "Feedback sent.")
+        self.assertIn(
+            "stage=delivery_count category=unknown "
+            "exception_class=ContactEmailDeliveryCountError",
+            logs.output[0],
+        )
         self.assertContains(
             response,
             "Your message couldn&#x27;t be sent right now.",

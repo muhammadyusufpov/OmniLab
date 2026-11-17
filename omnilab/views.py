@@ -28,6 +28,24 @@ from .reactions import (
 
 
 contact_logger = logging.getLogger("omnilab.contact")
+SAFE_MAIL_EXCEPTION_NAMES = frozenset({
+    "ConnectionRefusedError",
+    "ContactEmailConfigurationError",
+    "ContactEmailDeliveryCountError",
+    "OSError",
+    "SMTPAuthenticationError",
+    "SMTPConnectError",
+    "SMTPDataError",
+    "SMTPHeloError",
+    "SMTPNotSupportedError",
+    "SMTPRecipientsRefused",
+    "SMTPResponseException",
+    "SMTPSenderRefused",
+    "SMTPServerDisconnected",
+    "TimeoutError",
+    "gaierror",
+    "SSLError",
+})
 
 
 def health(request):
@@ -5774,15 +5792,23 @@ def contact(request):
         reply_to=[form.cleaned_data["email"]],
     )
 
+    failure_stage = "configuration"
     try:
         validate_contact_email_configuration()
+        failure_stage = "email_send"
         delivered_messages = message.send(fail_silently=False)
+        failure_stage = "delivery_count"
         if delivered_messages != 1:
             raise ContactEmailDeliveryCountError
     except Exception as error:
+        exception_class = type(error).__name__
+        if exception_class not in SAFE_MAIL_EXCEPTION_NAMES:
+            exception_class = "OtherError"
         contact_logger.error(
-            "contact_email_delivery_failed category=%s",
+            "contact_email_delivery_failed stage=%s category=%s exception_class=%s",
+            failure_stage,
             get_contact_email_failure_category(error),
+            exception_class,
         )
         form.add_error(
             None,
