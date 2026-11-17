@@ -488,6 +488,12 @@ body {
     font-weight: 700;
 }
 
+.first-experiment-links {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 18px;
+}
+
 .first-experiment-exit {
     min-height: 44px;
     margin-top: 10px;
