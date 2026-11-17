@@ -2583,8 +2583,24 @@ class ObservationGuidePageTests(TestCase):
                 answer = html.split('<p class="guide-answer">', 1)[1].split(
                     "</p>", 1
                 )[0]
+                schema_match = re.search(
+                    r'<script type="application/ld\+json">(.*?)</script>',
+                    html,
+                    re.DOTALL,
+                )
 
                 self.assertEqual(response.status_code, 200)
+                self.assertIsNotNone(schema_match)
+                schema = json.loads(schema_match.group(1))
+                question = schema["mainEntity"]
+                self.assertEqual(schema["@type"], "LearningResource")
+                self.assertEqual(question["@type"], "Question")
+                self.assertIn(
+                    f'<h1 id="guide-heading">{question["name"]}</h1>', html
+                )
+                self.assertEqual(question["acceptedAnswer"], {
+                    "@type": "Answer", "text": answer,
+                })
                 self.assertIn(warning, answer)
                 self.assertIn(f'href="{demo_path}?source=', html)
                 self.assertIn("The result can be incomplete or wrong.", html)
