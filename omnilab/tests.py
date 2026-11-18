@@ -2476,8 +2476,12 @@ class ObservationGuidePageTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(
             response,
-            "<title>Sodium reacts with water: equation and result | OmniLab</title>",
+            "<title>What happens when sodium reacts with water? | OmniLab</title>",
             html=True,
+        )
+        self.assertContains(
+            response,
+            'name="description" content="Sodium and water form sodium hydroxide and hydrogen gas.',
         )
         self.assertContains(
             response,
@@ -2508,8 +2512,12 @@ class ObservationGuidePageTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(
             response,
-            "<title>Zinc and hydrochloric acid reaction | OmniLab</title>",
+            "<title>Zinc and hydrochloric acid reaction: gas and equation | OmniLab</title>",
             html=True,
+        )
+        self.assertContains(
+            response,
+            'name="description" content="Zinc and hydrochloric acid form zinc chloride and hydrogen gas.',
         )
         self.assertContains(
             response,
@@ -2537,10 +2545,14 @@ class ObservationGuidePageTests(TestCase):
         self.assertContains(
             response,
             (
-                "<title>Acetic acid and sodium bicarbonate reaction | "
+                "<title>Acetic acid and sodium bicarbonate reaction: products | "
                 "OmniLab</title>"
             ),
             html=True,
+        )
+        self.assertContains(
+            response,
+            'name="description" content="Acetic acid and sodium bicarbonate form sodium acetate, water, and carbon dioxide.',
         )
         self.assertContains(
             response,

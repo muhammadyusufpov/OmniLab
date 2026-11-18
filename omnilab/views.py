@@ -1216,12 +1216,12 @@ OBSERVATION_GUIDE_PAGES = {
         "demo_route_name": "demo_sodium_water",
         "title": "What happens when sodium reacts with water?",
         "page_title": (
-            "Sodium reacts with water: equation and result | OmniLab"
+            "What happens when sodium reacts with water? | OmniLab"
         ),
         "description": (
-            "See what happens when sodium reacts with water, including the "
-            "balanced equation, hydrogen bubbles, sodium hydroxide, and "
-            "safety limits."
+            "Sodium and water form sodium hydroxide and hydrogen gas. See "
+            "the balanced equation, heat warning, and educational prediction "
+            "in OmniLab."
         ),
         "reading_time": "6 minute read",
         "direct_answer": (
@@ -1356,11 +1356,12 @@ OBSERVATION_GUIDE_PAGES = {
         "demo_route_name": "demo_zinc_hydrochloric_acid",
         "title": "What happens when zinc reacts with hydrochloric acid?",
         "page_title": (
-            "Zinc and hydrochloric acid reaction | OmniLab"
+            "Zinc and hydrochloric acid reaction: gas and equation | OmniLab"
         ),
         "description": (
-            "See the zinc and hydrochloric acid reaction, balanced equation, "
-            "hydrogen bubbles, zinc chloride product, and safety limits."
+            "Zinc and hydrochloric acid form zinc chloride and hydrogen gas. "
+            "Read the balanced equation and bubble explanation, then try "
+            "an educational prediction."
         ),
         "reading_time": "5 minute read",
         "direct_answer": (
@@ -1487,11 +1488,12 @@ OBSERVATION_GUIDE_PAGES = {
             "What happens when acetic acid reacts with sodium bicarbonate?"
         ),
         "page_title": (
-            "Acetic acid and sodium bicarbonate reaction | OmniLab"
+            "Acetic acid and sodium bicarbonate reaction: products | OmniLab"
         ),
         "description": (
-            "See the acetic acid and sodium bicarbonate reaction, balanced "
-            "equation, carbon dioxide bubbles, products, and safety limits."
+            "Acetic acid and sodium bicarbonate form sodium acetate, water, "
+            "and carbon dioxide. See why it fizzes and try OmniLab's "
+            "educational prediction."
         ),
         "reading_time": "5 minute read",
         "direct_answer": (
