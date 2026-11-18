@@ -1889,6 +1889,21 @@ body {
     line-height: 1.65;
 }
 
+.contact-direct-email {
+    max-width: 410px;
+    margin: 24px 0 0;
+    color: var(--muted-text);
+    font-size: 14px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+.contact-direct-email a {
+    color: var(--text-color);
+    font-weight: 700;
+    text-underline-offset: 3px;
+}
+
 .contact-form-card {
     padding: clamp(24px, 4vw, 42px);
     border: 2px solid var(--border-color);
