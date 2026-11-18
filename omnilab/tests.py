@@ -5543,3 +5543,30 @@ class PublicPageTrackingTests(TestCase):
                 self.assertContains(response, 'before_send: sanitizePayload', count=1)
                 preview = self.client.get(route, HTTP_HOST='localhost')
                 self.assertNotContains(preview, 'posthog.init(')
+
+
+class ReactionPairIndexTests(TestCase):
+    def test_every_supported_pair_has_one_working_guide_link(self):
+        from .reactions import supported_reaction_pairs
+
+        response = self.client.get(reverse("reaction_pair_index"))
+        self.assertEqual(response.status_code, 200)
+        pairs = response.context["pairs"]
+        self.assertEqual(len(pairs), 34)
+        self.assertEqual(
+            [pair["formula"] for pair in pairs],
+            [" + ".join(pair) for pair in supported_reaction_pairs()],
+        )
+        self.assertEqual(len({pair["formula"] for pair in pairs}), 34)
+        for pair in pairs:
+            with self.subTest(pair=pair["formula"]):
+                self.assertContains(response, f'href="{pair["guide_url"]}"', count=1)
+                self.assertEqual(self.client.get(pair["guide_url"]).status_code, 200)
+        self.assertContains(response, "educational predictions")
+        self.assertContains(response, "trained laboratory supervision")
+
+    def test_index_appears_once_in_sitemap(self):
+        sitemap = self.client.get("/sitemap.xml").content.decode()
+        self.assertEqual(
+            sitemap.count("/guides/reaction-pairs/"), 1
+        )

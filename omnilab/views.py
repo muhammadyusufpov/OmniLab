@@ -12,6 +12,7 @@ from django.core.cache import cache
 from django.core.mail import EmailMessage
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
+from django.urls import reverse
 from django.views.decorators.csrf import ensure_csrf_cookie
 
 from .email_delivery import (
@@ -68,6 +69,7 @@ PUBLIC_CANONICAL_URLS = {
     "contact": f"{PRODUCTION_BASE_URL}/contact/",
     "faq": f"{PRODUCTION_BASE_URL}/faq/",
     "guides": f"{PRODUCTION_BASE_URL}/guides/",
+    "reaction_pairs": f"{PRODUCTION_BASE_URL}/guides/reaction-pairs/",
     "chemical_reaction_predictor": (
         f"{PRODUCTION_BASE_URL}/guides/chemical-reaction-predictor/"
     ),
@@ -5566,6 +5568,66 @@ def guide_library(request):
             "guide_groups": GUIDE_LIBRARY_GROUPS,
         },
     )
+
+
+def reaction_pair_index(request):
+    """List each supported matrix pair with its matching study guide."""
+    chemical_names = {
+        chemical["id"]: chemical["name"]
+        for chemical in json.loads(
+            (Path(settings.BASE_DIR) / "static/js/chemicaldata.json").read_text()
+        )
+    }
+    guides_by_family = {}
+    for canonical_key, family in GUIDE_REACTION_FAMILY_BY_PAGE.items():
+        guides_by_family.setdefault(family, GUIDE_PAGE_REFERENCES[canonical_key])
+
+    pairs = []
+    for number, pair in enumerate(supported_reaction_pairs(), start=1):
+        family = "+".join(pair)
+        guide = guides_by_family[family]
+        pairs.append({
+            "number": number,
+            "formula": " + ".join(pair),
+            "names": " + ".join(chemical_names[chemical] for chemical in pair),
+            "guide_title": guide["title"],
+            "guide_url": reverse(guide["route_name"]),
+        })
+
+    canonical_url = PUBLIC_CANONICAL_URLS["reaction_pairs"]
+    description = (
+        "Browse all 34 supported OmniLab chemistry reaction pairs. "
+        "Open the matching student guide for each pair and study its "
+        "educational prediction and safety limits."
+    )
+    page_schema = {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": "Supported chemistry reaction pairs",
+        "url": canonical_url,
+        "mainEntity": {
+            "@type": "ItemList",
+            "numberOfItems": len(pairs),
+            "itemListElement": [
+                {
+                    "@type": "ListItem",
+                    "position": pair["number"],
+                    "name": pair["names"],
+                    "url": f"{PRODUCTION_BASE_URL}{pair['guide_url']}",
+                }
+                for pair in pairs
+            ],
+        },
+    }
+    return render(request, "reaction_pair_index.html", {
+        "page_title": "34 chemistry reaction pairs and guides | OmniLab",
+        "page_description": description,
+        "canonical_url": canonical_url,
+        "social_preview_url": SOCIAL_PREVIEW_URL,
+        "social_preview_alt": SOCIAL_PREVIEW_ALT,
+        "page_schema_json": json.dumps(page_schema),
+        "pairs": pairs,
+    })
 
 
 def chemical_reaction_predictor(request):

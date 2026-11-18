@@ -488,6 +488,12 @@ body {
     font-weight: 700;
 }
 
+.first-experiment-links {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 18px;
+}
+
 .first-experiment-exit {
     min-height: 44px;
     margin-top: 10px;
@@ -2575,6 +2581,60 @@ body {
     line-height: 1.7;
     opacity: 0.78;
     text-wrap: pretty;
+}
+
+.reaction-pair-list-section {
+    margin-top: 112px;
+    display: grid;
+    grid-template-columns: minmax(220px, 0.68fr) minmax(0, 1.32fr);
+    align-items: start;
+    gap: 72px;
+}
+
+.reaction-pair-list-intro { position: sticky; top: 32px; }
+.reaction-pair-list-intro h2 {
+    max-width: 12ch;
+    margin: 0;
+    font-size: clamp(34px, 4vw, 48px);
+    line-height: 1.06;
+    letter-spacing: -1.8px;
+}
+.reaction-pair-list-intro > p:last-child {
+    max-width: 38ch;
+    color: var(--muted-text);
+    font-size: 15px;
+    line-height: 1.65;
+}
+.reaction-pair-list { margin: 0; padding: 0; list-style: none; border-top: 2px solid var(--border-color); }
+.reaction-pair-list li { border-bottom: 1px solid var(--border-color); }
+.reaction-pair-list a {
+    min-height: 90px;
+    padding: 18px 0;
+    display: grid;
+    grid-template-columns: 38px minmax(0, 1fr) 24px;
+    align-items: center;
+    gap: 16px;
+    color: var(--text-color);
+    text-decoration: none;
+}
+.reaction-pair-list a:hover .reaction-pair-arrow { transform: translateX(4px); }
+.reaction-pair-list a:focus-visible { outline: 3px solid #e3384f; outline-offset: 3px; }
+.reaction-pair-number { align-self: start; padding-top: 4px; color: var(--muted-text); font-size: 12px; font-weight: 700; }
+.reaction-pair-copy { display: grid; gap: 7px; }
+.reaction-pair-copy strong { font-size: 18px; line-height: 1.4; }
+.reaction-pair-copy span { color: var(--muted-text); font-size: 14px; }
+.reaction-pair-arrow { font-size: 20px; transition: transform 0.16s ease; }
+
+@media (max-width: 900px) {
+    .reaction-pair-list-section { grid-template-columns: 1fr; gap: 40px; }
+    .reaction-pair-list-intro { position: static; }
+}
+
+@media (max-width: 480px) {
+    .reaction-pair-list-section { margin-top: 72px; }
+    .reaction-pair-list-intro h2 { font-size: 36px; }
+    .reaction-pair-list a { min-height: 88px; gap: 10px; grid-template-columns: 30px minmax(0, 1fr) 20px; }
+    .reaction-pair-copy strong { font-size: 16px; }
 }
 
 .guide-equation {

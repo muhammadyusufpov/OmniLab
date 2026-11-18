@@ -35,6 +35,7 @@ urlpatterns = [
     path('privacy/', views.privacy, name="privacy"),
     path('terms/', views.terms, name="terms"),
     path('guides/', views.guide_library, name="guide_library"),
+    path('guides/reaction-pairs/', views.reaction_pair_index, name="reaction_pair_index"),
     path('guides/chemical-reaction-predictor/', views.chemical_reaction_predictor,
          name="chemical_reaction_predictor"),
     path('guides/chemical-reaction-practice/', views.chemical_reaction_practice,
