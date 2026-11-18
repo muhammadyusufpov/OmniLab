@@ -1227,7 +1227,8 @@ OBSERVATION_GUIDE_PAGES = {
         "direct_answer": (
             "Sodium reacts with water to form sodium hydroxide and hydrogen "
             "gas. The reaction releases substantial heat, and the escaping "
-            "hydrogen appears as bubbles."
+            "hydrogen appears as bubbles. This is an educational prediction, "
+            "not a verified simulation or a replacement for trained supervision."
         ),
         "reactants": [
             {"name": "Sodium", "formula": "Na"},
@@ -1366,7 +1367,9 @@ OBSERVATION_GUIDE_PAGES = {
         "reading_time": "5 minute read",
         "direct_answer": (
             "Zinc reacts with hydrochloric acid to form zinc chloride and "
-            "hydrogen gas. The hydrogen leaves the solution as bubbles."
+            "hydrogen gas. The hydrogen leaves the solution as bubbles. This "
+            "is an educational prediction, not a verified simulation or a "
+            "replacement for trained supervision."
         ),
         "opening_boundary": (
             "The model leaves out acid concentration, zinc surface area, and "
@@ -1499,7 +1502,8 @@ OBSERVATION_GUIDE_PAGES = {
         "direct_answer": (
             "Acetic acid reacts with sodium bicarbonate to form sodium "
             "acetate, carbon dioxide, and water. Escaping carbon dioxide "
-            "causes the fizzing."
+            "causes the fizzing. This is an educational prediction, not a "
+            "verified simulation or a replacement for trained supervision."
         ),
         "opening_boundary": (
             "The model leaves out foam height, gas volume, cooling, and "
