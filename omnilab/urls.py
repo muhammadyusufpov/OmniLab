@@ -41,6 +41,8 @@ urlpatterns = [
          name="chemical_reaction_practice"),
     path('guides/types-of-chemical-reactions-practice/', views.reaction_types_practice,
          name="reaction_types_practice"),
+    path('guides/observation-of-chemical-reaction/', views.reaction_observations,
+         name="reaction_observations"),
     path(
         'first-experiment/',
         views.first_experiment,

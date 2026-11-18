@@ -1,0 +1,133 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{{ page_description }}">
+    <title>{{ page_title }}</title>
+    <link rel="canonical" href="{{ canonical_url }}">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="OmniLab">
+    <meta property="og:title" content="{{ page_title }}">
+    <meta property="og:description" content="{{ page_description }}">
+    <meta property="og:url" content="{{ canonical_url }}">
+    <meta property="og:image" content="{{ social_preview_url }}">
+    <meta property="og:image:alt" content="{{ social_preview_alt }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ page_title }}">
+    <meta name="twitter:description" content="{{ page_description }}">
+    <meta name="twitter:image" content="{{ social_preview_url }}">
+    <link rel="icon" href="{% static 'favicon.png' %}" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% include "partials/product_analytics.html" %}
+    <script type="application/ld+json">{{ page_schema_json|safe }}</script>
+</head>
+<body class="guide-page">
+    <header class="guide-site-header">
+        <a class="guide-brand" href="{% url 'index' %}">OmniLab</a>
+        <span class="guide-site-label">Chemistry guide</span>
+    </header>
+    <main>
+        <article class="reaction-lab-shell practice-shell">
+            <nav class="guide-breadcrumb" aria-label="Breadcrumb">
+                <a href="{% url 'guide_library' %}">Chemistry guides</a>
+                <span aria-hidden="true">/</span>
+                <span>Reaction observations</span>
+            </nav>
+
+            <section class="reaction-lab-hero" aria-labelledby="observations-heading">
+                <div class="reaction-lab-hero-copy">
+                    <p class="guide-context">Observation first · Explanation second</p>
+                    <h1 id="observations-heading">Observation of a chemical reaction</h1>
+                    <p class="reaction-lab-lede">Record what changed before you name a product. Bubbles, a new solid, or a color change can point to a reaction. Each clue needs context.</p>
+                    <a class="guide-primary" href="#examples">See worked examples <span aria-hidden="true">→</span></a>
+                    <p class="guide-cta-note">For study only. Physical experiments need trained supervision.</p>
+                </div>
+                <figure class="guide-preview reaction-lab-preview">
+                    <div class="guide-preview-frame">
+                        <img src="{% static 'images/omnilab-social-preview.png' %}" alt="OmniLab result with a reaction equation, explanation, and safety notes">
+                        <span class="guide-preview-label">OmniLab result</span>
+                    </div>
+                    <figcaption>Compare a predicted result with a precise written observation.</figcaption>
+                </figure>
+            </section>
+
+            <section class="practice-method" aria-labelledby="method-heading">
+                <p class="guide-section-label">How to write it</p>
+                <h2 id="method-heading">Separate what you see from what you infer</h2>
+                <p>An observation describes a change you can notice: “the clear mixture turns cloudy” or “bubbles form.” An inference explains a possible cause: “a solid formed” or “a gas was released.” Write the observation first, then support the explanation with the reactants, equation, and conditions.</p>
+                <p>One clue alone can mislead. Bubbles may come from boiling or trapped air. A color shift may come from dilution or mixing. A solid may be an undissolved starting material. Check whether the change fits the whole reaction before you identify a product.</p>
+            </section>
+
+            <section class="practice-list" id="examples" aria-labelledby="examples-heading">
+                <div class="practice-list-intro">
+                    <p class="guide-section-label">Supported examples</p>
+                    <h2 id="examples-heading">Four observations, four explanations</h2>
+                    <p>Each example connects a specific visual clue to a balanced equation. The virtual lab predicts these outcomes for supported pairs.</p>
+                </div>
+                <article class="practice-card">
+                    <div class="practice-card-head"><span class="practice-number">01</span><span class="practice-type">Cloudiness</span></div>
+                    <h3>Carbon dioxide enters limewater</h3>
+                    <p><strong>Observation:</strong> The clear limewater becomes cloudy or milky. A white solid appears in the mixture.</p>
+                    <p class="practice-equation">CO₂(g) + Ca(OH)₂(aq) → CaCO₃(s) + H₂O(l)</p>
+                    <p><strong>Explanation:</strong> Calcium carbonate is poorly soluble. Its small solid particles scatter light. The cloudiness is a clue to a precipitate, not a measure of its mass.</p>
+                    <p>Passing excess carbon dioxide can change the later appearance. This simple equation describes the initial result only.</p>
+                </article>
+                <article class="practice-card">
+                    <div class="practice-card-head"><span class="practice-number">02</span><span class="practice-type">Gas bubbles</span></div>
+                    <h3>Sodium carbonate meets hydrochloric acid</h3>
+                    <p><strong>Observation:</strong> The mixture fizzes. Bubbles rise and leave the liquid.</p>
+                    <p class="practice-equation">Na₂CO₃(aq) + 2HCl(aq) → 2NaCl(aq) + H₂O(l) + CO₂(g)</p>
+                    <p><strong>Explanation:</strong> The acid reacts with carbonate and releases carbon dioxide. The visible fizz is gas leaving the solution. Bubble size and speed depend on amounts and conditions.</p>
+                    <p>Do not name an unknown gas from fizzing alone. A supervised identification test needs more evidence.</p>
+                </article>
+                <article class="practice-card">
+                    <div class="practice-card-head"><span class="practice-number">03</span><span class="practice-type">Colored solid</span></div>
+                    <h3>Silver nitrate meets potassium iodide</h3>
+                    <p><strong>Observation:</strong> A yellow solid forms when the solutions mix.</p>
+                    <p class="practice-equation">AgNO₃(aq) + KI(aq) → AgI(s) + KNO₃(aq)</p>
+                    <p><strong>Explanation:</strong> Silver and iodide ions form insoluble silver iodide. Potassium and nitrate ions remain dissolved. The yellow color helps describe the solid but does not prove an unknown sample is silver iodide.</p>
+                </article>
+                <article class="practice-card">
+                    <div class="practice-card-head"><span class="practice-number">04</span><span class="practice-type">Blue solid</span></div>
+                    <h3>Copper(II) sulfate meets potassium hydroxide</h3>
+                    <p><strong>Observation:</strong> A blue solid appears in the liquid.</p>
+                    <p class="practice-equation">CuSO₄(aq) + 2KOH(aq) → Cu(OH)₂(s) + K₂SO₄(aq)</p>
+                    <p><strong>Explanation:</strong> Copper(II) ions and hydroxide ions form copper(II) hydroxide. The equation explains why two hydroxide ions are needed per copper ion.</p>
+                </article>
+            </section>
+
+            <section class="practice-method" aria-labelledby="record-heading">
+                <p class="guide-section-label">Use this pattern</p>
+                <h2 id="record-heading">Write a stronger lab note</h2>
+                <p>Start with the starting appearance and the action: “Two clear solutions were mixed.” Add the change without naming a cause: “A yellow solid appeared.” Then give the proposed explanation with the equation and the specific product. If you did not measure heat, pH, gas volume, or time, do not claim a value for it.</p>
+                <p>This order makes your answer easier to check. It also shows where the evidence ends. A predicted visual cue can support a study answer, but it cannot replace a real observation made under controlled conditions.</p>
+            </section>
+
+            <section class="reaction-lab-boundary" aria-labelledby="boundary-heading">
+                <div><p class="guide-section-label">Study boundary</p><h2 id="boundary-heading">A prediction is not a physical result.</h2></div>
+                <div><p>OmniLab's results are educational predictions, not verified simulations. They do not model every concentration, temperature, reaction rate, or competing process.</p><p>Use your course materials to check important claims. Follow trained supervision and your laboratory's safety rules. Never use this page as a physical procedure.</p></div>
+            </section>
+
+            <section class="reaction-lab-final" aria-labelledby="next-heading">
+                <p class="guide-section-label">Try one example</p>
+                <h2 id="next-heading">Compare the cue with the equation.</h2>
+                <p>Open the prepared limewater setup. Read the predicted change, then write your own observation sentence before reading the explanation.</p>
+                <div class="reaction-lab-final-links"><a class="guide-primary" href="{% url 'demo_carbon_dioxide_calcium_hydroxide' %}?source=guide_observations">Open the prepared reaction <span aria-hidden="true">→</span></a></div>
+            </section>
+
+            <nav class="guide-related" aria-label="Related chemistry guides">
+                <div><p class="guide-section-label">Read the specific results</p><h2>Follow each visible clue</h2></div>
+                <div class="guide-related-links">
+                    <a href="{% url 'guide_limewater_carbon_dioxide' %}">Why limewater turns cloudy <span aria-hidden="true">→</span></a>
+                    <a href="{% url 'guide_sodium_carbonate_hydrochloric_acid' %}">Why carbonate and acid fizz <span aria-hidden="true">→</span></a>
+                    <a href="{% url 'guide_silver_nitrate_potassium_iodide' %}">Why silver iodide forms a yellow solid <span aria-hidden="true">→</span></a>
+                </div>
+            </nav>
+        </article>
+    </main>
+    {% include "partials/site_footer.html" %}
+</body>
+</html>
