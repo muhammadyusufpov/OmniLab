@@ -40,6 +40,8 @@ urlpatterns = [
          name="chemical_reaction_predictor"),
     path('guides/chemical-reaction-practice/', views.chemical_reaction_practice,
          name="chemical_reaction_practice"),
+    path('guides/acid-base-reaction-practice-problems/', views.acid_base_practice,
+         name="acid_base_practice"),
     path('guides/types-of-chemical-reactions-practice/', views.reaction_types_practice,
          name="reaction_types_practice"),
     path('guides/observation-of-chemical-reaction/', views.reaction_observations,
