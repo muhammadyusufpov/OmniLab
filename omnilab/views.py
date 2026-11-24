@@ -76,6 +76,9 @@ PUBLIC_CANONICAL_URLS = {
     "chemical_reaction_practice": (
         f"{PRODUCTION_BASE_URL}/guides/chemical-reaction-practice/"
     ),
+    "acid_base_practice": (
+        f"{PRODUCTION_BASE_URL}/guides/acid-base-reaction-practice-problems/"
+    ),
     "reaction_types_practice": (
         f"{PRODUCTION_BASE_URL}/guides/types-of-chemical-reactions-practice/"
     ),
@@ -4853,6 +4856,14 @@ GUIDE_LIBRARY_GROUPS = [
     },
 ]
 
+GUIDE_LIBRARY_GROUPS[0]["guides"].append({
+    "number": "39",
+    "title": "Acid-base reaction practice problems",
+    "summary": "Solve six worked acid-base problems, then compare supported pairs in the virtual lab.",
+    "route_name": "acid_base_practice",
+    "canonical_key": "acid_base_practice",
+})
+
 GUIDE_LIBRARY_GROUPS[2]["guides"].append({
     "number": "38",
     "title": "Observation of a chemical reaction",
@@ -5514,7 +5525,7 @@ def chemical_reaction_virtual_lab(request):
 def guide_library(request):
     canonical_url = PUBLIC_CANONICAL_URLS["guides"]
     description = (
-        "Browse 38 free, no-account chemistry guides about virtual reaction "
+        "Browse 39 free, no-account chemistry guides about virtual reaction "
         "labs, equations, bonding, combustion, oxidation, acids, gases, and "
         "precipitates."
     )
@@ -5673,6 +5684,32 @@ def chemical_reaction_practice(request):
     }
     return render(request, "chemical_reaction_practice.html", {
         "page_title": "Chemical reaction practice problems: 10 answers | OmniLab",
+        "page_description": description,
+        "canonical_url": canonical_url,
+        "social_preview_url": SOCIAL_PREVIEW_URL,
+        "social_preview_alt": SOCIAL_PREVIEW_ALT,
+        "page_schema_json": json.dumps(page_schema),
+    })
+
+
+def acid_base_practice(request):
+    canonical_url = PUBLIC_CANONICAL_URLS["acid_base_practice"]
+    description = (
+        "Try six acid-base reaction practice problems with worked answers. "
+        "Balance equations, identify exceptions, and compare supported lab examples."
+    )
+    page_schema = {
+        "@context": "https://schema.org",
+        "@type": "LearningResource",
+        "name": "Acid-base reaction practice problems with worked answers",
+        "description": description,
+        "url": canonical_url,
+        "learningResourceType": "Practice problems",
+        "isPartOf": {"@type": "WebSite", "name": "OmniLab",
+                     "url": PUBLIC_CANONICAL_URLS["index"]},
+    }
+    return render(request, "acid_base_practice.html", {
+        "page_title": "Acid-base reaction practice problems: 6 worked answers | OmniLab",
         "page_description": description,
         "canonical_url": canonical_url,
         "social_preview_url": SOCIAL_PREVIEW_URL,

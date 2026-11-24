@@ -215,8 +215,8 @@ class DeploymentConfigurationTests(SimpleTestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         discovery = json.loads(result.stdout)
         self.assertEqual(discovery["origin"], configured_origin)
-        self.assertEqual(len(discovery["canonicals"]), 50)
-        self.assertEqual(len(set(discovery["canonicals"])), 50)
+        self.assertEqual(len(discovery["canonicals"]), 51)
+        self.assertEqual(len(set(discovery["canonicals"])), 51)
         for url in (
             discovery["canonicals"]
             + discovery["demo_urls"]
@@ -230,7 +230,7 @@ class DeploymentConfigurationTests(SimpleTestCase):
         )
         self.assertEqual(
             discovery["sitemap"].count(f"<loc>{configured_origin}/"),
-            50,
+            51,
         )
         self.assertTrue(discovery["noindex"])
 
@@ -323,7 +323,7 @@ class SearchIndexControlTests(SimpleTestCase):
             for node in root.findall("sitemap:url/sitemap:loc", namespace)
         ]
 
-        self.assertEqual(len(public_paths), 50)
+        self.assertEqual(len(public_paths), 51)
         for path in public_paths:
             with self.subTest(path=path):
                 response = self.client.get(path)
@@ -798,10 +798,10 @@ class GuideLibraryPageTests(TestCase):
         self.assertEqual(self.response.status_code, 200)
         self.assertContains(
             self.response,
-            "38 questions · One connected library",
+            "39 questions · One connected library",
         )
-        self.assertEqual(len(self.guides), 38)
-        self.assertEqual(self.html.count('class="guide-index-link"'), 38)
+        self.assertEqual(len(self.guides), 39)
+        self.assertEqual(self.html.count('class="guide-index-link"'), 39)
 
         guide_hrefs = re.findall(
             r'<a class="guide-index-link" href="([^"]+)">',
@@ -811,7 +811,7 @@ class GuideLibraryPageTests(TestCase):
             reverse(guide["route_name"]) for guide in self.guides
         ]
         self.assertEqual(guide_hrefs, expected_hrefs)
-        self.assertEqual(len(set(guide_hrefs)), 38)
+        self.assertEqual(len(set(guide_hrefs)), 39)
 
         for group in GUIDE_LIBRARY_GROUPS:
             with self.subTest(group=group["label"]):
@@ -838,13 +838,21 @@ class GuideLibraryPageTests(TestCase):
     def test_library_description_names_thirty_seven_free_no_account_guides(self):
         description = self.response.context["page_description"]
 
-        self.assertIn("38 free, no-account chemistry guides", description)
+        self.assertIn("39 free, no-account chemistry guides", description)
         self.assertLessEqual(len(description), 160)
         self.assertContains(
             self.response,
             f'<meta name="description" content="{description}">',
             html=True,
         )
+
+    def test_acid_base_practice_is_linked_and_explains_prediction_limits(self):
+        path = reverse("acid_base_practice")
+        response = self.client.get(path)
+        self.assertContains(self.response, f'href="{path}"')
+        self.assertContains(response, "Six acid-base problems")
+        self.assertContains(response, "not verified simulations")
+        self.assertContains(response, 'rel="canonical"')
 
     def test_all_thirty_seven_guides_have_distinct_titles_and_descriptions(self):
         self.assertEqual(len(GUIDE_PAGE_REFERENCES), 37)
@@ -1118,8 +1126,8 @@ class GuideLibraryPageTests(TestCase):
         self.assertEqual(schema["url"], PUBLIC_CANONICAL_URLS["guides"])
         item_list = schema["mainEntity"]
         self.assertEqual(item_list["@type"], "ItemList")
-        self.assertEqual(item_list["numberOfItems"], 38)
-        self.assertEqual(len(item_list["itemListElement"]), 38)
+        self.assertEqual(item_list["numberOfItems"], 39)
+        self.assertEqual(len(item_list["itemListElement"]), 39)
 
         for position, (guide, item) in enumerate(
             zip(self.guides, item_list["itemListElement"]),
@@ -1969,7 +1977,7 @@ class SearchDiscoveryTests(TestCase):
         )
         metadata = []
 
-        self.assertEqual(len(paths), 50)
+        self.assertEqual(len(paths), 51)
         for path in paths:
             with self.subTest(path=path):
                 response = self.client.get(path)
@@ -1998,8 +2006,8 @@ class SearchDiscoveryTests(TestCase):
 
         titles = [title for title, _description in metadata]
         descriptions = [description for _title, description in metadata]
-        self.assertEqual(len(set(titles)), 50)
-        self.assertEqual(len(set(descriptions)), 50)
+        self.assertEqual(len(set(titles)), 51)
+        self.assertEqual(len(set(descriptions)), 51)
         self.assertNotIn("12 guides", " ".join(descriptions))
 
     def test_public_pages_use_production_canonical_urls(self):
