@@ -1,0 +1,155 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{{ page_description }}">
+    <title>{{ page_title }}</title>
+    <link rel="canonical" href="{{ canonical_url }}">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="OmniLab">
+    <meta property="og:title" content="{{ page_title }}">
+    <meta property="og:description" content="{{ page_description }}">
+    <meta property="og:url" content="{{ canonical_url }}">
+    <meta property="og:image" content="{{ social_preview_url }}">
+    <meta property="og:image:alt" content="{{ social_preview_alt }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ page_title }}">
+    <meta name="twitter:description" content="{{ page_description }}">
+    <meta name="twitter:image" content="{{ social_preview_url }}">
+    <link rel="icon" href="{% static 'favicon.png' %}" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% include "partials/product_analytics.html" %}
+    <script type="application/ld+json">{{ page_schema_json|safe }}</script>
+</head>
+<body class="guide-page">
+    <header class="guide-site-header">
+        <a class="guide-brand" href="{% url 'index' %}">OmniLab</a>
+        <span class="guide-site-label">Study tool</span>
+    </header>
+    <main>
+        <article class="reaction-lab-shell practice-shell">
+            <nav class="guide-breadcrumb" aria-label="Breadcrumb">
+                <a href="{% url 'guide_library' %}">Chemistry guides</a>
+                <span aria-hidden="true">/</span>
+                <span>Acid-base practice</span>
+            </nav>
+            <section class="reaction-lab-hero" aria-labelledby="practice-heading">
+                <div class="reaction-lab-hero-copy">
+                    <p class="guide-context">Six questions · Worked answers · Matching lab examples</p>
+                    <h1 id="practice-heading">Acid-base reaction practice problems with worked answers</h1>
+                    <p class="reaction-lab-lede">Practice the product, the balanced equation, and the reasoning. Start with neutralization, then test where the simple salt-and-water rule stops working.</p>
+                    <a class="guide-primary" href="#practice-questions">Start the problems <span aria-hidden="true">→</span></a>
+                    <p class="guide-cta-note">No account or payment is required in the current release.</p>
+                </div>
+                <figure class="guide-preview reaction-lab-preview">
+                    <div class="guide-preview-frame">
+                        <img src="{% static 'images/omnilab-social-preview.png' %}" alt="OmniLab showing selected chemicals, a balanced equation, and safety guidance">
+                        <span class="guide-preview-label">Actual OmniLab result</span>
+                    </div>
+                    <figcaption>Use supported pairs to compare your answer with an educational prediction.</figcaption>
+                </figure>
+            </section>
+            <section class="practice-method" aria-labelledby="method-heading">
+                <p class="guide-section-label">Method</p>
+                <h2 id="method-heading">Find the proton transfer before you balance.</h2>
+                <p>Identify the acid and the base. Ask what accepts a proton, then predict the products. Count atoms on each side and change coefficients, never subscripts. Finally, check whether water forms or whether another product explains the reaction.</p>
+                <p>Try each question before you open its answer. The first two are familiar neutralizations. The later questions include ammonia, bicarbonate, and a small amount comparison. This set is about equations and reasoning. It does not calculate pH or replace a lab procedure.</p>
+            </section>
+            <section class="practice-list" id="practice-questions" aria-labelledby="questions-heading">
+                <div class="practice-list-intro">
+                    <p class="guide-section-label">Work through the reactions</p>
+                    <h2 id="questions-heading">Six acid-base problems</h2>
+                    <p>Each answer shows the step that matters. Open a linked guide when you want more context.</p>
+                </div>
+                <article class="practice-card">
+                    <div class="practice-card-head"><span class="practice-number">01</span><span class="practice-type">Neutralization</span></div>
+                    <h3>What forms when hydrochloric acid meets sodium hydroxide?</h3>
+                    <p>Write the molecular equation. Then remove ions that do not change to write the net ionic equation.</p>
+                    <details><summary>Show the worked answer</summary><div class="practice-answer">
+                        <p class="practice-equation">HCl(aq) + NaOH(aq) → NaCl(aq) + H₂O(l)</p>
+                        <p>Hydrogen ions and hydroxide ions form water. Sodium and chloride remain dissolved. Each formula unit already balances with coefficient 1. Remove the spectator ions to get H⁺(aq) + OH⁻(aq) → H₂O(l).</p>
+                        <p>A balanced equation alone cannot tell you the final pH. The amounts and concentrations matter.</p>
+                        <a href="{% url 'guide_hydrochloric_acid_sodium_hydroxide' %}">Read the hydrochloric acid and sodium hydroxide guide →</a>
+                    </div></details>
+                </article>
+                <article class="practice-card">
+                    <div class="practice-card-head"><span class="practice-number">02</span><span class="practice-type">Two acidic hydrogens</span></div>
+                    <h3>How much potassium hydroxide balances sulfuric acid?</h3>
+                    <p>Start with H₂SO₄ + KOH → K₂SO₄ + H₂O. Find the potassium coefficient before you balance water.</p>
+                    <details><summary>Show the worked answer</summary><div class="practice-answer">
+                        <p class="practice-equation">H₂SO₄(aq) + 2KOH(aq) → K₂SO₄(aq) + 2H₂O(l)</p>
+                        <p>Potassium sulfate has two potassium atoms, so put 2 before KOH. Those two hydroxide groups combine with the two acidic hydrogens to form two water molecules. Check oxygen last: six on each side.</p>
+                        <p>The 1:2 ratio counts formula units in this equation. It does not set a safe mixing amount for a physical experiment.</p>
+                        <a href="{% url 'guide_sulfuric_acid_potassium_hydroxide' %}">Read the sulfuric acid and potassium hydroxide guide →</a>
+                    </div></details>
+                </article>
+                <article class="practice-card">
+                    <div class="practice-card-head"><span class="practice-number">03</span><span class="practice-type">No water product</span></div>
+                    <h3>Does every acid-base reaction make water?</h3>
+                    <p>Predict what forms when ammonia accepts a proton from nitric acid. Look for a hydroxide group before you add water.</p>
+                    <details><summary>Show the worked answer</summary><div class="practice-answer">
+                        <p class="practice-equation">NH₃(aq) + HNO₃(aq) → NH₄NO₃(aq)</p>
+                        <p>Ammonia accepts a proton and becomes ammonium. Nitrate is the accompanying ion. No hydroxide group appears on the reactant side, so adding water would invent atoms. One of each reactant balances the equation.</p>
+                        <p>Acid-base describes proton transfer. The salt-and-water shortcut fits many acid-plus-hydroxide problems, not every acid-base pair.</p>
+                        <a href="{% url 'guide_ammonia_nitric_acid' %}">Read the ammonia and nitric acid guide →</a>
+                    </div></details>
+                </article>
+                <article class="practice-card">
+                    <div class="practice-card-head"><span class="practice-number">04</span><span class="practice-type">Gas formation</span></div>
+                    <h3>What products follow when acetic acid meets sodium bicarbonate?</h3>
+                    <p>Write a balanced equation. Explain why the products include a gas as well as water and a salt.</p>
+                    <details><summary>Show the worked answer</summary><div class="practice-answer">
+                        <p class="practice-equation">CH₃COOH(aq) + NaHCO₃(aq) → CH₃COONa(aq) + H₂O(l) + CO₂(g)</p>
+                        <p>Bicarbonate accepts a proton, forming carbonic acid. Carbonic acid can break down into water and carbon dioxide. The remaining acetate pairs with sodium. Every formula has coefficient 1 in the overall balanced equation.</p>
+                        <p>Bubbles are an expected cue, not proof of a gas identity in an unknown real sample.</p>
+                        <a href="{% url 'guide_acetic_acid_sodium_bicarbonate' %}">Read the acetic acid and bicarbonate guide →</a>
+                    </div></details>
+                </article>
+                <article class="practice-card">
+                    <div class="practice-card-head"><span class="practice-number">05</span><span class="practice-type">Amount comparison</span></div>
+                    <h3>What remains after 0.10 mol HCl reacts with 0.08 mol NaOH?</h3>
+                    <p>Use the equation in question 1. Assume both reactants can mix fully, then compare their mole amounts.</p>
+                    <details><summary>Show the worked answer</summary><div class="practice-answer">
+                        <p class="practice-equation">0.10 mol HCl − 0.08 mol NaOH = 0.02 mol HCl remaining</p>
+                        <p>The reaction uses one HCl for each NaOH. All 0.08 mol NaOH can react with 0.08 mol HCl, leaving 0.02 mol HCl. The mixture also contains 0.08 mol NaCl in this ideal amount calculation.</p>
+                        <p>Do not infer a pH from these moles alone. A concentration requires the final volume, and real behavior can depend on conditions. OmniLab's reaction result does not model these amounts.</p>
+                        <a href="{% url 'guide_hydrochloric_acid_sodium_hydroxide' %}">Review the neutralization equation →</a>
+                    </div></details>
+                </article>
+                <article class="practice-card">
+                    <div class="practice-card-head"><span class="practice-number">06</span><span class="practice-type">Carbonate and acid</span></div>
+                    <h3>Why does sodium carbonate need two hydrochloric acid units?</h3>
+                    <p>Predict the gas, salt, and water. Check sodium and chlorine before hydrogen and oxygen.</p>
+                    <details><summary>Show the worked answer</summary><div class="practice-answer">
+                        <p class="practice-equation">Na₂CO₃(aq) + 2HCl(aq) → 2NaCl(aq) + H₂O(l) + CO₂(g)</p>
+                        <p>Two sodium atoms require two NaCl units. That calls for two chlorine atoms, supplied by 2HCl. The remaining two hydrogen atoms make one water molecule. Carbonate supplies the carbon for carbon dioxide.</p>
+                        <p>This predicts a supported reaction pair. Fizzing alone does not identify a substance, and the model does not verify a physical sample.</p>
+                        <a href="{% url 'guide_sodium_carbonate_hydrochloric_acid' %}">Read the sodium carbonate and hydrochloric acid guide →</a>
+                    </div></details>
+                </article>
+            </section>
+            <section class="reaction-lab-boundary" aria-labelledby="boundary-heading">
+                <div><p class="guide-section-label">Study boundary</p><h2 id="boundary-heading">Use these answers to study, not to run a lab.</h2></div>
+                <div>
+                    <p>These worked answers and OmniLab results are educational predictions for supported pairs. They are not verified simulations or full models of concentration, temperature, or reaction conditions.</p>
+                    <p>Check your course materials and follow trained supervision. Never use these predictions instead of laboratory safety procedures.</p>
+                </div>
+            </section>
+            <section class="reaction-lab-final" aria-labelledby="next-heading">
+                <p class="guide-section-label">Next step</p>
+                <h2 id="next-heading">Check one equation in the virtual lab.</h2>
+                <p>The prepared hydrochloric acid and sodium hydroxide example opens with a supported pair selected. You decide when to analyze it.</p>
+                <div class="reaction-lab-final-links">
+                    <a class="guide-primary" href="{% url 'demo_hydrochloric_acid_sodium_hydroxide' %}?source=guide_acid_base_practice">Open a prepared reaction <span aria-hidden="true">→</span></a>
+                    <a href="{% url 'guide_library' %}">Browse the chemistry guides <span aria-hidden="true">→</span></a>
+                    <a href="{% url 'reaction_types_practice' %}">Practice reaction types <span aria-hidden="true">→</span></a>
+                </div>
+            </section>
+        </article>
+    </main>
+    {% include "partials/site_footer.html" %}
+</body>
+</html>
