@@ -401,6 +401,8 @@ export function resetLaboratory(): void {
 
     config.updateLabState({
         selectedChemicals: [],
+        apparatusSelected: false,
+        burnerActive: false,
         targetLiquidVol: 0,
         currentLiquidVol: 0,
         liquidColor: '#3399ff',
@@ -424,6 +426,10 @@ export function resetLaboratory(): void {
         filteredLiquidVol: 0
     });
     document.querySelectorAll('.chemical-card').forEach(card => {
+        card.setAttribute('aria-pressed', 'false');
+    });
+    document.querySelectorAll('.apparatus-option-card[id^="opt-"]').forEach(card => {
+        card.classList.remove('selected');
         card.setAttribute('aria-pressed', 'false');
     });
     refreshChemicalMenuGuidance();
