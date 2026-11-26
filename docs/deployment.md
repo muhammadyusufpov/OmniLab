@@ -64,6 +64,18 @@ Use `GET /health/` as the liveness check. It returns HTTP 200 with `ok` and does
 not touch the database, SMTP, or analytics. A check that reaches Gunicorn
 directly must send the public `Host` value and `X-Forwarded-Proto: https`.
 
+After the service restarts, check the homepage, chemistry lab, and a current
+reaction guide with one read-only command:
+
+```bash
+python3 deploy/check_routes.py https://omnilab-bk8q.onrender.com
+```
+
+The command prints PASS or FAIL for each route and exits non-zero if any route
+does not return HTTP 200. Run it again after later releases. It does not submit
+a reaction or change student data. The liveness check and full journey check
+remain separate steps.
+
 ## Failure behavior
 
 The command stops with a non-zero status when the secret is missing, a numeric
