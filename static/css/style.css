@@ -365,6 +365,78 @@ body {
     position: relative;
 }
 
+.two-vessel-controls {
+    position: absolute;
+    z-index: 4;
+    left: 20px;
+    bottom: 20px;
+    width: min(390px, calc(100% - 40px));
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    background: var(--panel-bg);
+    box-shadow: var(--shadow);
+}
+.two-vessel-controls button {
+    min-height: 40px;
+    padding: 7px 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--bg-main);
+    color: var(--text-color);
+    font-size: 12px;
+    font-weight: 700;
+}
+.two-vessel-controls button[aria-pressed="true"] { border-color: var(--text-color); }
+.two-vessel-controls button:disabled { opacity: .45; cursor: not-allowed; }
+.two-vessel-controls button:focus-visible { outline: 3px solid #e3384f; outline-offset: 2px; }
+.two-vessel-controls [hidden], .second-vessel[hidden] { display: none; }
+#vessel-transfer-status {
+    flex: 1 0 100%;
+    margin: 0;
+    color: var(--muted-text);
+    font-size: 11px;
+    line-height: 1.4;
+}
+.second-vessel {
+    position: absolute;
+    left: 73%;
+    top: 50%;
+    transform: translate(-50%, -30%);
+    width: 140px;
+    text-align: center;
+    pointer-events: none;
+}
+.second-vessel-letter {
+    color: var(--text-color);
+    font-size: 13px;
+    font-weight: 700;
+}
+.second-vessel-glass {
+    position: relative;
+    overflow: hidden;
+    height: 175px;
+    margin-top: 8px;
+    border: 3px solid color-mix(in srgb, var(--text-color) 46%, transparent);
+    border-top: 0;
+    border-radius: 2px 2px 17px 17px;
+    background: color-mix(in srgb, var(--bg-main) 36%, transparent);
+}
+#second-vessel-fill {
+    position: absolute;
+    inset: auto 3px 3px;
+    height: 0;
+    border-radius: 0 0 12px 12px;
+    opacity: .72;
+}
+@media (max-width: 600px) {
+    .second-vessel { left: 74%; width: 92px; transform: translate(-50%, -5%); }
+    .second-vessel-glass { height: 135px; }
+}
+
 .app-title-card {
     position: absolute;
     top: 92px;
