@@ -110,6 +110,18 @@
             
             <div class="col-lg-8" id="canvas-zone" ondragover="allowDrop(event)" ondragleave="dragLeave(event)" ondrop="drop(event)">
                 <canvas id="lab-canvas"></canvas>
+                <div class="two-vessel-controls" role="group" aria-label="Vessel controls">
+                    <button type="button" id="add-second-vessel">Add second beaker</button>
+                    <button type="button" id="select-first-vessel" aria-pressed="true">Vessel A · <span id="first-vessel-contents">Empty</span></button>
+                    <button type="button" id="select-second-vessel" aria-pressed="false" hidden>Vessel B · <span id="second-vessel-contents">Empty</span></button>
+                    <button type="button" id="transfer-first-second" hidden>Move half A → B</button>
+                    <button type="button" id="transfer-second-first" hidden>Move half B → A</button>
+                    <p id="vessel-transfer-status" role="status" aria-live="polite">Choose a vessel in Apparatus. Amounts are visual portions, not milliliters.</p>
+                </div>
+                <div class="second-vessel" id="second-vessel" aria-label="Second beaker" hidden>
+                    <span class="second-vessel-letter">B</span>
+                    <div class="second-vessel-glass"><div id="second-vessel-fill"></div></div>
+                </div>
             </div>
 
             <button type="button" class="analysis-reopen" id="btn-show-analysis" aria-controls="reaction-analysis" aria-expanded="false" hidden>
@@ -167,7 +179,7 @@
                     <span class="analysis-availability-message" id="analysis-availability-message">
                         {% if reaction_demo %}Ready to analyze this supported reaction pair.{% else %}Add two chemicals from a supported reaction pair.{% endif %}
                     </span>
-                    <span class="prediction-input-boundary"><strong>Analysis inputs:</strong> Selected chemicals only. Vessel and burner choices are visual setup aids.</span>
+                    <span class="prediction-input-boundary"><strong>Analysis inputs:</strong> Selected chemicals only. Vessel and burner choices are visual setup aids. Analysis covers vessel A.</span>
                 </p>
 
                 <button class="btn action-btn-primary w-100 py-3" id="btn-fire-analysis" aria-describedby="prediction-input-note"{% if not reaction_demo %} disabled{% endif %}>

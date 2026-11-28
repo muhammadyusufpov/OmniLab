@@ -298,6 +298,7 @@ for (const [firstChemical, secondChemical] of supportedReactionPairs) {
 let state = {
     chemicalDatabase: [],
     selectedChemicals: [],
+    secondVesselVisible: false,
     currentVessel: 'flask',
     apparatusSelected: false,
     theme: 'light',
@@ -342,7 +343,8 @@ export function vesselCenterX() {
         return 0;
     const collapsed = canvas.closest('.lab-workspace')?.classList.contains('is-analysis-collapsed');
     const anchoredWidth = Number(canvas.dataset.expandedAnchorWidth) || canvas.width;
-    return (collapsed ? canvas.width : anchoredWidth) / 2 + state.vesselOffsetX;
+    const width = collapsed ? canvas.width : anchoredWidth;
+    return width / 2 - (state.secondVesselVisible ? Math.min(width * 0.19, 140) : 0) + state.vesselOffsetX;
 }
 export function updateLabState(newState) {
     state = { ...state, ...newState };

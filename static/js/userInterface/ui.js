@@ -230,6 +230,7 @@ export function selectVessel(type) {
         }
     }
     const updatedState = config.getLabState();
+    window.dispatchEvent(new Event('omnilab:apparatus-changed'));
     captureLabSetupStarted({
         vessel: updatedState.currentVessel,
         burner_active: updatedState.burnerActive,
