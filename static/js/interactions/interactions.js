@@ -6,6 +6,7 @@ import { bindFeedbackOpenCapture, buildFeedbackContactUrl, captureFeedbackPrompt
 import { normalizeReactionEffect, normalizePrecipitateColor, parseSavedReactionResult } from './reactionResult.js';
 import { readStorageValue, removeStorageValue, writeStorageValue } from '../storage/storage.js';
 import { moveLiquid, pourIntoLiquid } from '../rendering/liquidMotion.js';
+import { addToSecond, isSecondDestination, recordFirstAddition, resetTwoVessels } from './twoVessels.js';
 const DEFAULT_REACTION_INSTRUCTION = `
     <div class="text-center mt-5 lab-empty-state">
         <p class="lab-instruction mb-2">Choose a supported pair from Chemicals. Try <strong>Hydrogen and Oxygen</strong> or <strong>Hydrochloric acid and Sodium hydroxide</strong>.</p>
@@ -234,6 +235,11 @@ export function allowDrop(ev) {
     ev.preventDefault();
 }
 export function addChemicalToLab(name, color, streamX = config.canvas ? config.canvas.width / 2 : 0) {
+    if (isSecondDestination()) {
+        addToSecond(name, color);
+        closeAllPopovers();
+        return;
+    }
     const state = config.getLabState();
     if (state.filterProgress > 0) {
         const status = document.getElementById('apparatus-status');
@@ -272,6 +278,7 @@ export function addChemicalToLab(name, color, streamX = config.canvas ? config.c
         }
         writeStorageValue(config.getLabStorageKey('savedChemicals'), JSON.stringify(updatedChemicals));
         writeStorageValue(config.getLabStorageKey('savedLiquidColor'), color);
+        recordFirstAddition(name);
         const mixtureEl = document.getElementById('current-mixture');
         if (mixtureEl) {
             mixtureEl.innerText = updatedChemicals.join(' + ');
@@ -299,6 +306,7 @@ export function drop(ev) {
     addChemicalToLab(name, color, ev.clientX - rect.left);
 }
 export function resetLaboratory() {
+    resetTwoVessels();
     removeStorageValue(config.getLabStorageKey('savedChemicals'));
     removeStorageValue(config.getLabStorageKey('savedLiquidColor'));
     removeStorageValue(config.getLabStorageKey('savedReaction'));
@@ -359,6 +367,19 @@ export function resetLaboratory() {
     }
     drawVesselAndFluid();
 }
+window.addEventListener?.('omnilab:vessels-changed', updateAnalysisAvailability);
+window.addEventListener?.('omnilab:vessel-transfer', () => {
+    currentAnalysisRunId += 1;
+    activeAnalysisController?.abort();
+    activeAnalysisController = null;
+    removeStorageValue(config.getLabStorageKey('savedReaction'));
+    cancelReactionEffects();
+    config.updateLabState({ isBubbling: false, precipitateColor: null });
+    const panel = document.getElementById('ai-response-content');
+    if (panel)
+        panel.innerHTML = getDefaultReactionInstruction();
+    setAnalysisPending(false);
+});
 function getCsrfToken() {
     const cookiePrefix = 'csrftoken=';
     const csrfCookie = document.cookie
