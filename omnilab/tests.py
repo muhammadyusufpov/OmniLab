@@ -4904,6 +4904,16 @@ class DeterministicReactionMatrixTests(TestCase):
                 self.assertEqual(reaction["precipitate_color"], expected_color)
                 self.assertIn(reaction["precipitate_color"], PRECIPITATE_COLORS)
 
+    def test_conditional_peroxone_result_does_not_claim_visible_bubbles(self):
+        reaction = REACTION_MATRIX[frozenset({"O3", "H2O2"})]
+        self.assertEqual(reaction["effect"], "none")
+        self.assertIn("cannot predict whether visible bubbles form", reaction["explanation"])
+
+    def test_silver_chloride_dissolution_requires_sufficient_ammonia(self):
+        reaction = REACTION_MATRIX[frozenset({"AgCl", "NH3"})]
+        self.assertIn("sufficient aqueous ammonia", reaction["explanation"])
+        self.assertNotIn("excess dilute", reaction["explanation"])
+
     def test_precipitate_contract_rejects_missing_or_unknown_colors(self):
         valid_reaction = REACTION_MATRIX[frozenset({"AgNO3", "KI"})]
 
