@@ -26,6 +26,7 @@ import {
     writeStorageValue
 } from '../storage/storage.js';
 import { moveLiquid, pourIntoLiquid } from '../rendering/liquidMotion.js';
+import { addToSecond, isSecondDestination, recordFirstAddition, resetTwoVessels } from './twoVessels.js';
 
 const DEFAULT_REACTION_INSTRUCTION = `
     <div class="text-center mt-5 lab-empty-state">
@@ -313,6 +314,11 @@ export function addChemicalToLab(
     color: string,
     streamX: number = config.canvas ? config.canvas.width / 2 : 0
 ): void {
+    if (isSecondDestination()) {
+        addToSecond(name, color);
+        closeAllPopovers();
+        return;
+    }
     const state = config.getLabState();
     if (state.filterProgress > 0) {
         const status = document.getElementById('apparatus-status');
@@ -356,6 +362,7 @@ export function addChemicalToLab(
             JSON.stringify(updatedChemicals)
         );
         writeStorageValue(config.getLabStorageKey('savedLiquidColor'), color);
+        recordFirstAddition(name);
 
         const mixtureEl = document.getElementById('current-mixture');
         if (mixtureEl) {
@@ -389,6 +396,7 @@ export function drop(ev: DragEvent): void {
 }
 
 export function resetLaboratory(): void {
+    resetTwoVessels();
     removeStorageValue(config.getLabStorageKey('savedChemicals'));
     removeStorageValue(config.getLabStorageKey('savedLiquidColor'));
     removeStorageValue(config.getLabStorageKey('savedReaction'));
@@ -453,6 +461,19 @@ export function resetLaboratory(): void {
     }
     drawVesselAndFluid();
 }
+
+window.addEventListener?.('omnilab:vessels-changed', updateAnalysisAvailability);
+window.addEventListener?.('omnilab:vessel-transfer', () => {
+    currentAnalysisRunId += 1;
+    activeAnalysisController?.abort();
+    activeAnalysisController = null;
+    removeStorageValue(config.getLabStorageKey('savedReaction'));
+    cancelReactionEffects();
+    config.updateLabState({ isBubbling: false, precipitateColor: null });
+    const panel = document.getElementById('ai-response-content');
+    if (panel) panel.innerHTML = getDefaultReactionInstruction();
+    setAnalysisPending(false);
+});
 
 function getCsrfToken(): string {
     const cookiePrefix = 'csrftoken=';
