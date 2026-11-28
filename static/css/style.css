@@ -346,6 +346,10 @@ body {
     grid-column: 1 / -1;
 }
 
+.apparatus-actions[aria-label="Combine lab equipment"] .apparatus-option-card:last-child {
+    grid-column: auto;
+}
+
 .apparatus-help {
     margin: 0;
     color: var(--muted-text);
