@@ -1,5 +1,5 @@
 import * as config from '../configuration/config.js';
-import { liquidSurfaceDisplacement } from './liquidMotion.js';
+import { liquidSurfaceDisplacement, surfaceHalfWidth } from './liquidMotion.js';
 import { drawApparatus } from '../apparatus/apparatus.js';
 
 function drawPrecipitate(
@@ -273,14 +273,16 @@ export function drawVesselAndFluid(): void {
         let baseLevel = updatedState.currentVessel === 'tube' || updatedState.currentVessel === 'cylinder' ? cy + 104 : cy + 106;
         
         let liquidTopY = baseLevel - updatedState.currentLiquidVol;
-        let amplitude = updatedState.streamActive ? 5.5 : 0;
+        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        let amplitude = updatedState.streamActive && !reducedMotion ? 5.5 : 0;
+        const surfaceWidth = surfaceHalfWidth(updatedState.currentVessel, liquidTopY, cy);
         
         config.ctx.moveTo(startX - 10, liquidTopY);
         
         for (let x = startX - 10; x <= endX + 10; x++) {
             let waveY = liquidTopY
                 + Math.sin(x * 0.05 + updatedState.waveTime * 1.3) * amplitude
-                + liquidSurfaceDisplacement(updatedState, x, cx, (endX - startX) / 2, updatedState.waveTime);
+                + (reducedMotion ? 0 : liquidSurfaceDisplacement(updatedState, x, cx, surfaceWidth, updatedState.waveTime));
             config.ctx.lineTo(x, waveY);
         }
         
