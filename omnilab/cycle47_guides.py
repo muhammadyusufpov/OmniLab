@@ -238,7 +238,7 @@ CYCLE47_GUIDES["silver-chloride-ammonia"] = {'route_name': 'guide_silver_chlorid
                   'supported equation and three safety notes.',
  'cta_label': 'Try the prepared reaction',
  'equation': 'AgCl(s) + 2NH3(aq) -> [Ag(NH3)2]+(aq) + Cl-(aq)',
- 'explanation': 'Freshly prepared silver chloride dissolves in excess dilute aqueous ammonia as '
+ 'explanation': 'Freshly prepared silver chloride can dissolve in sufficient aqueous ammonia as '
                 'the diamminesilver(I) complex forms. Complex formation lowers the free silver-ion '
                 'concentration and shifts the silver chloride dissolution equilibrium.',
  'observation_title': 'The white precipitate can dissolve',

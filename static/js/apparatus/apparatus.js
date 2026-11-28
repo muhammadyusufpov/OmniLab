@@ -58,7 +58,10 @@ function toggleAccessory(type) {
             announce('Turn the burner off before adding the watch glass cover.');
             return;
         }
-        config.updateLabState({ watchGlassActive: !state.watchGlassActive });
+        config.updateLabState({
+            watchGlassActive: !state.watchGlassActive,
+            stirringUntil: state.watchGlassActive ? state.stirringUntil : 0
+        });
         announce(state.watchGlassActive ? 'Watch glass cover removed.' : 'Watch glass covers the beaker. It is a visual setup aid.');
     }
     syncAccessoryButtons();

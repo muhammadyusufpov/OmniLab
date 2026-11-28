@@ -17,7 +17,7 @@ const cards = ['flask', 'beaker', 'tube', 'cylinder', 'burner'].map(id => ({
     },
     setAttribute() {}
 }));
-const tools = ['tripod', 'clamp', 'watch-glass'].map(id => ({
+const tools = ['tripod', 'clamp', 'watch-glass', 'filter', 'stir'].map(id => ({
     id: `tool-${id}`,
     classList: {
         add: () => selected.add(id),
@@ -106,4 +106,33 @@ test('a burner needs vessel support and the cover blocks it', () => {
     assert.equal(config.getLabState().tripodActive, false);
     assert.equal(config.getLabState().burnerActive, false);
     assert.equal(selected.has('tripod'), false);
+});
+
+test('adding the watch glass stops a moving stir rod', () => {
+    resetLaboratory();
+    selectVessel('beaker');
+    config.updateLabState({ currentLiquidVol: 40, targetLiquidVol: 40, stirringUntil: performance.now() + 2600 });
+    tools[2].click();
+    assert.equal(config.getLabState().watchGlassActive, true);
+    assert.equal(config.getLabState().stirringUntil, 0);
+    tools[4].click();
+    assert.equal(config.getLabState().stirringUntil, 0);
+    resetLaboratory();
+});
+
+test('filter paper cannot be used with a lit burner', () => {
+    resetLaboratory();
+    selectVessel('beaker');
+    tools[0].click();
+    selectVessel('burner');
+    assert.equal(config.getLabState().burnerActive, true);
+    config.updateLabState({ currentLiquidVol: 40, targetLiquidVol: 40, precipitateColor: '#f5f3ea' });
+    tools[3].click();
+    assert.equal(config.getLabState().filterProgress, 0);
+    selectVessel('burner');
+    tools[3].click();
+    assert.ok(config.getLabState().filterProgress > 0);
+    selectVessel('burner');
+    assert.equal(config.getLabState().burnerActive, false);
+    resetLaboratory();
 });

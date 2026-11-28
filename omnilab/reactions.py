@@ -441,7 +441,7 @@ REACTION_MATRIX = {
         "none",
         "AgCl(s) + 2NH3(aq) -> [Ag(NH3)2]+(aq) + Cl-(aq)",
         (
-            "Freshly prepared silver chloride dissolves in excess dilute "
+            "Freshly prepared silver chloride can dissolve in sufficient "
             "aqueous ammonia as the diamminesilver(I) complex forms. Complex "
             "formation lowers the free silver-ion concentration and shifts "
             "the silver chloride dissolution equilibrium."
@@ -552,13 +552,15 @@ REACTION_MATRIX = {
         ),
     ),
     frozenset({"O3", "H2O2"}): _reaction(
-        "bubble",
+        "none",
         "O3(g) + H2O2(aq) -> 2O2(g) + H2O(l)",
         (
             "Ozone and hydrogen peroxide produce water and oxygen in the "
             "simplified net equation for the aqueous peroxone process. The "
             "real pathway includes short-lived reactive intermediates that "
-            "the current model does not represent. Oxygen evolution can bubble."
+            "the current model does not represent. The model lacks gas flow, "
+            "concentration, and reaction-rate inputs, so it cannot predict "
+            "whether visible bubbles form."
         ),
         (
             "Use contained, ventilated ozone equipment in a specialist setup.",
