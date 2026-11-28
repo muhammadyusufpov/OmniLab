@@ -223,7 +223,7 @@ export function setupCanvasDrag() {
             dragStartX: e.clientX,
             dragStartY: e.clientY,
             ...(state.currentLiquidVol > 0 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches
-                ? moveLiquid(state, dx, dy)
+                ? moveLiquid(state, dx, dy, state.currentVessel)
                 : {})
         });
     });
@@ -266,7 +266,7 @@ export function addChemicalToLab(name, color, streamX = config.canvas ? config.c
             filterProgress: 0,
             filteredLiquidVol: 0,
             ...(state.targetLiquidVol > 0 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches
-                ? pourIntoLiquid(state)
+                ? pourIntoLiquid(state, state.currentVessel)
                 : {})
         });
         if (updatedChemicals.length === 1) {

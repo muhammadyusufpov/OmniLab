@@ -456,8 +456,12 @@ function engineLoop(now: number): void {
                 : state.waveTime
         });
     }
-    if (state.currentLiquidVol > 0 && !reducedMotion.matches) {
-        config.updateLabState(settleLiquid(config.getLabState(), elapsed));
+    if (reducedMotion.matches) {
+        if (state.liquidTilt || state.liquidTiltVelocity || state.liquidRipple || state.liquidRippleVelocity) {
+            config.updateLabState({ liquidTilt: 0, liquidTiltVelocity: 0, liquidRipple: 0, liquidRippleVelocity: 0 });
+        }
+    } else if (state.currentLiquidVol > 0) {
+        config.updateLabState(settleLiquid(config.getLabState(), elapsed, state.currentVessel));
     }
     if (state.filterProgress === 0) updateApparatus(now, elapsed);
     render.drawVesselAndFluid();

@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 
-const { moveLiquid, pourIntoLiquid, settleLiquid, liquidSurfaceDisplacement } = await import(
+const { moveLiquid, pourIntoLiquid, settleLiquid, liquidSurfaceDisplacement, surfaceHalfWidth } = await import(
     '../static/js/rendering/liquidMotion.js'
 );
 
@@ -18,6 +18,21 @@ test('moving a filled vessel kicks the liquid surface in the opposite direction'
     assert.ok(moving.liquidTilt < 0);
     assert.notEqual(liquidSurfaceDisplacement(moving, -50, 0, 50, 0),
         liquidSurfaceDisplacement(moving, 50, 0, 50, 0));
+});
+
+test('the same drag and pour produce vessel-sized motion', () => {
+    const drag = ['beaker', 'flask', 'tube'].map(vessel =>
+        Math.abs(moveLiquid(still, 10, 0, vessel).liquidTiltVelocity));
+    const pour = ['beaker', 'flask', 'tube'].map(vessel =>
+        pourIntoLiquid(still, vessel).liquidRippleVelocity);
+    assert.ok(drag[0] > drag[1] && drag[1] > drag[2]);
+    assert.ok(pour[0] > pour[1] && pour[1] > pour[2]);
+});
+
+test('flask surface narrows toward its neck', () => {
+    assert.equal(surfaceHalfWidth('flask', -30, 0), 23);
+    assert.equal(surfaceHalfWidth('flask', 100, 0), 106);
+    assert.equal(surfaceHalfWidth('tube', 100, 0), 33);
 });
 
 test('vertical movement creates a ripple that settles after the vessel stops', () => {
