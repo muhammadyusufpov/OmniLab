@@ -2,6 +2,7 @@ import * as config from '../configuration/config.js';
 import * as ui from '../userInterface/ui.js';
 import * as render from '../rendering/render.js';
 import * as interactions from '../interactions/interactions.js';
+import { setupTwoVessels } from '../interactions/twoVessels.js';
 import * as firstExperiment from '../firstExperiment/firstExperiment.js';
 import { capture } from '../analytics/analytics.js';
 import { settleLiquid } from '../rendering/liquidMotion.js';
@@ -21,6 +22,7 @@ declare global {
 }
 
 document.addEventListener("DOMContentLoaded", function(): void {
+    setupTwoVessels();
     capture('lab_viewed', { route: window.location.pathname });
     const reactionDemo = config.getReactionDemoConfig();
     if (reactionDemo) {
