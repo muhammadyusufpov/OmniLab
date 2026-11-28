@@ -12,9 +12,19 @@ const cards = ['flask', 'beaker', 'tube', 'cylinder', 'burner'].map(id => ({
     id: `opt-${id}`,
     classList: {
         add: () => selected.add(id),
-        remove: () => selected.delete(id)
+        remove: () => selected.delete(id),
+        toggle: (_name, active) => active ? selected.add(id) : selected.delete(id)
     },
     setAttribute() {}
+}));
+const tools = ['tripod', 'clamp', 'watch-glass'].map(id => ({
+    id: `tool-${id}`,
+    classList: {
+        add: () => selected.add(id),
+        remove: () => selected.delete(id)
+    },
+    setAttribute() {},
+    addEventListener(_event, callback) { this.click = () => callback({ stopPropagation() {} }); }
 }));
 const canvas = {
     width: 800,
@@ -32,7 +42,7 @@ globalThis.window = {
 };
 globalThis.document = {
     addEventListener() {},
-    getElementById: id => id === 'lab-canvas' ? canvas : cards.find(card => card.id === id) || null,
+    getElementById: id => id === 'lab-canvas' ? canvas : [...cards, ...tools].find(card => card.id === id) || null,
     querySelectorAll: selector => selector === '.apparatus-option-card[id^="opt-"]' ? cards : [],
     cookie: ''
 };
@@ -40,7 +50,9 @@ globalThis.document = {
 const config = await import('../static/js/configuration/config.js');
 const { drawVesselAndFluid } = await import('../static/js/rendering/render.js');
 const { selectVessel } = await import('../static/js/userInterface/ui.js');
+const { bindApparatusTools } = await import('../static/js/apparatus/apparatus.js');
 const { resetLaboratory } = await import('../static/js/interactions/interactions.js');
+bindApparatusTools();
 
 test('a normal first load draws no apparatus until the student selects one', () => {
     assert.equal(config.getLabState().apparatusSelected, false);
@@ -73,4 +85,25 @@ test('panel resize holds the vessel while full close centers it', () => {
     workspace.classList.contains = name => name === 'is-analysis-collapsed';
     canvas.width = 1000;
     assert.equal(config.vesselCenterX(), 500);
+});
+
+test('a burner needs vessel support and the cover blocks it', () => {
+    resetLaboratory();
+    selectVessel('beaker');
+    selectVessel('burner');
+    assert.equal(config.getLabState().burnerActive, false);
+    tools[2].click();
+    assert.equal(config.getLabState().watchGlassActive, true);
+    tools[0].click();
+    selectVessel('burner');
+    assert.equal(config.getLabState().burnerActive, false);
+    tools[2].click();
+    selectVessel('burner');
+    assert.equal(config.getLabState().burnerActive, true);
+    assert.equal(config.getLabState().tripodActive, true);
+    assert.ok(selected.has('tripod'));
+    resetLaboratory();
+    assert.equal(config.getLabState().tripodActive, false);
+    assert.equal(config.getLabState().burnerActive, false);
+    assert.equal(selected.has('tripod'), false);
 });
