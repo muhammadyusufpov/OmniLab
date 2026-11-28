@@ -45,6 +45,9 @@ export interface LabState {
     isBubbling: boolean;
     precipitateColor: '#5ba7d1' | '#f2c94c' | '#f5f3ea' | null;
     burnerActive: boolean;
+    tripodActive: boolean;
+    clampActive: boolean;
+    watchGlassActive: boolean;
     pipetteAmount: number;
     stirringUntil: number;
     filterProgress: number;
@@ -425,6 +428,9 @@ let state: LabState = {
     isBubbling: false,
     precipitateColor: null,
     burnerActive: false,
+    tripodActive: false,
+    clampActive: false,
+    watchGlassActive: false,
     pipetteAmount: 0,
     stirringUntil: 0,
     filterProgress: 0,

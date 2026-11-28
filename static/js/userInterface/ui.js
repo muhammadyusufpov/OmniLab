@@ -174,10 +174,19 @@ export function closeAllPopovers() {
 }
 export function selectVessel(type) {
     const state = config.getLabState();
-    config.updateLabState({ apparatusSelected: true });
     if (type === 'burner') {
+        const status = document.getElementById('apparatus-status');
+        if (!state.apparatusSelected || !state.tripodActive || state.watchGlassActive || state.filterProgress > 0) {
+            if (status)
+                status.textContent = 'Choose a beaker or flask with tripod and gauze. Remove the cover and filter paper before lighting the burner.';
+            return;
+        }
         const isActive = !state.burnerActive;
         config.updateLabState({ burnerActive: isActive });
+        if (status)
+            status.textContent = isActive
+                ? 'Burner lit below the gauze. Temperature and boiling are not calculated; reaction results use selected chemicals only.'
+                : 'Burner off. No heat outcome is inferred.';
         const burnerCard = document.getElementById('opt-burner');
         if (burnerCard) {
             burnerCard.classList.toggle('selected', isActive);
@@ -185,7 +194,29 @@ export function selectVessel(type) {
         }
     }
     else {
-        config.updateLabState({ currentVessel: type });
+        const canUseTripod = type === 'beaker' || type === 'flask';
+        const canUseClamp = type === 'tube' || type === 'cylinder';
+        config.updateLabState({
+            currentVessel: type,
+            apparatusSelected: true,
+            tripodActive: canUseTripod && state.tripodActive,
+            clampActive: canUseClamp && state.clampActive,
+            watchGlassActive: type === 'beaker' && state.watchGlassActive,
+            burnerActive: canUseTripod && state.tripodActive && state.burnerActive
+        });
+        for (const [id, active] of Object.entries({
+            'tool-tripod': canUseTripod && state.tripodActive,
+            'tool-clamp': canUseClamp && state.clampActive,
+            'tool-watch-glass': type === 'beaker' && state.watchGlassActive,
+            'opt-burner': canUseTripod && state.tripodActive && state.burnerActive
+        })) {
+            const button = document.getElementById(id);
+            if (active)
+                button?.classList.add('selected');
+            else
+                button?.classList.remove('selected');
+            button?.setAttribute('aria-pressed', String(active));
+        }
         document.querySelectorAll('.apparatus-option-card[id^="opt-"]').forEach(c => {
             if (c.id !== 'opt-burner') {
                 c.classList.remove('selected');

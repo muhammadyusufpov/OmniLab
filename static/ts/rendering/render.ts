@@ -2,79 +2,6 @@ import * as config from '../configuration/config.js';
 import { liquidSurfaceDisplacement } from './liquidMotion.js';
 import { drawApparatus } from '../apparatus/apparatus.js';
 
-export function updateAndDrawAmbientBubbles(cx: number, cy: number): void {
-    if (!config.getLabState().burnerActive) {
-        config.updateLabState({ ambientBubbles: [] });
-        return;
-    }
-
-    const state = config.getLabState();
-
-    if (state.currentLiquidVol <= 0) {
-        config.updateLabState({ ambientBubbles: [] });
-        return;
-    }
-
-    let vesselWidth = 180;
-    if (state.currentVessel === 'tube' || state.currentVessel === 'cylinder') vesselWidth = 70;
-
-    let spawnChance = state.burnerActive ? 0.65 : 0.15;
-    let maxBubbles = state.burnerActive ? 90 : 30;
-
-    let bubbles = [...state.ambientBubbles];
-
-    if (Math.random() < spawnChance && bubbles.length < maxBubbles) {
-        let span = vesselWidth - 20;
-        if (state.currentVessel === 'flask') span = 140;
-        
-        bubbles.push({
-            x: cx + (Math.random() * span - span / 2),
-            y: cy + 110,
-            vx: 0,
-            vy: 0,
-            alpha: 1,
-            color: '#ffffff',
-            r: state.burnerActive ? Math.random() * 5 + 2 : Math.random() * 3 + 1.5,
-            speed: state.burnerActive ? Math.random() * 3.5 + 2 : Math.random() * 1 + 0.5,
-            wobble: Math.random() * 2,
-            wobbleSpeed: state.burnerActive ? Math.random() * 0.3 + 0.15 : Math.random() * 0.1 + 0.05
-        } as any);
-    }
-
-    for (let i = bubbles.length - 1; i >= 0; i--) {
-        let b = bubbles[i] as any;
-        b.y -= b.speed;
-        b.wobble += b.wobbleSpeed;
-        let currentX = b.x + Math.sin(b.wobble) * (state.burnerActive ? 2.5 : 1.5);
-
-        let liquidTopY = cy + 120 - state.currentLiquidVol + Math.sin(currentX * 0.025 + state.waveTime) * 4.5;
-
-        let inside = false;
-        if (state.currentVessel === 'beaker' && Math.abs(currentX - cx) < 85) inside = true;
-        else if ((state.currentVessel === 'tube' || state.currentVessel === 'cylinder') && Math.abs(currentX - cx) < 30) inside = true;
-        else if (state.currentVessel === 'flask') {
-            let currentLiquidHeight = (cy + 120) - b.y;
-            let ratio = currentLiquidHeight / 220;
-            let maxW = 220 - (220 - 50) * ratio;
-            if (Math.abs(currentX - cx) < (maxW / 2 - 10)) inside = true;
-        }
-
-        if (b.y < liquidTopY || !inside) {
-            bubbles.splice(i, 1);
-            continue;
-        }
-
-        if (config.ctx) {
-            config.ctx.fillStyle = state.burnerActive ? 'rgba(255, 255, 255, 0.75)' : 'rgba(255, 255, 255, 0.5)';
-            config.ctx.beginPath();
-            config.ctx.arc(currentX, b.y, b.r, 0, Math.PI * 2);
-            config.ctx.fill();
-        }
-    }
-
-    config.updateLabState({ ambientBubbles: bubbles });
-}
-
 function drawPrecipitate(
     cx: number,
     liquidTopY: number,
@@ -155,9 +82,7 @@ export function drawVesselAndFluid(): void {
     const updatedState = config.getLabState();
     let targetColor = updatedState.liquidColor;
     
-    if (updatedState.burnerActive) {
-        targetColor = '#eab308'; 
-    }
+    // Heating is a setup choice, not a chemical observation. Keep the selected liquid color.
 
     // An empty or first-filled vessel has nothing to blend with.
     if (!currentRenderColor || updatedState.selectedChemicals.length <= 1) {
@@ -188,7 +113,7 @@ export function drawVesselAndFluid(): void {
         config.ctx.lineWidth = 5;
         config.ctx.lineCap = 'round';
         let baseLevel = updatedState.currentVessel === 'tube' || updatedState.currentVessel === 'cylinder' ? cy + 104 : cy + 106;
-        if (updatedState.burnerActive) {
+        if (updatedState.tripodActive) {
             baseLevel -= 40;
         }
         let liquidTopY = baseLevel - updatedState.currentLiquidVol;
@@ -200,13 +125,15 @@ export function drawVesselAndFluid(): void {
         config.ctx.restore();
     }
 
-    if (updatedState.burnerActive) {
+    if (updatedState.tripodActive) {
         cy = cy - 40;
-        const burnerY = cy + 110;
+    }
+    if (updatedState.burnerActive) {
+        const burnerY = cy + 172;
         
         config.ctx.save();
         let wobble = Math.sin(updatedState.waveTime * 1.8) * 2.5;
-        let flameHeight = 65 + Math.sin(updatedState.waveTime * 3.6) * 4 + Math.random() * 4;
+        let flameHeight = 48 + Math.sin(updatedState.waveTime * 3.6) * 3;
     
         config.ctx.globalCompositeOperation = 'screen';
     
@@ -346,7 +273,7 @@ export function drawVesselAndFluid(): void {
         let baseLevel = updatedState.currentVessel === 'tube' || updatedState.currentVessel === 'cylinder' ? cy + 104 : cy + 106;
         
         let liquidTopY = baseLevel - updatedState.currentLiquidVol;
-        let amplitude = updatedState.burnerActive ? 6 : (updatedState.streamActive ? 5.5 : 0);
+        let amplitude = updatedState.streamActive ? 5.5 : 0;
         
         config.ctx.moveTo(startX - 10, liquidTopY);
         
@@ -394,19 +321,7 @@ export function drawVesselAndFluid(): void {
             );
         }
 
-        if (updatedState.burnerActive) {
-            let topY = baseLevel - updatedState.currentLiquidVol;
-            config.ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
-            for (let i = 0; i < 15; i++) {
-                let fx = cx + (Math.random() - 0.5) * (updatedState.currentVessel === 'tube' || updatedState.currentVessel === 'cylinder' ? 50 : 130);
-                let fy = topY + (Math.random() * 14 - 7);
-                config.ctx.beginPath();
-                config.ctx.arc(fx, fy, Math.random() * 4 + 2, 0, Math.PI * 2);
-                config.ctx.fill();
-            }
-        }
-
-        updateAndDrawAmbientBubbles(cx, cy);
+        // Do not show boiling without a measured temperature or liquid properties.
         config.ctx.restore();
     }
 

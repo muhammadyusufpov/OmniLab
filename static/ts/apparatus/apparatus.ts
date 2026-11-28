@@ -8,6 +8,61 @@ function announce(message: string): void {
     if (status) status.textContent = message;
 }
 
+export function syncAccessoryButtons(): void {
+    const state = config.getLabState();
+    const selected: Record<string, boolean> = {
+        'tool-tripod': state.tripodActive,
+        'tool-clamp': state.clampActive,
+        'tool-watch-glass': state.watchGlassActive,
+        'opt-burner': state.burnerActive
+    };
+    for (const [id, active] of Object.entries(selected)) {
+        const button = document.getElementById(id);
+        if (active) button?.classList.add('selected');
+        else button?.classList.remove('selected');
+        button?.setAttribute('aria-pressed', String(active));
+    }
+}
+
+function toggleAccessory(type: 'tripod' | 'clamp' | 'watch-glass'): void {
+    const state = config.getLabState();
+    if (!state.apparatusSelected) {
+        announce('Choose a vessel first, then add compatible equipment.');
+        return;
+    }
+    if (state.filterProgress > 0) {
+        announce('Reset the setup before changing equipment after filtration.');
+        return;
+    }
+    if (type === 'tripod') {
+        if (state.currentVessel !== 'beaker' && state.currentVessel !== 'flask') {
+            announce('A tripod and gauze support a beaker or flask here. Choose one first.');
+            return;
+        }
+        config.updateLabState({ tripodActive: !state.tripodActive, burnerActive: state.tripodActive ? false : state.burnerActive });
+        announce(state.tripodActive ? 'Tripod removed. The burner is off.' : 'Tripod and wire gauze support the vessel. Add a burner only if needed.');
+    } else if (type === 'clamp') {
+        if (state.currentVessel !== 'tube' && state.currentVessel !== 'cylinder') {
+            announce('The clamp stand holds a test tube or graduated cylinder here.');
+            return;
+        }
+        config.updateLabState({ clampActive: !state.clampActive });
+        announce(state.clampActive ? 'Clamp stand removed.' : 'Clamp stand holds the vessel. It does not measure or change a reaction.');
+    } else {
+        if (state.currentVessel !== 'beaker') {
+            announce('The watch glass cover fits the beaker only.');
+            return;
+        }
+        if (state.burnerActive) {
+            announce('Turn the burner off before adding the watch glass cover.');
+            return;
+        }
+        config.updateLabState({ watchGlassActive: !state.watchGlassActive });
+        announce(state.watchGlassActive ? 'Watch glass cover removed.' : 'Watch glass covers the beaker. It is a visual setup aid.');
+    }
+    syncAccessoryButtons();
+}
+
 function syncPipetteButton(loaded: boolean): void {
     const button = document.getElementById('tool-pipette');
     if (!button) return;
@@ -17,6 +72,10 @@ function syncPipetteButton(loaded: boolean): void {
 
 function usePipette(): void {
     const state = config.getLabState();
+    if (state.watchGlassActive) {
+        announce('Remove the watch glass cover before using the pipette.');
+        return;
+    }
     if (state.filterProgress > 0) {
         announce('Reset the setup before taking another sample.');
         return;
@@ -43,6 +102,10 @@ function usePipette(): void {
 
 function stir(): void {
     const state = config.getLabState();
+    if (state.watchGlassActive) {
+        announce('Remove the watch glass cover before stirring.');
+        return;
+    }
     if (state.currentLiquidVol <= 0 || state.filterProgress > 0) {
         announce('Add liquid to a vessel before stirring.');
         return;
@@ -53,6 +116,14 @@ function stir(): void {
 
 function filter(): void {
     const state = config.getLabState();
+    if (state.watchGlassActive) {
+        announce('Remove the watch glass cover before filtering.');
+        return;
+    }
+    if (state.burnerActive) {
+        announce('Turn the burner off before using filter paper.');
+        return;
+    }
     if (!state.precipitateColor || state.currentLiquidVol <= 0 || state.filterProgress > 0 || state.currentLiquidVol < state.targetLiquidVol) {
         announce('Analyze a supported reaction that forms a precipitate before filtering.');
         return;
@@ -70,6 +141,9 @@ function filter(): void {
 
 export function bindApparatusTools(): void {
     const actions: Record<string, () => void> = {
+        'tool-tripod': () => toggleAccessory('tripod'),
+        'tool-clamp': () => toggleAccessory('clamp'),
+        'tool-watch-glass': () => toggleAccessory('watch-glass'),
         'tool-pipette': usePipette,
         'tool-stir': stir,
         'tool-filter': filter
@@ -82,7 +156,8 @@ export function bindApparatusTools(): void {
     }
     document.getElementById('btn-reset-lab')?.addEventListener('click', () => {
         syncPipetteButton(false);
-        announce('Tools show a visual technique. Volumes are not calibrated. Results are educational estimates.');
+        syncAccessoryButtons();
+        announce('Combine compatible equipment around one vessel. Heat and volumes are not measured. Results are educational estimates.');
     });
 }
 
@@ -109,6 +184,74 @@ export function updateApparatus(now: number, elapsed: number): void {
 }
 
 export function drawApparatus(ctx: CanvasRenderingContext2D, cx: number, cy: number, state: config.LabState): void {
+    const metal = state.theme === 'dark' ? '#a9bac8' : '#66798a';
+    if (state.tripodActive) {
+        ctx.save();
+        ctx.strokeStyle = metal;
+        ctx.lineWidth = 5;
+        ctx.lineCap = 'round';
+        ctx.beginPath();
+        ctx.moveTo(cx - 87, cy + 114);
+        ctx.lineTo(cx - 112, cy + 215);
+        ctx.moveTo(cx + 87, cy + 114);
+        ctx.lineTo(cx + 112, cy + 215);
+        ctx.moveTo(cx - 15, cy + 116);
+        ctx.lineTo(cx + 13, cy + 214);
+        ctx.stroke();
+        ctx.strokeStyle = '#87959d';
+        ctx.lineWidth = 7;
+        ctx.beginPath();
+        ctx.moveTo(cx - 103, cy + 112);
+        ctx.lineTo(cx + 103, cy + 112);
+        ctx.stroke();
+        ctx.strokeStyle = 'rgba(80,99,110,.55)';
+        ctx.lineWidth = 1;
+        for (let offset = -90; offset <= 90; offset += 12) {
+            ctx.beginPath();
+            ctx.moveTo(cx + offset, cy + 108);
+            ctx.lineTo(cx + offset + 7, cy + 116);
+            ctx.stroke();
+        }
+        ctx.restore();
+    }
+
+    if (state.clampActive) {
+        ctx.save();
+        const x = cx + 94;
+        ctx.strokeStyle = metal;
+        ctx.lineWidth = 5;
+        ctx.lineCap = 'round';
+        ctx.beginPath();
+        ctx.moveTo(x, cy + 108);
+        ctx.lineTo(x, cy - 155);
+        ctx.moveTo(x - 44, cy + 108);
+        ctx.lineTo(x + 44, cy + 108);
+        ctx.moveTo(x, cy - 70);
+        ctx.lineTo(cx + 31, cy - 70);
+        ctx.stroke();
+        ctx.fillStyle = '#576b7b';
+        ctx.beginPath();
+        ctx.arc(x, cy - 70, 7, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+    }
+
+    if (state.watchGlassActive) {
+        ctx.save();
+        ctx.fillStyle = 'rgba(176,210,224,.25)';
+        ctx.strokeStyle = metal;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.ellipse(cx, cy - 83, 90, 12, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(cx, cy - 92, 5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+        ctx.restore();
+    }
+
     if (state.stirringUntil > performance.now() && state.currentLiquidVol > 0) {
         const swing = Math.sin(performance.now() / 150) * 11;
         ctx.save();

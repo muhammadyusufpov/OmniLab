@@ -91,12 +91,17 @@
             <button type="button" class="apparatus-option-card{% if reaction_demo %} selected{% endif %}" id="opt-beaker" aria-pressed="{% if reaction_demo %}true{% else %}false{% endif %}">Laboratory Beaker</button>
             <button type="button" class="apparatus-option-card" id="opt-burner" aria-pressed="false">Bunsen Burner</button>
             <button type="button" class="apparatus-option-card" id="opt-cylinder" aria-pressed="false">Graduated Cylinder</button>
+            <div class="apparatus-actions" role="group" aria-label="Combine lab equipment">
+                <button type="button" class="apparatus-option-card" id="tool-tripod" aria-pressed="false">Tripod + wire gauze</button>
+                <button type="button" class="apparatus-option-card" id="tool-clamp" aria-pressed="false">Clamp stand</button>
+                <button type="button" class="apparatus-option-card" id="tool-watch-glass" aria-pressed="false">Watch glass cover</button>
+            </div>
             <div class="apparatus-actions" role="group" aria-label="Lab techniques">
                 <button type="button" class="apparatus-option-card" id="tool-pipette">Pipette sample</button>
                 <button type="button" class="apparatus-option-card" id="tool-stir">Stir with glass rod</button>
                 <button type="button" class="apparatus-option-card" id="tool-filter">Filter precipitate</button>
             </div>
-            <p class="apparatus-help" id="apparatus-status" role="status" aria-live="polite">Tools show a visual technique. Volumes are not calibrated. Results are educational estimates.</p>
+            <p class="apparatus-help" id="apparatus-status" role="status" aria-live="polite">Combine compatible equipment around one vessel. Heat and volumes are not measured. Results are educational estimates.</p>
         </div>
     </div>
 
