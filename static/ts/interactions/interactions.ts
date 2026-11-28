@@ -266,21 +266,10 @@ export function setupCanvasDrag(): void {
         const mouseY = e.clientY - rect.top;
 
         const state = config.getLabState();
+        if (!state.apparatusSelected) return;
         let cx = config.vesselCenterX();
         let cy = config.canvas.height / 2 + 50 + state.vesselOffsetY;
-
-        let checkCy = state.burnerActive ? cy - 40 : cy;
-        let btnX = cx;
-        let btnY = checkCy + 110 + 48;
-
-        let dist = Math.sqrt((mouseX - btnX) ** 2 + (mouseY - btnY) ** 2);
-        if (dist <= 12) {
-            config.updateLabState({ burnerActive: !state.burnerActive });
-            drawVesselAndFluid();
-            return;
-        }
-
-        const currentCy = state.burnerActive ? cy - 40 : cy;
+        const currentCy = state.tripodActive ? cy - 40 : cy;
         let clickRadius = state.currentVessel === 'flask' ? 110 : (state.currentVessel === 'beaker' ? 90 : 40);
 
         if (Math.abs(mouseX - cx) < clickRadius && mouseY > currentCy - 100 && mouseY < currentCy + 110) {
@@ -325,6 +314,16 @@ export function addChemicalToLab(
     streamX: number = config.canvas ? config.canvas.width / 2 : 0
 ): void {
     const state = config.getLabState();
+    if (state.filterProgress > 0) {
+        const status = document.getElementById('apparatus-status');
+        if (status) status.textContent = 'Reset the setup before adding a chemical after filtration.';
+        return;
+    }
+    if (state.watchGlassActive) {
+        const status = document.getElementById('apparatus-status');
+        if (status) status.textContent = 'Remove the watch glass cover before adding a chemical.';
+        return;
+    }
 
     if (!state.selectedChemicals.includes(name)) {
         const updatedChemicals = [...state.selectedChemicals, name];
@@ -403,6 +402,9 @@ export function resetLaboratory(): void {
         selectedChemicals: [],
         apparatusSelected: false,
         burnerActive: false,
+        tripodActive: false,
+        clampActive: false,
+        watchGlassActive: false,
         targetLiquidVol: 0,
         currentLiquidVol: 0,
         liquidColor: '#3399ff',
@@ -432,6 +434,11 @@ export function resetLaboratory(): void {
         card.classList.remove('selected');
         card.setAttribute('aria-pressed', 'false');
     });
+    for (const id of ['tool-tripod', 'tool-clamp', 'tool-watch-glass']) {
+        const button = document.getElementById(id);
+        button?.classList.remove('selected');
+        button?.setAttribute('aria-pressed', 'false');
+    }
     refreshChemicalMenuGuidance();
     setAnalysisPending(false);
 
