@@ -19,6 +19,7 @@ export interface Particle {
 export interface LabState {
     chemicalDatabase: Chemical[];
     selectedChemicals: string[];
+    secondVesselVisible: boolean;
     currentVessel: 'flask' | 'beaker' | 'tube' | 'cylinder';
     apparatusSelected: boolean;
     theme: 'light' | 'dark';
@@ -402,6 +403,7 @@ for (const [firstChemical, secondChemical] of supportedReactionPairs) {
 let state: LabState = {
     chemicalDatabase: [],
     selectedChemicals: [],
+    secondVesselVisible: false,
     currentVessel: 'flask',
     apparatusSelected: false,
     theme: 'light',
@@ -447,7 +449,8 @@ export function vesselCenterX(): number {
     if (!canvas) return 0;
     const collapsed = canvas.closest('.lab-workspace')?.classList.contains('is-analysis-collapsed');
     const anchoredWidth = Number(canvas.dataset.expandedAnchorWidth) || canvas.width;
-    return (collapsed ? canvas.width : anchoredWidth) / 2 + state.vesselOffsetX;
+    const width = collapsed ? canvas.width : anchoredWidth;
+    return width / 2 - (state.secondVesselVisible ? Math.min(width * 0.19, 140) : 0) + state.vesselOffsetX;
 }
 
 export function updateLabState(newState: Partial<LabState>): void {
